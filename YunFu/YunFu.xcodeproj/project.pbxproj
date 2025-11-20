@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		017370892ECF00630045407F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017370882ECF00630045407F /* Assets.xcassets */; };
 		2F0BA4DC215BA12300F67004 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */; };
 		2FDE6A502971470D004C7701 /* DCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE6A4F2971470D004C7701 /* DCloud.swift */; };
 		FE2855092E7A7715004C0EF1 /* ESPullToRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = FE2855082E7A7715004C0EF1 /* ESPullToRefresh */; };
@@ -56,6 +57,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		017370882ECF00630045407F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FDE6A4E2971470D004C7701 /* YunFu-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YunFu-Header.h"; sourceTree = "<group>"; };
 		2FDE6A4F2971470D004C7701 /* DCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCloud.swift; sourceTree = "<group>"; };
@@ -87,7 +89,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		FE4E42BE2ECEE39A004F83E2 /* AppMain */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppMain; sourceTree = "<group>"; };
+		017370A52ECF00A30045407F /* AppMain */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppMain; sourceTree = "<group>"; };
 		FE72D73E2E30A49000EF2C5A /* ZZZZZ */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ZZZZZ; sourceTree = "<group>"; };
 		FE9AFA642E2E352E00CD6AD1 /* SSSSS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SSSSS; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -167,7 +169,7 @@
 		8EED62A1198A1D13000A4449 /* YunFu */ = {
 			isa = PBXGroup;
 			children = (
-				FE4E42BE2ECEE39A004F83E2 /* AppMain */,
+				017370A52ECF00A30045407F /* AppMain */,
 				FE72D73E2E30A49000EF2C5A /* ZZZZZ */,
 				FE9AFA642E2E352E00CD6AD1 /* SSSSS */,
 				FE3E72F42E7AB00C00FBABB0 /* AppDelegate.swift */,
@@ -182,6 +184,7 @@
 		8EED62A2198A1D13000A4449 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				017370882ECF00630045407F /* Assets.xcassets */,
 				2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */,
 				FEEAD3812C6349D60082D97D /* Images.xcassets */,
 				8EED62A3198A1D13000A4449 /* YunFu-Info.plist */,
@@ -212,7 +215,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				FE4E42BE2ECEE39A004F83E2 /* AppMain */,
+				017370A52ECF00A30045407F /* AppMain */,
 				FE72D73E2E30A49000EF2C5A /* ZZZZZ */,
 				FE9AFA642E2E352E00CD6AD1 /* SSSSS */,
 			);
@@ -280,6 +283,7 @@
 				2F0BA4DC215BA12300F67004 /* LaunchScreen.storyboard in Resources */,
 				FEEAD3822C6349D60082D97D /* Images.xcassets in Resources */,
 				FEA96C972C64AAC50078E6B6 /* icon_tukou_logo.png in Resources */,
+				017370892ECF00630045407F /* Assets.xcassets in Resources */,
 				FE946B382D1BAC85007E94AC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,7 +411,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 65C565KHM4;
+				DEVELOPMENT_TEAM = BYRP6L2B45;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -543,7 +547,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 65C565KHM4;
+				DEVELOPMENT_TEAM = BYRP6L2B45;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
