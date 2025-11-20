@@ -110,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let tufuh_tsNav = TUOKOUXIUSwiftBaNavC(rootViewController: tufuh_tarVC2)
         tufuh_tsNav.navigationBar.isHidden = true
 
-        let tufuh_tarVC4 = TUOKOUXIUSwiftSSZVC()
+        let tufuh_tarVC4 = TUOKOUXIUSwiftMy()
         let tufuh_myNav = TUOKOUXIUSwiftBaNavC(rootViewController: tufuh_tarVC4)
         tufuh_myNav.navigationBar.isHidden = true
 
