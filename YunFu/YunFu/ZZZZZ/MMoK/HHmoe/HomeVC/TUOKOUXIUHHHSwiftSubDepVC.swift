@@ -127,7 +127,7 @@ class TUOKOUXIUHHHSwiftSubDepVC: TUOKOUXIUSwiftBaseVC {
             return
         }
         
-        tukou_creTabV()
+//        tukou_creTabV()
     }
     
     func tukou_loadData() {

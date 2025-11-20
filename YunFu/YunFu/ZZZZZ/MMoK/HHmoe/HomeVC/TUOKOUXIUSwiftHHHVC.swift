@@ -13,7 +13,6 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         
     }
 
-
     var tufuh_timer: Timer?
     var tufuh_topV: UIView?
     var tufuh_topSearL: UILabel?
@@ -118,17 +117,8 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         self.tufuh_pageCon!.tufuh_currPag = toIndex
     }
 
-
     func tukou_gotoBFV(_ notify: Notification) {
         
-
-    }
-
-    @objc func tukou_clickClosedTZV() {
-        if let loadTZV = self.tufuh_loadTZV {
-            loadTZV.removeFromSuperview()
-            self.tufuh_loadTZV = nil
-        }
     }
 
     func fuhan_creaDispT() {
@@ -223,12 +213,6 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tufuh_tabN = 0
-
-        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUGotoBFV"))
-            .sink { [weak self] notification in
-                self?.tukou_gotoBFV(notification)
-            }
-            .store(in: &cancellables)
 
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUQiDongLabel"))
             .sink { [weak self] _ in self?.tukou_qidongTime()}

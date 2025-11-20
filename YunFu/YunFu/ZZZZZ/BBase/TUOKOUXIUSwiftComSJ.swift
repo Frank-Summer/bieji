@@ -16,7 +16,6 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     var tufuh_isHTTZ: Bool = false
     var tufuh_isOutBFV: Bool = false
 
-
     var tufuh_isPushEnabled: Bool = false
     var tufuh_isDSJu: Bool = false
     var tufuh_isADXS: Bool = false
@@ -431,9 +430,14 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
         aniV.center = loadV.center
         loadV.addSubview(aniV)
         
-        let gifPath = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_bacImGfUrl("gf_tukou_load.gif")
-        let gifURL = URL(fileURLWithPath: gifPath)
-        DispatchQueue.main.async { aniV.kf.setImage(with: gifURL) }
+//        let gifPath = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_bacImGfUrl("gf_tukou_load.gif")
+//        let gifURL = URL(fileURLWithPath: gifPath)
+//        DispatchQueue.main.async { aniV.kf.setImage(with: gifURL) }
+        if let gifURL = Bundle.main.url(forResource: "gf_tukou_load", withExtension: "gif") {
+            DispatchQueue.main.async {
+                aniV.kf.setImage(with: gifURL)
+            }
+        }
     }
         
     func tukou_gbGFV() {

@@ -105,7 +105,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
             self.tukou_noNetwV()
             return
         }
-        self.tukou_testNet()
+//        self.tukou_testNet()
     }
     
     @objc func tukou_testNet() {

@@ -13,6 +13,7 @@
 		FE3E72F52E7AB00C00FBABB0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE3E72F42E7AB00C00FBABB0 /* AppDelegate.swift */; };
 		FE3E73162E7ABBCE00FBABB0 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FE3E73152E7ABBCE00FBABB0 /* IQKeyboardManagerSwift */; };
 		FE4E42BD2ECEE35A004F83E2 /* READM.md in Resources */ = {isa = PBXBuildFile; fileRef = FE4E42BC2ECEE35A004F83E2 /* READM.md */; };
+		FE4E43AD2ECEF519004F83E2 /* gf_tukou_load.gif in Resources */ = {isa = PBXBuildFile; fileRef = FE4E43AC2ECEF519004F83E2 /* gf_tukou_load.gif */; };
 		FE5E73622E7CEE8900ECC5BB /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = FE5E73612E7CEE8900ECC5BB /* NVActivityIndicatorView */; };
 		FE5E73642E7CEE8900ECC5BB /* NVActivityIndicatorViewExtended in Frameworks */ = {isa = PBXBuildFile; productRef = FE5E73632E7CEE8900ECC5BB /* NVActivityIndicatorViewExtended */; };
 		FE67F07E2E791FFC00D67B80 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = FE67F07D2E791FFC00D67B80 /* Alamofire */; };
@@ -63,6 +64,7 @@
 		8EED62A9198A1D13000A4449 /* YunFu-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YunFu-Prefix.pch"; sourceTree = "<group>"; };
 		FE3E72F42E7AB00C00FBABB0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE4E42BC2ECEE35A004F83E2 /* READM.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = READM.md; sourceTree = "<group>"; };
+		FE4E43AC2ECEF519004F83E2 /* gf_tukou_load.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = gf_tukou_load.gif; sourceTree = "<group>"; };
 		FE946B192D1BA7A5007E94AC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FE946B1B2D1BA7AC007E94AC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		FE946B1D2D1BA7B8007E94AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -186,6 +188,7 @@
 				FEE81DE62C784BDC00F09998 /* TUOKOUXIUConfig.plist */,
 				FEA96C962C64AAC50078E6B6 /* icon_tukou_logo.png */,
 				FEA96C8F2C64A4D20078E6B6 /* icon_tukou_bg.png */,
+				FE4E43AC2ECEF519004F83E2 /* gf_tukou_load.gif */,
 				FE4E42BC2ECEE35A004F83E2 /* READM.md */,
 				8EED62A9198A1D13000A4449 /* YunFu-Prefix.pch */,
 			);
@@ -270,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE4E43AD2ECEF519004F83E2 /* gf_tukou_load.gif in Resources */,
 				FEE81DE72C784BDC00F09998 /* TUOKOUXIUConfig.plist in Resources */,
 				FE4E42BD2ECEE35A004F83E2 /* READM.md in Resources */,
 				FEA96C902C64A4D20078E6B6 /* icon_tukou_bg.png in Resources */,

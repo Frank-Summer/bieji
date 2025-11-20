@@ -105,17 +105,20 @@ class TUOKOUXIUSwiftTBar: UIViewController {
 
             switch i {
             case 0:
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_hh_ite_off", andIsOne: false), for: .normal)
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_hh_ite_on", andIsOne: false), for: .selected)
+                let off = UIImage(named: "TUOKOUXIU_ic_hh_ite_off")
+                let on = UIImage(named: "TUOKOUXIU_ic_hh_ite_on")
+                tufuh_btn.setImage((off), for: .normal)
+                tufuh_btn.setImage((on), for: .selected)
             case 1:
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_tas_ite_off", andIsOne: false), for: .normal)
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_tas_ite_on", andIsOne: false), for: .selected)
+                let off = UIImage(named: "TUOKOUXIU_ic_tas_ite_off")
+                let on = UIImage(named: "TUOKOUXIU_ic_tas_ite_on")
+                tufuh_btn.setImage((off), for: .normal)
+                tufuh_btn.setImage((on), for: .selected)
             case 2:
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_vp_ite_off", andIsOne: false), for: .normal)
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_vp_ite_on", andIsOne: false), for: .selected)
-            case 3:
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_st_ite_off", andIsOne: false), for: .normal)
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_st_ite_on", andIsOne: false), for: .selected)
+                let off = UIImage(named: "TUOKOUXIU_ic_st_ite_off")
+                let on = UIImage(named: "TUOKOUXIU_ic_st_ite_on")
+                tufuh_btn.setImage((off), for: .normal)
+                tufuh_btn.setImage((on), for: .selected)
             default:
                 break
             }
@@ -233,9 +236,6 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                 tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_tas_ite_off", andIsOne: false), for: .normal)
                 tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_tas_ite_on", andIsOne: false), for: .selected)
             case 2:
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_vp_ite_off", andIsOne: false), for: .normal)
-                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_vp_ite_on", andIsOne: false), for: .selected)
-            case 3:
                 tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_st_ite_off", andIsOne: false), for: .normal)
                 tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_st_ite_on", andIsOne: false), for: .selected)
             default:

@@ -90,12 +90,12 @@ class TUOKOUXIUSwiftTTSSVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
             .store(in: &cancellables)
 
         
-        if !TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_expConArr.isEmpty {
-            tufuh_currPaN = 1
-            tukou_testNet()
-        } else {
-            tukou_noNetwV()
-        }
+//        if !TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_expConArr.isEmpty {
+//            tufuh_currPaN = 1
+//            tukou_testNet()
+//        } else {
+//            tukou_noNetwV()
+//        }
     }
     
     func tukou_qidongTime() {

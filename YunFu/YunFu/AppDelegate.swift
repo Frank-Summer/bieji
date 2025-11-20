@@ -117,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         tufuh_tabBaVC.tufuh_tabbVCArr = [tufuh_homeNav, tufuh_tsNav, tufuh_myNav]
 
         tufuh_tabBaVC.tukou_setTabBTitArr(
-            ["Home", "Explore", "Me"],
+            ["Home", "Explore", "My"],
             texClr: UIColor.TUOKOUXIUSSRGB(r: 144, g: 147, b: 153),
             selTexClr: TUOKOUXIUSwiftbaiseC,
             barBgClr: UIColor.TUOKOUXIUSSRGBA(r: 51, g: 51, b: 51, a: 0.86)
