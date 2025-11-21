@@ -1,6 +1,7 @@
 /AppMain
 ├─ Global/                                  全局定义
-│
+│   ├─ Base/                               # 自定义导航和主控制器
+│   └─ Tabbar/                             # 自定义tabbar
 │
 ├─ Modules/                                各个模块
 │  ├─ Home/                                 # 首页

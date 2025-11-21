@@ -1,5 +1,4 @@
 import AppTrackingTransparency
-import StoreKit
 import UIKit
 import Foundation
 import AdSupport

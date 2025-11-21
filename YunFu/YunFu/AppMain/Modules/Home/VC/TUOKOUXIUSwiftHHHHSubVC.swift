@@ -1,7 +1,6 @@
 
 import UIKit
 import Foundation
-import StoreKit
 import Combine
 
 class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSource {
@@ -33,7 +32,6 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         
         tableView.sectionHeaderTopPadding = 0
 
-        
         tableView.backgroundColor = .red
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
         tableView.estimatedRowHeight = 0
@@ -121,10 +119,15 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         self.tufuh_tabV.dataSource = self
         
         self.tufuh_tabV.register(UITableViewCell.self, forCellReuseIdentifier: "TUOKOUXIUHHHTabVVDefCellId")
-//        self.tufuh_tabV.register(TUOKOUXIUSwiftHHHBigCell.self, forCellReuseIdentifier: "TUOKOUXIUHHHBigCellId")
-//        self.tufuh_tabV.register(TUOKOUXIUSwiftHHHTabVCell.self, forCellReuseIdentifier: "TUOKOUXIUHHHTabVVCellId")
         self.tufuh_tabV.register(TUOKOUXIUSwiftHomeTopCell.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeTopCellId")
-        
+        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell1.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell1Id")
+        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell2.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell2Id")
+        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell3.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell3Id")
+        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell4.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell4Id")
+        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell5.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell5Id")
+        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell6.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell6Id")
+        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell7.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell7Id")
+        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell8.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell8Id")
         self.tufuh_tabV.reloadData()
     }
 
@@ -186,32 +189,22 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
                 TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
                 
                 guard let dataDict = dataDict as? [String: Any] else { return }
-                
                 let tufuh_resArr = dataDict["mainList"] as? [[String: Any]] ?? []
-                
                 let tufuh_subArr = dataDict["subGuide"] as? [[String: Any]] ?? []
-                
                 if let tufuh_randomN = tufuh_subArr.indices.randomElement() {
                     self.tufuh_subDict = tufuh_subArr[tufuh_randomN]
                 }
-    
                 
                 TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_expConArr = (dataDict["exploreConfig"] as? [[String: Any]]) ?? []
-                
                 self.tufuh_ZTArr = (dataDict["collections"] as? [[String: Any]]) ?? []
-            
                 if tufuh_resArr.isEmpty {
-
                     TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_tipsV()
                     return
                 }
-                
                 if !self.tufuh_dataTreArr.isEmpty {
                     self.tufuh_dataTreArr.removeAll()
                 }
-                
                 NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShuaXinTabb"), object: nil)
-
                 self.tufuh_dataTreArr = tufuh_resArr
                 self.tufuh_tabV.reloadData()
                 
@@ -267,54 +260,61 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return TUOKOUXIUSwiftSCRE_H
+        } else {
+            if indexPath.row == 0 {
+                return 400
+            } else if indexPath.row == 1 {
+                return 200
+            } else if indexPath.row == 2 {
+                return 200
+            } else if indexPath.row == 3 {
+                return 200
+            } else if indexPath.row == 4 {
+                return 200
+            } else if indexPath.row == 5 {
+                return 200
+            } else if indexPath.row == 6 {
+                return 200
+            } else if indexPath.row == 7 {
+                return 200
+            }
         }
-        return TUOKOUXIUSwiftSCRE_H * 2
-        
-//        else {
-//            if self.tufuh_dataTreArr.isEmpty { return 0 }
-//
-//            if indexPath.section == self.tufuh_collNum {
-//                return 3 * (50.0 / 9.0) * 16.0 * TUOKOUXIUDeviceInfo.scaleX + 79 + 6
-//            }
-//            return 160 * TUOKOUXIUDeviceInfo.scaleX + 40
-//        }
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        if section == 0 {
-            return 0.01
-//        } else if section == 1 {
-//            if (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr) != nil) {
-//                return 32
-//            } else {
-//                return 0.01
-//            }
-//        } else {
-//            if self.tufuh_dataTreArr.isEmpty { return 0 }
-//            return 32
-//        }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        if section == 0 {
-            let tufuh_v = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
-            tufuh_v.backgroundColor = TUOKOUXIUSwiftheiseC
-            return tufuh_v
-//        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.01
     }
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let tufuh_v = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
+        tufuh_v.backgroundColor = TUOKOUXIUSwiftheiseC
+        return tufuh_v
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0.01
+        }
+        return 100
+    }
+
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
+        var height: CGFloat = 0.0
+        if section == 0 {
+            height = 0.01
+        }
+        height = 100.0
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: height))
         footerView.backgroundColor = TUOKOUXIUSwiftheiseC
         return footerView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section == 0 {
+            return 1
+        }
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -322,43 +322,36 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeTopCellId", for: indexPath) as! TUOKOUXIUSwiftHomeTopCell
 //            cell.pdduo_contStr((pddds_dataArr[indexPath.row] as! String))
             return cell
+        } else {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell1Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell1
+                return cell
+            } else if indexPath.row == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell2Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell2
+                return cell
+            } else if indexPath.row == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell3Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell3
+                return cell
+            } else if indexPath.row == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell4Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell4
+                return cell
+            } else if indexPath.row == 4 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell5Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell5
+                return cell
+            } else if indexPath.row == 5 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell6Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell6
+                return cell
+            } else if indexPath.row == 6 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell7Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell7
+                return cell
+            } else if indexPath.row == 7 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell8Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell8
+                return cell
+            }
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUHHHTabVVDefCellId", for: indexPath)
         cell.backgroundColor = TUOKOUXIUSwiftheiseC
         return cell
-//        if indexPath.section == 1 {
-//            if let hisArray = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr), !hisArray.isEmpty {
-//                
-//                guard let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUHHHTabVVCellId", for: indexPath) as? TUOKOUXIUSwiftHHHTabVCell else {
-//                    return UITableViewCell()
-//                }
-//                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-//                cell.tufuh_isZhanShiAd = false
-//                cell.tufuh_isHis = true
-//                cell.tukou_resData(hisArray)
-//                
-//                cell.tufuh_clkItemArrBlk = { modelArr in
-//                    
-//                }
-//                
-//                return cell
-//            } else {
-//                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUHHHTabVVDefCellId", for: indexPath)
-//                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-//                return cell
-//            }
-//        }
-//        
-//        if tufuh_dataTreArr.isEmpty {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUHHHTabVVDefCellId", for: indexPath)
-//            cell.backgroundColor = TUOKOUXIUSwiftheiseC
-//            return cell
-//        }
-//        
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUHHHTabVVCellId", for: indexPath) as? TUOKOUXIUSwiftHHHTabVCell else {
-//            return UITableViewCell()
-//        }
-//        return cell
     }
 
     func tukou_currVC() -> UIViewController? {

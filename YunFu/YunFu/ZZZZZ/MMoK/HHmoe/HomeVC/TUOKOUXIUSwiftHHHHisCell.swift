@@ -51,16 +51,16 @@ class TUOKOUXIUSwiftHHHHisCell: UICollectionViewCell {
             return label
         }()
     private lazy var tufuh_totalV: UIView = {
-            let v = UIView()
-            v.backgroundColor = TUOKOUXIUSwiftZTClr3A
-            return v
-        }()
+        let v = UIView()
+        v.backgroundColor = TUOKOUXIUSwiftZTClr3A
+        return v
+    }()
 
-        private lazy var tufuh_curV: UIView = {
-            let v = UIView()
-            v.backgroundColor = TUOKOUXIUSwiftZTClr
-            return v
-        }()
+    private lazy var tufuh_curV: UIView = {
+        let v = UIView()
+        v.backgroundColor = TUOKOUXIUSwiftZTClr
+        return v
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = TUOKOUXIUSwiftheiseC

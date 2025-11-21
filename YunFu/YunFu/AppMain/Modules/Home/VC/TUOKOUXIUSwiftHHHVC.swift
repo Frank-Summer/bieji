@@ -16,14 +16,6 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
 //    var tufuh_isFirWil: Bool = false
 
     private var cancellables = Set<AnyCancellable>()
-
-    func fuhan_mainBar() -> UIViewController {
-        var vc: UIViewController = self
-        while let parent = vc.parent {
-            vc = parent
-        }
-        return vc
-    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent

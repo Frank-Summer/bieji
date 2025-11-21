@@ -114,20 +114,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let tufuh_myNav = TUOKOUXIUSwiftBaNavC(rootViewController: tufuh_tarVC4)
         tufuh_myNav.navigationBar.isHidden = true
 
-        tufuh_tabBaVC.tufuh_tabbVCArr = [tufuh_homeNav, tufuh_tsNav, tufuh_myNav]
-
-        tufuh_tabBaVC.tukou_setTabBTitArr(
-            ["Home", "Explore", "My"],
-            texClr: UIColor.TUOKOUXIUSSRGB(r: 144, g: 147, b: 153),
-            selTexClr: TUOKOUXIUSwiftbaiseC,
-            barBgClr: .clear
-        )
+        tufuh_tabBaVC.tufuh_tabbVCArr = [tufuh_tsNav, tufuh_homeNav, tufuh_myNav]
 
         window?.rootViewController = tufuh_tabBaVC
         window?.makeKeyAndVisible()
-    }
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return .portrait
     }
 }
 
