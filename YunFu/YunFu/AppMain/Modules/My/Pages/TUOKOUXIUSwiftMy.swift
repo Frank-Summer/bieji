@@ -107,11 +107,11 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
             setting.heightAnchor.constraint(equalToConstant: 24)
         ])
         
-//        // MARK: - 图片资源
-//        profilePicture.image = ResourceKit.image("logo", module: MyViewController.self)
-//        vipLogo.image = ResourceKit.image("my_vip", module: MyViewController.self)
-//        setting.image = ResourceKit.image("my_setting", module: MyViewController.self)
-//        
+        // MARK: - 图片资源
+        profilePicture.image = UIImage(named: "logo")
+        vipLogo.image = UIImage(named: "my_vip")
+        setting.image = UIImage(named: "my_setting")
+
         // ✅ SwiftUI 按钮行组件
         let buttonRow = MyButtonRowView(actions: .init(
             onMyCollection: { print("点击 我的收藏") },
@@ -122,6 +122,7 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         
         // ✅ 用 UIHostingController 包装
         let hostingVC = UIHostingController(rootView: paddedButtonRow)
+        hostingVC.view.backgroundColor = .clear
         addChild(hostingVC)
         view.addSubview(hostingVC.view)
         hostingVC.didMove(toParent: self)
