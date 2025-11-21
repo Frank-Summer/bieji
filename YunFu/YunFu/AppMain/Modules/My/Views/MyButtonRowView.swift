@@ -20,7 +20,6 @@ public struct MyButtonRowActions {
     }
 }
 
-@available(iOS 16.0, *)
 public struct MyButtonRowView: View {
     
     private let actions: MyButtonRowActions
@@ -52,7 +51,6 @@ public struct MyButtonRowView: View {
 }
 
 // 单个按钮样式：宽 161，高 60，左对齐；描边 + 圆角 20；浅白蒙层
-@available(iOS 16.0, *)
 struct FeatureButton: View {
     let title: String
     let icon: String
