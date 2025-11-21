@@ -18,9 +18,9 @@ class TUOKOUXIUSwiftTTSSVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
     var tufuh_currPaN: Int = 0
     var tufuh_isRecover: Bool = false
     var tufuh_headV: TUOKOUXIUSwiftTTSSCollReusV?
-    var tufuh_souT: DispatchSourceTimer?
-    var tufuh_timeNum: Int = 0
-    var tufuh_timer: Timer?
+    
+    
+    
     var tufuh_hotTN: Int = 0
     var tufuh_toTopVpBtn: UIButton?
     var tufuh_isToD: Bool = false
@@ -60,13 +60,6 @@ class TUOKOUXIUSwiftTTSSVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        if let souT = tufuh_souT {
-            souT.cancel()
-        }
-        
-        NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
-
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,109 +71,12 @@ class TUOKOUXIUSwiftTTSSVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
             tufuh_toTopVpBtn?.setImage(img, for: .normal)
         }
         
-        tukou_qidongTime()
-
-        tukou_entForegr()
-        
-        NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
-            .sink { [weak self] _ in self?.tukou_entBackG() }
-            .store(in: &cancellables)
-        NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)
-            .sink { [weak self] _ in self?.tukou_entForegr() }
-            .store(in: &cancellables)
-
-        
 //        if !TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_expConArr.isEmpty {
 //            tufuh_currPaN = 1
 //            tukou_testNet()
 //        } else {
 //            tukou_noNetwV()
 //        }
-    }
-    
-    func tukou_qidongTime() {
-        tukou_guanbiTime()
-        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_hotArr.count == 0 { return }
-        tufuh_timer = Timer.scheduledTimer(timeInterval: 5.0,
-                                           target: self,
-                                           selector: #selector(tukou_timFir),
-                                           userInfo: nil,
-                                           repeats: true)
-        RunLoop.main.add(tufuh_timer!, forMode: .common)
-    }
-    
-    func tukou_guanbiTime() {
-        if let timer = tufuh_timer {
-            timer.invalidate()
-            tufuh_timer = nil
-        }
-    }
-    
-    @objc func tukou_timFir() {
-        let hotArr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_hotArr
-        if hotArr.count == 0 { return }
-        
-        if hotArr.count > tufuh_hotTN {
-
-        } else {
-            tufuh_hotTN = 0
-        }
-        
-        guard let topLabel = tufuh_topSearL else { return }
-        topLabel.frame = CGRect(x: 20, y: 30, width: TUOKOUXIUSwiftSCRE_W - 142, height: 10)
-        topLabel.text = ""
-        
-        UIView.animate(withDuration: 0.25, animations: {
-            topLabel.frame = CGRect(x: 20, y: 0, width: TUOKOUXIUSwiftSCRE_W - 142, height: 40)
-            topLabel.text = (hotArr[self.tufuh_hotTN] as! String)
-        }, completion: { _ in
-            self.tufuh_hotTN += 1
-            if self.tufuh_hotTN >= hotArr.count {
-                self.tufuh_hotTN = 0
-            }
-        })
-    }
-    
-    func tukou_creDisSourT() {
-        tufuh_timeNum = 0
-        let queue = DispatchQueue.global(qos: .default)
-        let timer = DispatchSource.makeTimerSource(queue: queue)
-        let delayTime: TimeInterval = 1.0
-        let timeInterval: TimeInterval = 1.0
-        
-        timer.schedule(deadline: .now() + delayTime,
-                       repeating: timeInterval,
-                       leeway: .milliseconds(100))
-        
-        timer.setEventHandler { [weak self] in
-            guard let self = self else { return }
-            self.tufuh_timeNum += 1
-        }
-        tufuh_souT = timer
-        timer.resume()
-    }
-    
-    private func tukou_entForegr() {
-        tukou_qidongTime()
-        
-        if !tufuh_dataTreArr.isEmpty {
-            tufuh_isRecover = true
-            let tufuh_aniEna = UIView.areAnimationsEnabled
-            UIView.setAnimationsEnabled(false)
-            tufuh_collcV!.reloadData()
-            UIView.setAnimationsEnabled(tufuh_aniEna)
-        }
-        
-        if let souT = tufuh_souT {
-            souT.cancel()
-        }
-        tukou_creDisSourT()
-    }
-    
-    func tukou_entBackG() {
-        if let souT = tufuh_souT {
-            souT.cancel()
-        }
     }
     
     func tukou_topVi() {
@@ -190,7 +86,6 @@ class TUOKOUXIUSwiftTTSSVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
                                           height: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 60))
         tufuh_topV?.backgroundColor = TUOKOUXIUSwiftwuseC
         view.addSubview(tufuh_topV!)
-
     }
 
     @objc func tukou_testNet() {

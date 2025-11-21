@@ -120,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             ["Home", "Explore", "My"],
             texClr: UIColor.TUOKOUXIUSSRGB(r: 144, g: 147, b: 153),
             selTexClr: TUOKOUXIUSwiftbaiseC,
-            barBgClr: UIColor.TUOKOUXIUSSRGBA(r: 51, g: 51, b: 51, a: 0.86)
+            barBgClr: .clear
         )
 
         window?.rootViewController = tufuh_tabBaVC

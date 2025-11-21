@@ -56,8 +56,6 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     
     
     var tufuh_expConArr: [Any] = []
-    var tufuh_hotArr: [Any] = []
-    var tufuh_tttArr: [Any] = []
     
     var tufuh_isGouMaiVpYue: Bool = false
     var tufuh_isXianShiZM: Bool = false
