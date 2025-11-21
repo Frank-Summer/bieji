@@ -99,11 +99,11 @@ class TUOKOUXIUSwiftPageCollVCell: UICollectionViewCell {
     func tukou_resModel(_ model: [String: Any]) {
         tufuh_mDict = model
 
-        var tufuh_urlS = TUOKOUXIUSSStringUtils.tukou_killNil(model["haibao"])
-        if !tufuh_urlS.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
-            tufuh_urlS = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
-        }
-        tufuh_coverIV.kf.setImage(with: URL(string: tufuh_urlS))
+//        var tufuh_urlS = TUOKOUXIUSSStringUtils.tukou_killNil(model["haibao"])
+//        if !tufuh_urlS.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
+//            tufuh_urlS = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
+//        }
+//        tufuh_coverIV.kf.setImage(with: URL(string: tufuh_urlS))
 
         tufuh_titL.text = TUOKOUXIUSSStringUtils.tukou_killNil(model["biaoti"])
 

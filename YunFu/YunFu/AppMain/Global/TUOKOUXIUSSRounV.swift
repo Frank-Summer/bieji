@@ -9,18 +9,18 @@ let TUOKOUXIUSwiftheiseC   = UIColor(red: 1/255.0, green: 1/255.0, blue: 1/255.0
 let TUOKOUXIUSwiftbaiseC   = UIColor(red: 254/255.0, green: 254/255.0, blue: 254/255.0, alpha: 1.0)
 let TUOKOUXIUSwiftwuseC    = UIColor.clear
 
-let TUOKOUXIUSwiftZTClr1A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.9)
+
 let TUOKOUXIUSwiftZTClr2A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.8)
 let TUOKOUXIUSwiftZTClr3A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.6)
 let TUOKOUXIUSwiftZTClr4A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.3)
-let TUOKOUXIUSwiftZTClr5A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.2)
+
 let TUOKOUXIUSwiftZTClr6A  = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.7)
 let TUOKOUXIUSwiftZTClr7A  = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.5)
 let TUOKOUXIUSwiftZTClr    = UIColor(red: 14/255.0, green: 136/255.0, blue: 253/255.0, alpha: 1.0)
 let TUOKOUXIUSwiftZTClr2   = UIColor(red: 38/255.0, green: 38/255.0, blue: 38/255.0, alpha: 1.0)
 let TUOKOUXIUSwiftZTClr3   = UIColor(red: 234/255.0, green: 234/255.0, blue: 234/255.0, alpha: 1.0)
 let TUOKOUXIUSwiftZTClr4   = UIColor(red: 135/255.0, green: 135/255.0, blue: 135/255.0, alpha: 1.0)
-let TUOKOUXIUSwiftZTClr5   = UIColor(red: 105/255.0, green: 105/255.0, blue: 105/255.0, alpha: 1.0)
+
 let TUOKOUXIUSwiftZTClr6   = UIColor(red: 151/255.0, green: 138/255.0, blue: 140/255.0, alpha: 1.0)
 let TUOKOUXIUSwiftZTClr7   = UIColor(red: 243/255.0, green: 243/255.0, blue: 243/255.0, alpha: 1.0)
 
@@ -226,32 +226,6 @@ class TUOKOUXIUSSStringUtils: NSObject {
         return trimmed
     }
     
-    static func tukou_strFromDict(_ dict: Any?) -> String {
-        guard let realDict = dict, !TUOKOUXISSDictionaryUtil.tukou_isEmpty(dict) else {
-            return ""
-        }
-
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: realDict, options: [.sortedKeys])
-            return String(data: jsonData, encoding: .utf8) ?? ""
-        } catch {
-            return ""
-        }
-    }
-    
-    static func tukou_reString(_ string: String, replaceStr: String) -> String {
-        let pattern = "<font.*?>|</font.*?>"
-
-        do {
-            let regex = try NSRegularExpression(pattern: pattern, options: [.dotMatchesLineSeparators])
-            let range = NSRange(location: 0, length: (string as NSString).length)
-            let modified = regex.stringByReplacingMatches(in: string, options: [], range: range, withTemplate: replaceStr)
-            return modified
-        } catch {
-            return string
-        }
-    }
-    
     static func tukou_sizWithT(_ text: String, font: UIFont, maxSize: CGSize) -> CGSize {
         let attributes: [NSAttributedString.Key: Any] = [.font: font]
         let boundingRect = text.boundingRect(
@@ -278,7 +252,6 @@ class TUOKOUXIUZMTitV: UIView {
         super.init(coder: coder)
     }
     
-//    @objc(JDrmuAeaZQtHVVnpHO)
     func tukou_closeView() {
         self.isHidden = true
         self.removeFromSuperview()

@@ -21,7 +21,7 @@ class TUOKOUXIUSSBFCollUpdV: UICollectionReusableView {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftZTClr3A
         label.font = TUOKOUXIUSwiftFont.regular(9)
-        label.text = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[4] as? String
+//        label.text = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[4] as? String
         label.textAlignment = .center
         label.numberOfLines = 3
         return label

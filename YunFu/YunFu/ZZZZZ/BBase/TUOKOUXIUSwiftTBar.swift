@@ -7,8 +7,8 @@ import UIKit
 class TUOKOUXIUSwiftTBar: UIViewController {
     
     var tufuh_tabbVCArr: [UIViewController] = []
-    var tufuh_updaW: TUOKOUXIUAppUpdW?
-    var tufuh_appUrl: String?
+    
+    
     var tufuh_isFirL = false
     var tufuh_isGTTabH = false
     var tufuh_isShoAd = false
@@ -27,9 +27,6 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             .sink { [weak self] _ in self?.tukou_shuaXTabb() }
             .store(in: &cancellables)
         
-        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUAppUpdate"))
-            .sink { [weak self] notif in self?.tukou_appUpdate(notif) }
-            .store(in: &cancellables)
         
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUHidTabb"))
             .sink { [weak self] _ in self?.tukou_hidTabb() }
@@ -174,56 +171,6 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         f.origin.y = view.frame.height - TUOKOUXIUDeviceInfo.tukou_tabBarHeight
         tufuh_tabBV.frame = f
         tufuh_contV.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - TUOKOUXIUDeviceInfo.tukou_tabBarHeight)
-    }
-    
-    func tukou_appUpdate(_ notification: Notification) {
-        guard let dict = notification.object as? [String: Any] else { return }
-
-        let appUrl = dict["appUrl"] as? String
-        let updateInfo = dict["appUpdateInfo"] as? String ?? ""
-        let imageUrl = dict["appImageUrl"] as? String
-
-        let centerW: CGFloat = 300
-        let centerH: CGFloat = 440
-
-        let updateView = TUOKOUXIUAppUpdW(frame: view.bounds)
-        let centerV = UIView(frame: CGRect(x: TUOKOUXIUSwiftSCRE_W/2 - centerW/2, y: TUOKOUXIUSwiftSCRE_H/2 - centerH/2, width: centerW, height: centerH))
-        centerV.backgroundColor = TUOKOUXIUSwiftZTClr2
-        centerV.layer.cornerRadius = 14
-        centerV.clipsToBounds = true
-        updateView.addSubview(centerV)
-
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: centerW, height: 190))
-        centerV.addSubview(imageView)
-        
-        imageView.kf.setImage(with: URL(string: imageUrl ?? ""))
-
-        UILabel.tukou_bjLabel(CGRect(x: 0, y: 190+25, width: centerW, height: 24), text: "Notice", superView: centerV, textAlignment: .center, font: TUOKOUXIUSwiftFont.semibold(18), textColor: TUOKOUXIUSwiftZTClr1A)
-
-        UIButton.tukou_bjBtn(CGRect(x: centerW-36, y: 10, width: 26, height: 26), target: self, image: TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_hh_sub_close", andIsOne: false), superView: centerV, action: #selector(tukou_closWind))
-
-        self.tufuh_appUrl = appUrl
-
-        let contentLabel = UILabel.tukou_bjLabel(CGRect(x: 24, y: 190+55, width: centerW-48, height: 110), text: updateInfo, superView: centerV, textAlignment: .center, font: TUOKOUXIUSwiftFont.medium(14), textColor: TUOKOUXIUSwiftZTClr3A)
-        contentLabel.numberOfLines = 0
-
-        UIButton.tukou_bjBtn(CGRect(x: 24, y: 190+175, width: 252, height: 50), target: self, imageName: nil, superView: centerV, action: #selector(tukou_clkJuAppSto), font: TUOKOUXIUSwiftFont.semibold(16), title: "Download & Install", color: TUOKOUXIUSwiftbaiseC, bgColor: TUOKOUXIUSwiftZTClr, cornerRadius: 8)
-
-        self.tufuh_updaW = updateView
-        view.addSubview(updateView)
-    }
-    
-    @objc func tukou_clkJuAppSto() {
-        if let urlStr = tufuh_appUrl, let url = URL(string: urlStr) {
-            UIApplication.shared.open(url)
-        }
-    }
-
-    @objc func tukou_closWind() {
-        if (tufuh_updaW != nil) {
-            tufuh_updaW!.removeFromSuperview()
-            tufuh_updaW = nil
-        }
     }
 
     func tukou_shuaXTabb() {

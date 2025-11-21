@@ -15,10 +15,10 @@ class TUOKOUXIUSwiftMyListCell: UICollectionViewCell {
         
         if self.tufuh_mArr.count > 9 {
             tufuh_botIV.isHidden = false
-            var tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(self.tufuh_mArr[10])
-            if !tufuh_ulrS.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
-                tufuh_ulrS = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
-            }
+            let tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(self.tufuh_mArr[10])
+//            if !tufuh_ulrS.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
+//                tufuh_ulrS = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
+//            }
             tufuh_coverIV.kf.setImage(with: URL(string: tufuh_ulrS))
             tufuh_titL.text = TUOKOUXIUSSStringUtils.tukou_killNil(self.tufuh_mArr[9])
             
@@ -57,10 +57,10 @@ class TUOKOUXIUSwiftMyListCell: UICollectionViewCell {
             }
             tufuh_numV.tufuh_numLabel.text = " \(tufuh_conS) "
             
-            var tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(self.tufuh_mArr[5])
-            if !tufuh_ulrS.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
-                tufuh_ulrS = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
-            }
+            let tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(self.tufuh_mArr[5])
+//            if !tufuh_ulrS.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
+//                tufuh_ulrS = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
+//            }
             tufuh_coverIV.kf.setImage(with: URL(string: tufuh_ulrS))
                 
             tufuh_titL.text = TUOKOUXIUSSStringUtils.tukou_killNil(self.tufuh_mArr[3])

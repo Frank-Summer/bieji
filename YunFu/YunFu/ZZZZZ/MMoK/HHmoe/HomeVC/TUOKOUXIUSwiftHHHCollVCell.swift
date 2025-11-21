@@ -113,10 +113,10 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
     func tukou_resModel(_ model: [String: Any]) {
             tufuh_mDict = model
             
-            var tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(model["haibao"])
-            if !tufuh_ulrS.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
-                tufuh_ulrS = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
-            }
+        let tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(model["haibao"])
+//            if !tufuh_ulrS.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
+//                tufuh_ulrS = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
+//            }
             if let url = URL(string: tufuh_ulrS) {
                 tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
             }

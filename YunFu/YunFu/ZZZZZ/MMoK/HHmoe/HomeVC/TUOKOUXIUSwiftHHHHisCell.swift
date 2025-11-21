@@ -128,10 +128,10 @@ class TUOKOUXIUSwiftHHHHisCell: UICollectionViewCell {
         tufuh_mArr = model
         
         if model.count > 9 {
-            var urlStr = TUOKOUXIUSSStringUtils.tukou_killNil(model[10])
-            if !urlStr.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
-                urlStr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
-            }
+            let urlStr = TUOKOUXIUSSStringUtils.tukou_killNil(model[10])
+//            if !urlStr.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
+//                urlStr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
+//            }
             tufuh_coverIV.kf.setImage(with: URL(string: urlStr))
             tufuh_titL.text = TUOKOUXIUSSStringUtils.tukou_killNil(model[9])
             
@@ -151,10 +151,10 @@ class TUOKOUXIUSwiftHHHHisCell: UICollectionViewCell {
             tufuh_juNumAndjiNumL.text = ""
             tufuh_juNumAndjiNumL.isHidden = true
 
-            var urlStr = TUOKOUXIUSSStringUtils.tukou_killNil(model[5])
-            if !urlStr.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
-                urlStr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
-            }
+            let urlStr = TUOKOUXIUSSStringUtils.tukou_killNil(model[5])
+//            if !urlStr.contains(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[31] as! String) {
+//                urlStr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_v_placeStr!
+//            }
             tufuh_coverIV.kf.setImage(with: URL(string: urlStr))
             tufuh_titL.text = TUOKOUXIUSSStringUtils.tukou_killNil(model[3])
 

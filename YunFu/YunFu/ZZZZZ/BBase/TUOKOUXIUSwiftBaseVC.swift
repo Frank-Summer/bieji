@@ -62,29 +62,7 @@ class TUOKOUXIUSwiftBaseVC: UIViewController {
             return
         }
         let tufuh_tk = tufuh_dict["tk"] as? String
-        let tufuh_appUrl = tufuh_dict["appUrl"] as? String
-        
-        if let tufuh_appUrl, !tufuh_appUrl.isEmpty {
-            let tufuh_appUpdInf = tufuh_dict["appUpdateInfo"]
-            let tufuh_ssArr = tufuh_dict["staticresources"] as? [[String: Any]] ?? []
-            let tufuh_scaF = UIScreen.main.scale
-            var tufuh_appImgUrl = ""
-            
-            if tufuh_scaF == 2.0 {
-                tufuh_appImgUrl = tufuh_ssArr.first { $0["key"] as? String == "ic_update_image2" }?["value"] as? String ?? ""
-            } else {
-                tufuh_appImgUrl = tufuh_ssArr.first { $0["key"] as? String == "ic_update_image3" }?["value"] as? String ?? ""
-            }
-            
-            NotificationCenter.default.post(name: NSNotification.Name("TUOKOUXIUAppUpdate"),
-                                            object: ["appUrl": tufuh_appUrl,
-                                                     "appUpdateInfo": tufuh_appUpdInf ?? "",
-                                                     "appImageUrl": tufuh_appImgUrl])
-            
-            if let appUpdInfStr = tufuh_appUpdInf as? String, appUpdInfStr.hasPrefix("/") {
-                return
-            }
-        }
+
         guard let tufuh_tk, !tufuh_tk.isEmpty else {
             TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
             TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_tipsV()
@@ -102,52 +80,42 @@ class TUOKOUXIUSwiftBaseVC: UIViewController {
         if sLcom.tufuh_hhTabsArr.isEmpty {
             sLcom.tufuh_hhTabsArr = tufuh_dict["toptabs"] as! [Any]
         }
-        var tufuh_ttttt:String = ""
-        if TUOKOUXISSUUtils.tukou_isStringEmpty(sLcom.tufuh_v_placeStr) {
-            if let dict = tufuh_staSArr.first(where: { ($0["key"] as? String) == "v_placeholder" }) {
-                sLcom.tufuh_v_placeStr = dict["value"] as? String
-            }
-            if let dict = tufuh_staSArr.first(where: { ($0["key"] as? String) == "ttttt" }) {
-                tufuh_ttttt = dict["value"] as? String ?? ""
-            }
-        }
 
-        sLcom.tufuh_tttArr = tufuh_ttttt.components(separatedBy: "、")
-        if TUOKOUXISSUUtils.tukou_isStringEmpty(sLcom.tufuh_ic_adPl) {
-            tukou_goAdPl(true)
-        }
-        if TUOKOUXISSUUtils.tukou_isStringEmpty(sLcom.tufuh_ic_hh_titPl) {
-            tukou_goAdPl(false)
-        }
-        if TUOKOUXISSUUtils.tukou_isStringEmpty(sLcom.tufuh_iconUrl) {
-            if let dict = tufuh_staSArr.first(where: { ($0["key"] as? String) == "iconUrl" }) {
-                sLcom.tufuh_iconUrl = dict["value"] as? String
-            }
-            
-            guard let iconUrl = sLcom.tufuh_iconUrl else { return }
-            let tufuh_arr = iconUrl.components(separatedBy: "/")
-            let tufuh_fileName = tufuh_arr.last ?? ""
-            let tufuh_p = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first?.appending("/\(tufuh_fileName)") ?? ""
-            
-            let tufuh_ver = UserDefaults.standard.string(forKey: "TUOKOUXIUappVersion")
-            if TUOKOUXISSUUtils.tukou_isStringEmpty(tufuh_ver) {
-                UserDefaults.standard.set(TUOKOUXIUSSApp.tukou_appVer(), forKey: "TUOKOUXIUappVersion")
-            } else if TUOKOUXIUSSApp.tukou_appVer() != tufuh_ver, FileManager.default.fileExists(atPath: tufuh_p) {
-                try? FileManager.default.removeItem(atPath: tufuh_p)
-            }
-            
-            if FileManager.default.fileExists(atPath: tufuh_p) {
-                if let attr = try? FileManager.default.attributesOfItem(atPath: tufuh_p),
-                   let fileSize = attr[.size] as? UInt64, fileSize < 1_500_000 {
-                    try? FileManager.default.removeItem(atPath: tufuh_p)
-                    tukou_goDLIcon()
-                } else {
-                    sLcom.tufuh_iconUrlExist = true
-                }
-            } else {
-                tukou_goDLIcon()
-            }
-        }
+//        if TUOKOUXISSUUtils.tukou_isStringEmpty(sLcom.tufuh_ic_adPl) {
+//            tukou_goAdPl(true)
+//        }
+//        if TUOKOUXISSUUtils.tukou_isStringEmpty(sLcom.tufuh_ic_hh_titPl) {
+//            tukou_goAdPl(false)
+//        }
+//        if TUOKOUXISSUUtils.tukou_isStringEmpty(sLcom.tufuh_iconUrl) {
+//            if let dict = tufuh_staSArr.first(where: { ($0["key"] as? String) == "iconUrl" }) {
+//                sLcom.tufuh_iconUrl = dict["value"] as? String
+//            }
+//            
+//            guard let iconUrl = sLcom.tufuh_iconUrl else { return }
+//            let tufuh_arr = iconUrl.components(separatedBy: "/")
+//            let tufuh_fileName = tufuh_arr.last ?? ""
+//            let tufuh_p = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first?.appending("/\(tufuh_fileName)") ?? ""
+//            
+//            let tufuh_ver = UserDefaults.standard.string(forKey: "TUOKOUXIUappVersion")
+//            if TUOKOUXISSUUtils.tukou_isStringEmpty(tufuh_ver) {
+//                UserDefaults.standard.set(TUOKOUXIUSSApp.tukou_appVer(), forKey: "TUOKOUXIUappVersion")
+//            } else if TUOKOUXIUSSApp.tukou_appVer() != tufuh_ver, FileManager.default.fileExists(atPath: tufuh_p) {
+//                try? FileManager.default.removeItem(atPath: tufuh_p)
+//            }
+//            
+//            if FileManager.default.fileExists(atPath: tufuh_p) {
+//                if let attr = try? FileManager.default.attributesOfItem(atPath: tufuh_p),
+//                   let fileSize = attr[.size] as? UInt64, fileSize < 1_500_000 {
+//                    try? FileManager.default.removeItem(atPath: tufuh_p)
+//                    tukou_goDLIcon()
+//                } else {
+//                    sLcom.tufuh_iconUrlExist = true
+//                }
+//            } else {
+//                tukou_goDLIcon()
+//            }
+//        }
 
         TUOKOUXIUSwiftWWWL.tukou_shared.tukou_conComHttHead(["token": tufuh_tk])
         tukou_reqCenter()
@@ -157,40 +125,40 @@ class TUOKOUXIUSwiftBaseVC: UIViewController {
 
     }
     
-    private func tukou_goAdPl(_ isAdPl: Bool) {
-        let tufuh_scaF = UIScreen.main.scale
-        let sLcom = TUOKOUXIUSwiftComSJ.tukou_sLcom
-        let tufuh_staSArr = sLcom.tufuh_staSArr
-        
-        var tufuh_adPl: String
-        var tufuh_adPl2: String
-        
-        if isAdPl {
-            tufuh_adPl = "ic_ad_placeholder2"
-            tufuh_adPl2 = "ic_ad_placeholder3"
-        } else {
-            tufuh_adPl = "ic_home_title_l2"
-            tufuh_adPl2 = "ic_home_title_l3"
-        }
-        
-        var tufuh_imageDict2: [String: Any]? = nil
-        
-        if tufuh_scaF == 2.0 {
-            tufuh_imageDict2 = tufuh_staSArr.compactMap { $0 as? [String: Any] }
-                    .first { $0["key"] as? String == tufuh_adPl }
-        } else {
-            tufuh_imageDict2 = tufuh_staSArr.compactMap { $0 as? [String: Any] }
-                    .first { $0["key"] as? String == tufuh_adPl2 }
-        }
-        
-        guard let tufuh_value = tufuh_imageDict2?["value"] as? String else { return }
-        
-        if isAdPl {
-            sLcom.tufuh_ic_adPl = tufuh_value
-        } else {
-            sLcom.tufuh_ic_hh_titPl = tufuh_value
-        }
-    }
+//    private func tukou_goAdPl(_ isAdPl: Bool) {
+//        let tufuh_scaF = UIScreen.main.scale
+//        let sLcom = TUOKOUXIUSwiftComSJ.tukou_sLcom
+//        let tufuh_staSArr = sLcom.tufuh_staSArr
+//        
+//        var tufuh_adPl: String
+//        var tufuh_adPl2: String
+//        
+//        if isAdPl {
+//            tufuh_adPl = "ic_ad_placeholder2"
+//            tufuh_adPl2 = "ic_ad_placeholder3"
+//        } else {
+//            tufuh_adPl = "ic_home_title_l2"
+//            tufuh_adPl2 = "ic_home_title_l3"
+//        }
+//        
+//        var tufuh_imageDict2: [String: Any]? = nil
+//        
+//        if tufuh_scaF == 2.0 {
+//            tufuh_imageDict2 = tufuh_staSArr.compactMap { $0 as? [String: Any] }
+//                    .first { $0["key"] as? String == tufuh_adPl }
+//        } else {
+//            tufuh_imageDict2 = tufuh_staSArr.compactMap { $0 as? [String: Any] }
+//                    .first { $0["key"] as? String == tufuh_adPl2 }
+//        }
+//        
+//        guard let tufuh_value = tufuh_imageDict2?["value"] as? String else { return }
+//        
+//        if isAdPl {
+//            sLcom.tufuh_ic_adPl = tufuh_value
+//        } else {
+//            sLcom.tufuh_ic_hh_titPl = tufuh_value
+//        }
+//    }
     
     private func tukou_goDLIcon() {
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_iconUrlExist = false
