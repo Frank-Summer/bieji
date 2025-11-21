@@ -50,6 +50,7 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true   // ← 必须，点击事件才有效
         return imageView
     }()
     
@@ -112,10 +113,19 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         vipLogo.image = UIImage(named: "my_vip")
         setting.image = UIImage(named: "my_setting")
 
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openSettings))
+                setting.addGestureRecognizer(tap)
+        
         // ✅ SwiftUI 按钮行组件
         let buttonRow = MyButtonRowView(actions: .init(
-            onMyCollection: { print("点击 我的收藏") },
-            onMyRecent: { print("点击 最近播放") }
+            onMyCollection: { [weak self] in
+                guard let self = self else { return }
+                let vc = MyHistoryViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            },
+            onMyRecent: {
+                print("点击 最近播放")
+            }
         ))
         // 给组件增加上下 padding 8pt
         let paddedButtonRow = buttonRow
@@ -123,6 +133,7 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         // ✅ 用 UIHostingController 包装
         let hostingVC = UIHostingController(rootView: paddedButtonRow)
         hostingVC.view.backgroundColor = .clear
+
         addChild(hostingVC)
         view.addSubview(hostingVC.view)
         hostingVC.didMove(toParent: self)
@@ -135,4 +146,10 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
             hostingVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
+    
+    // MARK: - 点击设置按钮 → 跳转到设置页
+        @objc private func openSettings() {
+            let vc = MySettingViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        }
 }
