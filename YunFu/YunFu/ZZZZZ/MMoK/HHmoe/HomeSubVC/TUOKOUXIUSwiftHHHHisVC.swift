@@ -491,8 +491,6 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
             if let cell = collectionView.cellForItem(at: indexPath) as? TUOKOUXIUSwiftHisCell {
                 cell.tukou_goToSelect(cell.tufuh_botSelectBtn)
             }
-        } else {
- 
         }
     }
 

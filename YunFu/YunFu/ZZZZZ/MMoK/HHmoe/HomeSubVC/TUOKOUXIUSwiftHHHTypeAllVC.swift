@@ -91,13 +91,6 @@ class TUOKOUXIUSwiftHHHTypeAllVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate
             textColor: TUOKOUXIUSwiftZTClr3
         )
         
-        let tufuh_sV = UIImageView.tukou_bjImageV(
-            CGRect(x: TUOKOUXIUSwiftSCRE_W - 34, y: 16, width: 24, height: 24),
-            superView: self.tufuh_tNavV!,
-            image: TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_sub_vie_sear", andIsOne: false)
-        )
-        tufuh_sV.isUserInteractionEnabled = true
-        tufuh_sV.tukou_addTapGesture(target: self, action: #selector(tukou_goToSearch))
     }
     
     private func tukou_shoTopBtn() {
@@ -124,13 +117,7 @@ class TUOKOUXIUSwiftHHHTypeAllVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate
     @objc private func tukou_goBack() {
         self.navigationController?.popViewController(animated: true)
     }
-    
-    @objc private func tukou_goToSearch() {
-        let tufuh_tarVC = TUOKOUXIUSwiftSSSVC()
-        tufuh_tarVC.tufuh_source = "3"
-        tufuh_tarVC.tufuh_isHHH = false
-        self.navigationController?.pushViewController(tufuh_tarVC, animated: true)
-    }
+
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == self.tufuh_collcV {

@@ -4,15 +4,15 @@ import Foundation
 import StoreKit
 import Combine
 
-class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSource, TUOKOUXIUSSPullDRefVDelegate {
+class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSource {
 
     var tufuh_noNetV: UIView?
     var tufuh_dataTreArr: [Any] = []
-    var tufuh_bannArr: [Any] = []
+    
     var tufuh_ZTArr: [Any] = []
     var tufuh_subDict: [String: Any] = [:]
+    var tufuh_num: Int = 0
     
-    var tufuh_toTopBtn: UIButton?
     var tufuh_xuYSX: Bool = false
     var tufuh_tzNum: Int = 0
     var tufuh_collNum: Int = 0
@@ -31,9 +31,8 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
             }
         }
         
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
+
         
         tableView.backgroundColor = TUOKOUXIUSwiftheiseC
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
@@ -45,10 +44,6 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
-    }()
-    
-    lazy var tufuh_refrV: TUOKOUXIUSSPullDRefV = {
-        return TUOKOUXIUSSPullDRefV(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 50))
     }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -96,7 +91,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
 
         
         self.tufuh_dataTreArr = []
-        self.tufuh_bannArr = []
+        
         self.tufuh_ZTArr = []
         
         self.view.backgroundColor = TUOKOUXIUSwiftheiseC
@@ -124,73 +119,22 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         
         self.tukou_loadData()
         
-        self.tufuh_tabV.frame = CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H - TUOKOUXIUDeviceInfo.tukou_tabBarHeight)
+        self.tufuh_tabV.frame = CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H)
         self.view.addSubview(self.tufuh_tabV)
         
         self.tufuh_tabV.delegate = self
         self.tufuh_tabV.dataSource = self
         
-        self.tufuh_refrV.fuhan_setup(owner: self.tufuh_tabV, delegate: self)
-        
         self.tufuh_tabV.register(UITableViewCell.self, forCellReuseIdentifier: "TUOKOUXIUHHHTabVVDefCellId")
-        self.tufuh_tabV.register(TUOKOUXIUSwiftLBTCell.self, forCellReuseIdentifier: "TUOKOUXIULBTCellId")
         self.tufuh_tabV.register(TUOKOUXIUSwiftHHHBigCell.self, forCellReuseIdentifier: "TUOKOUXIUHHHBigCellId")
         self.tufuh_tabV.register(TUOKOUXIUSwiftHHHTabVCell.self, forCellReuseIdentifier: "TUOKOUXIUHHHTabVVCellId")
     }
 
-    func tukou_pullDRefDidFin() {
-        guard !self.tufuh_dataTreArr.isEmpty else { return }
-        
-        for cell in tufuh_tabV.visibleCells {
-            guard let tufuh_c = cell as? TUOKOUXIUSwiftHHHTabVCell,
-                  let indexPath = tufuh_tabV.indexPath(for: tufuh_c) else { continue }
-            
-            if indexPath.section > 0 {
-                if indexPath.section == 1 {
-                    if (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr) != nil) {
-                        tufuh_c.tufuh_collcV?.setContentOffset(.zero, animated: false)
-                    }
-                } else {
-                    tufuh_c.tufuh_collcV?.setContentOffset(.zero, animated: false)
-                }
-            }
-        }
-        
-        self.tukou_testNet()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.tukou_stoo()
-        }
-    }
-    
-    func tukou_stoo() {
-        tufuh_refrV.fuhan_stoLoadi()
-        
-        if #available(iOS 15.0, *) {
-
-        } else {
-            if self.tufuh_tabV.contentOffset.y == 0 {
-                self.tufuh_tabV.contentInset = UIEdgeInsets(top: -34, left: 0, bottom: 0, right: 0)
-            }
-        }
-    }
-
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.tufuh_refrV.scrollViewDidScroll(scrollView)
         
         guard scrollView == self.tufuh_tabV else { return }
         
         let tufuh_yy = self.tufuh_tabV.contentOffset.y
-        
-        if tufuh_yy >= (TUOKOUXIUSwiftSCRE_H / 2), !self.tufuh_dataTreArr.isEmpty {
-            if self.tufuh_toTopBtn == nil {
-                self.tukou_shoTopBtn()
-            }
-        } else {
-            if self.tufuh_toTopBtn != nil {
-                self.tukou_hidTopBt()
-            }
-        }
         
         if tufuh_yy > 20 {
             if self.tufuh_tzNum < 1 {
@@ -203,35 +147,6 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
                 NotificationCenter.default.post(name: NSNotification.Name("TUOKOUXIUTopVBianSe"), object: "no")
             }
         }
-    }
-
-    func tukou_shoTopBtn() {
-        let buttonFrame = CGRect(x: TUOKOUXIUSwiftSCRE_W - 40 - 20,
-                                 y: TUOKOUXIUSwiftSCRE_H - TUOKOUXIUDeviceInfo.tukou_tabBarHeight - 60,
-                                 width: 40, height: 40)
-        
-        let buttonImage = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_totop", andIsOne: false)
-        
-        self.tufuh_toTopBtn = UIButton.tukou_bjBtn(buttonFrame, target: self, image: buttonImage, superView: self.view, action: #selector(tukou_toTop))
-    }
-
-    @objc func tukou_toTop() {
-        self.tufuh_tabV.setContentOffset(.zero, animated: true)
-    }
-
-    func tukou_hidTopBt() {
-        if (tufuh_toTopBtn != nil) {
-            self.tufuh_toTopBtn!.removeFromSuperview()
-            self.tufuh_toTopBtn = nil
-        }
-    }
-
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        self.tufuh_refrV.scrollViewDidEndDragging(scrollView, willDecelerate: decelerate)
-    }
-
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        self.tufuh_refrV.scrollViewWillBeginDragging(scrollView)
     }
     
     func tukou_loadData() {
@@ -260,9 +175,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
             return
         }
 
-        
         TUOKOUXIUSwiftWWWL.tukou_shared.tukou_requWithURL(TUOKOUXIUSwiftConst.TUOKOUXIUjkzx, pars: [tufuh_ba64Str]) { dataDict, isSuccess in
-            
             if isSuccess {
                 if let strData = dataDict as? String {
                     self.tukou_checkCode(strData) { isSuccess2 in
@@ -272,13 +185,12 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
                     }
                     return
                 }
-                
                 TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
                 
                 guard let dataDict = dataDict as? [String: Any] else { return }
                 
                 let tufuh_resArr = dataDict["mainList"] as? [[String: Any]] ?? []
-                self.tufuh_bannArr = (dataDict["mainBanner"] as? [[String: Any]]) ?? []
+                
                 let tufuh_subArr = dataDict["subGuide"] as? [[String: Any]] ?? []
                 
                 if let tufuh_randomN = tufuh_subArr.indices.randomElement() {
@@ -287,13 +199,12 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
     
                 
                 TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_expConArr = (dataDict["exploreConfig"] as? [[String: Any]]) ?? []
-                TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_phArr = (dataDict["hotsearch"] as? [[String: Any]]) ?? []
+                
                 TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_hotArr = (dataDict["hotsearchkeys"] as? [String]) ?? []
                 self.tufuh_ZTArr = (dataDict["collections"] as? [[String: Any]]) ?? []
                 self.tufuh_collNum = Int("\(dataDict["collection_sort"] ?? 2)") ?? 2
                 if self.tufuh_collNum < 2 { self.tufuh_collNum = 2 }
             
-                
                 if tufuh_resArr.isEmpty {
 
                     TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_tipsV()
@@ -304,9 +215,8 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
                     self.tufuh_dataTreArr.removeAll()
                 }
                 
-                NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUHHHTopSearchIV"), object: nil)
                 NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShuaXinTabb"), object: nil)
-                NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUQiDongLabel"), object: nil)
+
                 
                 self.tufuh_dataTreArr = tufuh_resArr
                 self.tufuh_tabV.reloadData()
@@ -321,8 +231,6 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         tufuh_tabV.removeFromSuperview()
         tufuh_tabV.delegate = nil
         tufuh_tabV.dataSource = nil
-        tufuh_refrV.removeFromSuperview()
-        tufuh_refrV.delegate = nil
 
         if self.tufuh_noNetV != nil { return }
 
@@ -332,13 +240,13 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
                                                  bgColor: TUOKOUXIUSwiftheiseC)
 
         let tufuh_lL = UILabel.tukou_bjLabel(CGRect(x: 0, y: tufuh_h/2 - 12, width: TUOKOUXIUSwiftSCRE_W, height: 20),
-                                              text: "The current network status is abnormal,",
+                                              text: "网络连接失败",
                                               superView: self.tufuh_noNetV!,
                                               textAlignment: .center,
                                               font: TUOKOUXIUSwiftFont.medium(16),
                                               textColor: TUOKOUXIUSwiftbaiseC)
         let tufuh_lL2 = UILabel.tukou_bjLabel(CGRect(x: 0, y: tufuh_lL.frame.maxY + 6, width: TUOKOUXIUSwiftSCRE_W, height: 20),
-                                               text: "please try again later.",
+                                               text: "别急，好饭不怕晚，请检查当前网络状态后再试试",
                                                superView: self.tufuh_noNetV!,
                                                textAlignment: .center,
                                                font: TUOKOUXIUSwiftFont.medium(16),
@@ -350,7 +258,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
                              superView: self.tufuh_noNetV!,
                              action: #selector(tukou_testNet),
                              font: TUOKOUXIUSwiftFont.semibold(14),
-                             title: "Retry",
+                             title: "重试",
                              color: TUOKOUXIUSwiftbaiseC,
                              bgColor: TUOKOUXIUSwiftZTClr,
                              cornerRadius: 5)
@@ -445,43 +353,6 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         } else {
             if self.tufuh_dataTreArr.isEmpty { return UIView() }
 
-            if section == self.tufuh_collNum {
-                let tufuh_headV = TUOKOUXIUSwiftTabHeadV(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 32))
-                tufuh_headV.backgroundColor = TUOKOUXIUSwiftheiseC
-                let tufuh_titS = "Part of the \(TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_tttArr[38]) Collection"
-
-                tufuh_headV.didSelectBlock = { [weak self] sectionNum in
-                    guard let self = self else { return }
-
-                    if let dataTreArr = self.tufuh_ZTArr as? [[String: Any]] {
-                        let tufuh_tarVC = TUOKOUXIUSwiftHHHCateDepVC()
-                        tufuh_tarVC.tufuh_dataTreArr = dataTreArr
-                        self.tukou_currVC()?.navigationController?.pushViewController(tufuh_tarVC, animated: true)
-                    }
-                }
-
-                if !tufuh_titS.isEmpty {
-                    let tufuh_iv = UIImageView(frame: CGRect(x: 10, y: 0, width: 24, height: 24))
-                    tufuh_headV.addSubview(tufuh_iv)
-                    
-                    tufuh_iv.kf.setImage(with: URL(string: TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_ic_hh_titPl!), options: [.transition(.fade(0.3))])
-                    UILabel.tukou_bjLabel(CGRect(x: 40, y: 0, width: TUOKOUXIUSwiftSCRE_W - 10 - 30 - 60 - 10, height: 24),
-                                          text: tufuh_titS,
-                                          superView: tufuh_headV,
-                                          textAlignment: .left,
-                                          font: TUOKOUXIUSwiftFont.medium(16),
-                                          textColor: TUOKOUXIUSwiftbaiseC)
-
-                    UILabel.tukou_bjLabel(CGRect(x: TUOKOUXIUSwiftSCRE_W - 12 - 60, y: 0, width: 60, height: 24),
-                                          text: "See All",
-                                          superView: tufuh_headV,
-                                          textAlignment: .right,
-                                          font: TUOKOUXIUSwiftFont.medium(14),
-                                          textColor: TUOKOUXIUSwiftZTClr3A)
-                }
-                return tufuh_headV
-            }
-
             let tufuh_headV = TUOKOUXIUSwiftTabHeadV(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 32))
             tufuh_headV.backgroundColor = TUOKOUXIUSwiftheiseC
 
@@ -569,23 +440,9 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            if tufuh_bannArr.isEmpty {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUHHHTabVVDefCellId", for: indexPath)
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                return cell
-            }
-            
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIULBTCellId", for: indexPath) as? TUOKOUXIUSwiftLBTCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUHHHTabVVCellId", for: indexPath) as? TUOKOUXIUSwiftHHHTabVCell else {
                 return UITableViewCell()
             }
-            cell.backgroundColor = TUOKOUXIUSwiftheiseC
-            cell.tukou_resData(tufuh_bannArr)
-            
-            cell.tufuh_clkItemBlk = { model in
-                
-            }
-            
-            return cell
         }
         
         if indexPath.section == 1 {
@@ -637,9 +494,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         
         cell.tufuh_isTop = (indexPath.section == 2)
 
-
         cell.tufuh_isZhanShiAd = false
-        
         
         var tufuh_dataNum = indexPath.section - 2
         if indexPath.section > tufuh_collNum {
@@ -657,7 +512,6 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         cell.tufuh_clkItemBlk = { model in
 
         }
-        
         return cell
     }
 
@@ -671,5 +525,4 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         }
         return nil
     }
-
 }

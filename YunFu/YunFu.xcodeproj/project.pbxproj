@@ -254,6 +254,7 @@
 				en,
 				Base,
 				"zh-Hans",
+				te,
 			);
 			mainGroup = 8EED628F198A1D13000A4449;
 			packageReferences = (
@@ -416,7 +417,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = BYRP6L2B45;
+				DEVELOPMENT_TEAM = 65C565KHM4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;

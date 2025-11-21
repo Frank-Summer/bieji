@@ -32,7 +32,6 @@ class TUOKOUXIUSwiftNetUt: NSObject {
             }
 
             if let tech = currentTech {
-                if #available(iOS 14.1, *) {
                     switch tech {
                     case CTRadioAccessTechnologyGPRS:
                         netType = "GPRS"
@@ -61,32 +60,6 @@ class TUOKOUXIUSwiftNetUt: NSObject {
                     default:
                         netType = "WWAN"
                     }
-                } else {
-                    switch tech {
-                    case CTRadioAccessTechnologyGPRS:
-                        netType = "GPRS"
-                    case CTRadioAccessTechnologyEdge:
-                        netType = "2.75G EDGE"
-                    case CTRadioAccessTechnologyWCDMA:
-                        netType = "3G"
-                    case CTRadioAccessTechnologyHSDPA:
-                        netType = "3.5G HSDPA"
-                    case CTRadioAccessTechnologyHSUPA:
-                        netType = "3.5G HSUPA"
-                    case CTRadioAccessTechnologyCDMA1x:
-                        netType = "2G"
-                    case CTRadioAccessTechnologyCDMAEVDORev0,
-                         CTRadioAccessTechnologyCDMAEVDORevA,
-                         CTRadioAccessTechnologyCDMAEVDORevB:
-                        netType = "3G"
-                    case CTRadioAccessTechnologyeHRPD:
-                        netType = "HRPD"
-                    case CTRadioAccessTechnologyLTE:
-                        netType = "4G"
-                    default:
-                        netType = "WWAN"
-                    }
-                }
             }
         default:
             break

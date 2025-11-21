@@ -29,11 +29,9 @@ class TUOKOUXIUSwiftPageVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if TUOKOUXIUSSApp.tukou_isPad() {
-            tufuh_banH = 90
-        } else {
+
             tufuh_banH = 50
-        }
+        
         
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUSouSuoHeight"))
             .sink { [weak self] _ in self?.tukou_sousuoHeight() }

@@ -21,12 +21,12 @@ class TUOKOUXIUSwiftBaseVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if #available(iOS 15.0, *) {
+        
             let navBar = UINavigationBarAppearance()
             navBar.backgroundColor = TUOKOUXIUSwiftbaiseC
             self.navigationController?.navigationBar.scrollEdgeAppearance = navBar
             self.navigationController?.navigationBar.standardAppearance = navBar
-        }
+        
     }
     
     func tukou_checkCode(_ dataDict: Any?, andResultBlk block: TUOKOUXIU_SuccessBlk?) {
@@ -70,9 +70,7 @@ class TUOKOUXIUSwiftBaseVC: UIViewController {
             let tufuh_scaF = UIScreen.main.scale
             var tufuh_appImgUrl = ""
             
-            if TUOKOUXIUSSApp.tukou_isPad() {
-                tufuh_appImgUrl = tufuh_ssArr.first { $0["key"] as? String == "ic_update_image3" }?["value"] as? String ?? ""
-            } else if tufuh_scaF == 2.0 {
+            if tufuh_scaF == 2.0 {
                 tufuh_appImgUrl = tufuh_ssArr.first { $0["key"] as? String == "ic_update_image2" }?["value"] as? String ?? ""
             } else {
                 tufuh_appImgUrl = tufuh_ssArr.first { $0["key"] as? String == "ic_update_image3" }?["value"] as? String ?? ""
@@ -177,10 +175,7 @@ class TUOKOUXIUSwiftBaseVC: UIViewController {
         
         var tufuh_imageDict2: [String: Any]? = nil
         
-        if TUOKOUXIUSSApp.tukou_isPad() {
-            tufuh_imageDict2 = tufuh_staSArr.compactMap { $0 as? [String: Any] }
-                    .first { $0["key"] as? String == tufuh_adPl2 }
-        } else if tufuh_scaF == 2.0 {
+        if tufuh_scaF == 2.0 {
             tufuh_imageDict2 = tufuh_staSArr.compactMap { $0 as? [String: Any] }
                     .first { $0["key"] as? String == tufuh_adPl }
         } else {

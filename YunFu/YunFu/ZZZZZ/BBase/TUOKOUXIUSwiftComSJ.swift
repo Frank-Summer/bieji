@@ -25,7 +25,7 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     var tufuh_dsJiDict: [String: Any]?
     
     var tufuh_zmArr: NSMutableArray = NSMutableArray()
-    var tufuh_phArr: [Any] = []
+
     var tufuh_dsijuArr: [Any] = []
     var tufuh_dsJiArr: [Any] = []
     
@@ -217,26 +217,18 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     }
         
     func tukou_reqIdfa() {
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { status in
-                switch status {
-                case .notDetermined:
-                    break
-                case .restricted:
-                    break
-                case .denied:
-                    break
-                case .authorized:
-                    break
-                @unknown default:
-                    break
-                }
-            }
-        } else {
-            if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
-            
-            } else {
-             
+        ATTrackingManager.requestTrackingAuthorization { status in
+            switch status {
+            case .notDetermined:
+                break
+            case .restricted:
+                break
+            case .denied:
+                break
+            case .authorized:
+                break
+            @unknown default:
+                break
             }
         }
     }
@@ -272,15 +264,13 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
 
         if !isOne {
             let tufuh_scaF = UIScreen.main.scale
-            if TUOKOUXIUSSApp.tukou_isPad() {
-                iconPath = "\(iconUrl)@3x"
-            } else {
+
                 if tufuh_scaF == 2.0 {
                     iconPath = "\(iconUrl)@2x"
                 } else {
                     iconPath = "\(iconUrl)@3x"
                 }
-            }
+            
         }
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first ?? ""
         let fullPath = (documentsPath as NSString).appendingPathComponent(iconPath)

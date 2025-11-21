@@ -42,7 +42,7 @@ class TUOKOUXIUHHHSwiftSubDepVC: TUOKOUXIUSwiftBaseVC {
 
         view.addSubview(tufuh_tabV)
 
-        let topOffset: CGFloat = TUOKOUXIUSSApp.tukou_isPad() ? 60 : 104
+        let topOffset: CGFloat = 104
         let height = TUOKOUXIUSwiftSCRE_H - TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight - TUOKOUXIUDeviceInfo.tukou_tabBarHeight - topOffset
         tufuh_tabV.frame = CGRect(x: 0,
                                   y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + topOffset,
@@ -56,13 +56,6 @@ class TUOKOUXIUHHHSwiftSubDepVC: TUOKOUXIUSwiftBaseVC {
     func tukou_stoo() {
         tufuh_refrV?.fuhan_stoLoadi()
         
-        if #available(iOS 15.0, *) {
-
-        } else {
-            if tufuh_tabV.contentOffset.y == 0 {
-                tufuh_tabV.contentInset = UIEdgeInsets(top: -34, left: 0, bottom: 0, right: 0)
-            }
-        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -244,13 +237,9 @@ class TUOKOUXIUHHHSwiftSubDepVC: TUOKOUXIUSwiftBaseVC {
         tableView.showsVerticalScrollIndicator = false
         tableView.contentInsetAdjustmentBehavior = .never
 
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        } else {
-            if tableView.contentOffset.y == 0 {
-                tableView.contentInset = UIEdgeInsets(top: -34, left: 0, bottom: 0, right: 0)
-            }
-        }
+
+        tableView.sectionHeaderTopPadding = 0
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.backgroundColor = TUOKOUXIUSwiftheiseC

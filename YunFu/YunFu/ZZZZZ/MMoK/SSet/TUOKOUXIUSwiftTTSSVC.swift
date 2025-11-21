@@ -191,49 +191,6 @@ class TUOKOUXIUSwiftTTSSVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
         tufuh_topV?.backgroundColor = TUOKOUXIUSwiftwuseC
         view.addSubview(tufuh_topV!)
 
-        let tufuh_searchV = UIView.tukou_bjView(CGRect(x: 12,
-                                                       y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 10,
-                                                       width: TUOKOUXIUSwiftSCRE_W - 68,
-                                                       height: 40),
-                                                superView: tufuh_topV!,
-                                                bgColor: TUOKOUXIUSwiftZTClr5A,
-                                                cornerRadius: 20,
-                                                borderWidth: 1,
-                                                borderColor: TUOKOUXIUSwiftZTClr)
-
-        tufuh_topSearL = UILabel.tukou_bjLabel(CGRect(x: 20,
-                                                      y: 0,
-                                                      width: TUOKOUXIUSwiftSCRE_W - 142,
-                                                      height: 40),
-                                               text: "Search Movies & TVShows",
-                                               superView: tufuh_searchV,
-                                               textAlignment: .left,
-                                               font: TUOKOUXIUSwiftFont.regular(12),
-                                               textColor: TUOKOUXIUSwiftZTClr1A)
-
-        let tufuh_searchBtn = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W - 122,
-                                                         y: 0,
-                                                         width: 54,
-                                                         height: 40),
-                                                  superView: tufuh_searchV,
-                                                  bgColor: TUOKOUXIUSwiftwuseC)
-
-        tufuh_searchBtn.tukou_addTapGesture(target: self, action: #selector(tukou_goToSearSS))
-
-        UIImageView.tukou_bjImageV(CGRect(x: 14, y: 8, width: 24, height: 24),
-                                   superView: tufuh_searchBtn,
-                                   image: TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_hh_sea_top", andIsOne: false))
-
-        tufuh_searchV.tukou_addTapGesture(target: self, action: #selector(tukou_goToSearch))
-
-    }
-    @objc func tukou_goToSearSS() {
-        let tufuh_tarVC = TUOKOUXIUSwiftSSSVC()
-        tufuh_tarVC.tufuh_gotoSS = true
-        tufuh_tarVC.tufuh_searchStr = tufuh_topSearL?.text ?? " "
-        tufuh_tarVC.tufuh_source = "2"
-        tufuh_tarVC.tufuh_isTS = true
-        navigationController?.pushViewController(tufuh_tarVC, animated: true)
     }
 
     @objc func tukou_testNet() {
@@ -543,13 +500,6 @@ class TUOKOUXIUSwiftTTSSVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
             bgColor: TUOKOUXIUSwiftZTClr,
             cornerRadius: 5
         )
-    }
-
-    @objc func tukou_goToSearch() {
-        let tufuh_tarVC = TUOKOUXIUSwiftSSSVC()
-        tufuh_tarVC.tufuh_source = "2"
-        tufuh_tarVC.tufuh_isTS = true
-        self.navigationController?.pushViewController(tufuh_tarVC, animated: true)
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
