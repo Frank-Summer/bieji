@@ -8,22 +8,20 @@ class TUOKOUXIUSwiftHomeContentCell6: UITableViewCell {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
         label.font = TUOKOUXIUSwiftFont.medium(18)
-        label.textAlignment = .left
         return label
     }()
     
     private let tufuh_contL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
+        label.textColor = TUOKOUXIUSwiftZTClr3A
         label.font = TUOKOUXIUSwiftFont.regular(15)
-        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = .gray
+        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
         return v
     }()
     
@@ -44,11 +42,11 @@ class TUOKOUXIUSwiftHomeContentCell6: UITableViewCell {
         contentView.addSubview(tufuh_lineV)
         
         tufuh_titleL.text = "东方意象"
-        tufuh_contL.text = """
+        tufuh_contL.setText("""
         敲钵回响象征“收束与释怀”，余音延长时间感。
         木鱼弱节律如禅定计数，“念起即觉”。
         吟诵远近交替，构建“内外一体”的心灵殿堂。
-        """
+        """, lineSpacing: 6)
         
         tufuh_titleL.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -65,7 +63,7 @@ class TUOKOUXIUSwiftHomeContentCell6: UITableViewCell {
         
         tufuh_lineV.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
-            make.top.equalTo(tufuh_contL.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
         }

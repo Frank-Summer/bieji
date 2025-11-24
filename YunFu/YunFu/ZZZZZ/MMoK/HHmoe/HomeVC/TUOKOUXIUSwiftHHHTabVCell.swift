@@ -177,22 +177,7 @@ class TUOKOUXIUSwiftHHHTabVCell: UITableViewCell, UICollectionViewDelegate, UICo
             }
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHHHTabCollVCellId", for: indexPath) as! TUOKOUXIUSwiftHHHCollVCell
-            if indexPath.row < 3 {
-                if tufuh_isTop {
-                    cell.tufuh_numIV.isHidden = false
-                    let imageName: String
-                    switch indexPath.row {
-                    case 0: imageName = "TUOKOUXIU_ic_hh_cel_top1"
-                    case 1: imageName = "TUOKOUXIU_ic_hh_cel_top2"
-                    default: imageName = "TUOKOUXIU_ic_hh_cel_top3"
-                    }
-                    cell.tufuh_numIV.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon(imageName, andIsOne: false)
-                } else {
-                    cell.tufuh_numIV.isHidden = true
-                }
-            } else {
-                cell.tufuh_numIV.isHidden = true
-            }
+
             switch tufuh_dataArr[indexPath.row] {
             case .dict(let dict):
                 cell.tukou_resModel(dict)

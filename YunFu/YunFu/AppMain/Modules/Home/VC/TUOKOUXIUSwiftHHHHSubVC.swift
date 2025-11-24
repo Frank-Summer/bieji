@@ -13,7 +13,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
     var tufuh_num: Int = 0
     
 //    var tufuh_xuYSX: Bool = false
-//    var tufuh_tzNum: Int = 0
+    var tufuh_tzNum: Int = 0
     
     private var cancellables = Set<AnyCancellable>()
 
@@ -32,7 +32,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         
         tableView.sectionHeaderTopPadding = 0
 
-        tableView.backgroundColor = .red
+        tableView.backgroundColor = .black
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
         tableView.estimatedRowHeight = 0
         tableView.estimatedSectionHeaderHeight = 0
@@ -87,7 +87,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         
         self.tufuh_ZTArr = []
         
-        self.view.backgroundColor = .orange
+        self.view.backgroundColor = .black
         
         if TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() == 0 {
             self.tukou_noNetwV()
@@ -128,26 +128,23 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell6.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell6Id")
         self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell7.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell7Id")
         self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell8.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell8Id")
-        self.tufuh_tabV.reloadData()
+//        self.tufuh_tabV.reloadData()
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
-//        guard scrollView == self.tufuh_tabV else { return }
-//        
-//        let tufuh_yy = self.tufuh_tabV.contentOffset.y
-//        
-//        if tufuh_yy > 20 {
-//            if self.tufuh_tzNum < 1 {
-//                self.tufuh_tzNum += 1
-//                NotificationCenter.default.post(name: NSNotification.Name("TUOKOUXIUTopVBianSe"), object: "yes")
-//            }
-//        } else {
-//            if self.tufuh_tzNum > 0 {
-//                self.tufuh_tzNum -= 1
-//                NotificationCenter.default.post(name: NSNotification.Name("TUOKOUXIUTopVBianSe"), object: "no")
-//            }
-//        }
+        guard scrollView == self.tufuh_tabV else { return }
+        
+        let offsetY = self.tufuh_tabV.contentOffset.y
+        
+        // 0~80 做动画
+        let progress = min(max(offsetY / 80.0, 0), 1)
+
+        NotificationCenter.default.post(
+            name: NSNotification.Name("TUOKOUXIUUpdaWScroll"),
+            object: nil,
+            userInfo: ["progress": progress]
+        )
     }
     
     func tukou_loadData() {
@@ -264,9 +261,9 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
             if indexPath.row == 0 {
                 return 400
             } else if indexPath.row == 1 {
-                return 200
+                return 247 * TUOKOUXIUDeviceInfo.scaleX
             } else if indexPath.row == 2 {
-                return 200
+                return 340 * TUOKOUXIUDeviceInfo.scaleX
             } else if indexPath.row == 3 {
                 return 200
             } else if indexPath.row == 4 {
@@ -274,9 +271,9 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
             } else if indexPath.row == 5 {
                 return 200
             } else if indexPath.row == 6 {
-                return 200
+                return 380
             } else if indexPath.row == 7 {
-                return 200
+                return 170 * TUOKOUXIUDeviceInfo.scaleX
             }
         }
         return 0.01

@@ -41,38 +41,38 @@ class TUOKOUXIUSwiftPageVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
         
         var tufuh_h: CGFloat = 0
 
-            tufuh_h = TUOKOUXIUSwiftSCRE_H - (TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 56 + 10) - 84
+        tufuh_h = TUOKOUXIUSwiftSCRE_H - (TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 56 + 10) - 84
         
         
-        if let hisArr = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisSearArr) as? [String] {
-            var tufuh_hV: CGFloat = 80
-            var numH = 1
-            var numN = 0
-            let tufuh_w = TUOKOUXIUSwiftSCRE_W - 40
-            var tufuh_w2: CGFloat = 0
-            let maxSize = CGSize(width: TUOKOUXIUSwiftSCRE_W - 40, height: 30)
-            
-            for (i, st1) in hisArr.enumerated() {
-                let frame = (st1 as NSString).boundingRect(
-                    with: maxSize,
-                    options: [.usesFontLeading, .usesLineFragmentOrigin],
-                    attributes: [.font: TUOKOUXIUSwiftFont.regular(14)],
-                    context: nil
-                )
-                if i > 0 { numN = 10 }
-                tufuh_w2 += (frame.size.width + 20) + CGFloat(numN)
-                if tufuh_w2 + 10 > tufuh_w {
-                    tufuh_w2 = frame.size.width + 20
-                    numH += 1
-                    tufuh_hV = 130
-                    if numH == 3 {
-                        tufuh_hV = 170
-                        break
-                    }
-                }
-            }
-            tufuh_h -= tufuh_hV
-        }
+//        if let hisArr = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisSearArr) as? [String] {
+//            var tufuh_hV: CGFloat = 80
+//            var numH = 1
+//            var numN = 0
+//            let tufuh_w = TUOKOUXIUSwiftSCRE_W - 40
+//            var tufuh_w2: CGFloat = 0
+//            let maxSize = CGSize(width: TUOKOUXIUSwiftSCRE_W - 40, height: 30)
+//            
+//            for (i, st1) in hisArr.enumerated() {
+//                let frame = (st1 as NSString).boundingRect(
+//                    with: maxSize,
+//                    options: [.usesFontLeading, .usesLineFragmentOrigin],
+//                    attributes: [.font: TUOKOUXIUSwiftFont.regular(14)],
+//                    context: nil
+//                )
+//                if i > 0 { numN = 10 }
+//                tufuh_w2 += (frame.size.width + 20) + CGFloat(numN)
+//                if tufuh_w2 + 10 > tufuh_w {
+//                    tufuh_w2 = frame.size.width + 20
+//                    numH += 1
+//                    tufuh_hV = 130
+//                    if numH == 3 {
+//                        tufuh_hV = 170
+//                        break
+//                    }
+//                }
+//            }
+//            tufuh_h -= tufuh_hV
+//        }
         
         tufuh_collcV.frame = CGRect(x: 10, y: 10, width: TUOKOUXIUSwiftSCRE_W - 20, height: tufuh_h - 10)
         view.addSubview(tufuh_collcV)
@@ -85,35 +85,35 @@ class TUOKOUXIUSwiftPageVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UICo
             tufuh_h = TUOKOUXIUSwiftSCRE_H - (TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 56 + 10) - 84
         
         
-        if let hisArr = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisSearArr) as? [String] {
-            var tufuh_hV: CGFloat = 80
-            var numH = 1
-            var numN = 0
-            let tufuh_w = TUOKOUXIUSwiftSCRE_W - 40
-            var tufuh_w2: CGFloat = 0
-            let maxSize = CGSize(width: TUOKOUXIUSwiftSCRE_W - 40, height: 30)
-            
-            for (i, st1) in hisArr.enumerated() {
-                let frame = (st1 as NSString).boundingRect(
-                    with: maxSize,
-                    options: [.usesFontLeading, .usesLineFragmentOrigin],
-                    attributes: [.font: TUOKOUXIUSwiftFont.regular(14)],
-                    context: nil
-                )
-                if i > 0 { numN = 10 }
-                tufuh_w2 += (frame.size.width + 20) + CGFloat(numN)
-                if tufuh_w2 + 10 > tufuh_w {
-                    tufuh_w2 = frame.size.width + 20
-                    numH += 1
-                    tufuh_hV = 130
-                    if numH == 3 {
-                        tufuh_hV = 170
-                        break
-                    }
-                }
-            }
-            tufuh_h -= tufuh_hV
-        }
+//        if let hisArr = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisSearArr) as? [String] {
+//            var tufuh_hV: CGFloat = 80
+//            var numH = 1
+//            var numN = 0
+//            let tufuh_w = TUOKOUXIUSwiftSCRE_W - 40
+//            var tufuh_w2: CGFloat = 0
+//            let maxSize = CGSize(width: TUOKOUXIUSwiftSCRE_W - 40, height: 30)
+//            
+//            for (i, st1) in hisArr.enumerated() {
+//                let frame = (st1 as NSString).boundingRect(
+//                    with: maxSize,
+//                    options: [.usesFontLeading, .usesLineFragmentOrigin],
+//                    attributes: [.font: TUOKOUXIUSwiftFont.regular(14)],
+//                    context: nil
+//                )
+//                if i > 0 { numN = 10 }
+//                tufuh_w2 += (frame.size.width + 20) + CGFloat(numN)
+//                if tufuh_w2 + 10 > tufuh_w {
+//                    tufuh_w2 = frame.size.width + 20
+//                    numH += 1
+//                    tufuh_hV = 130
+//                    if numH == 3 {
+//                        tufuh_hV = 170
+//                        break
+//                    }
+//                }
+//            }
+//            tufuh_h -= tufuh_hV
+//        }
         
         tufuh_collcV.frame = CGRect(x: 10, y: 10, width: TUOKOUXIUSwiftSCRE_W - 20, height: tufuh_h - 10)
         tufuh_collcV.reloadData()

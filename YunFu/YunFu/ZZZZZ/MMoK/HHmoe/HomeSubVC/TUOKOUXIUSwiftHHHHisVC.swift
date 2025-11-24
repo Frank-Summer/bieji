@@ -59,11 +59,11 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
             return
         }
         
-        if tufuh_isList {
-            tufuh_dataArr = (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr) as? [[Any]]) ?? []
-        } else {
-            tufuh_dataArr = (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr) as? [[Any]]) ?? []
-        }
+//        if tufuh_isList {
+//            tufuh_dataArr = (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr) as? [[Any]]) ?? []
+//        } else {
+//            tufuh_dataArr = (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr) as? [[Any]]) ?? []
+//        }
         
         if !tufuh_dataArr.isEmpty {
             let aniEna = UIView.areAnimationsEnabled
@@ -78,11 +78,11 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
     }
     
     private func tukou_resData() {
-        if tufuh_isList {
-            tufuh_dataArr = (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr) as? [[Any]]) ?? []
-        } else {
-            tufuh_dataArr = (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr) as? [[Any]]) ?? []
-        }
+//        if tufuh_isList {
+//            tufuh_dataArr = (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr) as? [[Any]]) ?? []
+//        } else {
+//            tufuh_dataArr = (TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr) as? [[Any]]) ?? []
+//        }
         tukou_topVi()
         tufuh_collcV.frame = CGRect(x: 10, y: tufuh_tNavV.frame.maxY + 10,
                                     width: TUOKOUXIUSwiftSCRE_W - 20,
@@ -209,13 +209,13 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
             if tufuh_deleArr.count == tufuh_dataArr.count {
                 tufuh_deleArr.removeAll()
                 tufuh_dataArr.removeAll()
-                if tufuh_isList {
-                    TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr)
-                    TUOKOUXIUSwiftKeyWindow()!.makeToast("My list has been cleaned up!", duration: 2.0, position: .center)
-                } else {
-                    TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr)
-                    TUOKOUXIUSwiftKeyWindow()!.makeToast("The playback has been cleaned up recently!", duration: 2.0, position: .center)
-                }
+//                if tufuh_isList {
+//                    TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr)
+//                    TUOKOUXIUSwiftKeyWindow()!.makeToast("My list has been cleaned up!", duration: 2.0, position: .center)
+//                } else {
+//                    TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr)
+//                    TUOKOUXIUSwiftKeyWindow()!.makeToast("The playback has been cleaned up recently!", duration: 2.0, position: .center)
+//                }
                 tufuh_collcV.reloadData()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     self.tukou_goBack()
@@ -227,13 +227,13 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
                             tufuh_dataArr.remove(at: idx)
                         }
                     }
-                    if i == tufuh_deleArr.count - 1 {
-                        if tufuh_isList {
-                            TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(tufuh_dataArr, forKey: TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr)
-                        } else {
-                            TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(tufuh_dataArr, forKey: TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr)
-                        }
-                    }
+//                    if i == tufuh_deleArr.count - 1 {
+//                        if tufuh_isList {
+//                            TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(tufuh_dataArr, forKey: TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr)
+//                        } else {
+//                            TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(tufuh_dataArr, forKey: TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr)
+//                        }
+//                    }
                 }
                 TUOKOUXIUSwiftKeyWindow()!.makeToast("Delete successfully!", duration: 2.0, position: .center)
                 tukou_goToEdit()
@@ -261,13 +261,13 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
             tufuh_deleArr.removeAll()
             tufuh_dataArr.removeAll()
             
-            if tufuh_isList {
-                TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr)
-                TUOKOUXIUSwiftKeyWindow()!.makeToast("My list has been cleaned up!", duration: 2.0, position: .center)
-            } else {
-                TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr)
-                TUOKOUXIUSwiftKeyWindow()!.makeToast("The playback has been cleaned up recently!", duration: 2.0, position: .center)
-            }
+//            if tufuh_isList {
+//                TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr)
+//                TUOKOUXIUSwiftKeyWindow()!.makeToast("My list has been cleaned up!", duration: 2.0, position: .center)
+//            } else {
+//                TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr)
+//                TUOKOUXIUSwiftKeyWindow()!.makeToast("The playback has been cleaned up recently!", duration: 2.0, position: .center)
+//            }
             
             tufuh_collcV.reloadData()
             
@@ -280,11 +280,11 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
                 tufuh_dataArr.remove(at: idx)
             }
             
-            if tufuh_isList {
-                TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(tufuh_dataArr, forKey: TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr)
-            } else {
-                TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(tufuh_dataArr, forKey: TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr)
-            }
+//            if tufuh_isList {
+//                TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(tufuh_dataArr, forKey: TUOKOUXIUSwiftConst.TUOKOUXIUSwiftMYLISTArr)
+//            } else {
+//                TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(tufuh_dataArr, forKey: TUOKOUXIUSwiftConst.TUOKOUXIUSwiftCURHisArr)
+//            }
             
             TUOKOUXIUSwiftKeyWindow()!.makeToast("Delete successfully!", duration: 2.0, position: .center)
             

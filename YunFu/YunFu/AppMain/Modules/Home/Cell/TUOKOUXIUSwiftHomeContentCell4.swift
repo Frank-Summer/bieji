@@ -8,7 +8,6 @@ class TUOKOUXIUSwiftHomeContentCell4: UITableViewCell {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
         label.font = TUOKOUXIUSwiftFont.semibold(20)
-        label.textAlignment = .left
         return label
     }()
     
@@ -16,22 +15,20 @@ class TUOKOUXIUSwiftHomeContentCell4: UITableViewCell {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
         label.font = TUOKOUXIUSwiftFont.medium(18)
-        label.textAlignment = .left
         return label
     }()
     
     private let tufuh_contL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
+        label.textColor = TUOKOUXIUSwiftZTClr3A
         label.font = TUOKOUXIUSwiftFont.regular(15)
-        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = .gray
+        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
         return v
     }()
     
@@ -54,11 +51,11 @@ class TUOKOUXIUSwiftHomeContentCell4: UITableViewCell {
         
         tufuh_titleL.text = "工作原理"
         tufuh_subTitleL.text = "音乐结构"
-        tufuh_contL.text = """
+        tufuh_contL.setText("""
         五声音阶与更纯和的比率，降低不协和与紧张。
         长音与缓慢包络，减少瞬态干扰，利于持续专注。
         细微随机（1/f 起伏）与呼吸节律，避免听觉疲劳。
-        """
+        """, lineSpacing: 6)
         
         tufuh_titleL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
@@ -81,7 +78,7 @@ class TUOKOUXIUSwiftHomeContentCell4: UITableViewCell {
         
         tufuh_lineV.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
-            make.top.equalTo(tufuh_contL.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
         }

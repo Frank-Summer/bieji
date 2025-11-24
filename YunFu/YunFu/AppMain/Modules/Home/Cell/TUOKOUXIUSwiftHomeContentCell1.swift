@@ -14,16 +14,18 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
     
     private let tufuh_subTitleL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.regular(15)
+        label.textColor = TUOKOUXIUSwiftZTClr3A
+        label.font = TUOKOUXIUSwiftFont.regular(14)
         label.textAlignment = .center
         return label
     }()
     
     private lazy var tufuh_enterBtn: UIButton = {
         let button = UIButton(type: .custom)
-        button.backgroundColor = .gray
+        button.backgroundColor = TUOKOUXIUSwiftZTClr5A
         button.layer.cornerRadius = 12
+        button.titleLabel?.font = TUOKOUXIUSwiftFont.medium(16)
+        button.titleLabel?.textColor = TUOKOUXIUSwiftbaiseC
         button.setTitle("进入", for: .normal)
         button.addTarget(self, action: #selector(tukou_goToMore), for: .touchUpInside)
         return button
@@ -32,14 +34,13 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
         label.font = TUOKOUXIUSwiftFont.regular(18)
-        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = .gray
+        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
         return v
     }()
     
@@ -63,11 +64,12 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
         
         tufuh_titleL.text = "东方禅境"
         tufuh_subTitleL.text = "空灵东方之声，抚平内在涟漪"
-        tufuh_contL.text = """
+
+        tufuh_contL.setText("""
         以东方器物与吟诵为灵感，营造静谧而温和的内在空间。
         不同于情绪化的常规音乐，它弱化节拍与旋律锋芒，以延绵的泛音与宽阔的空间感，轻轻包裹专注与休息。
         你无需刻意参与，声音会在不知不觉间抚平紧张与脑疲劳，让思绪慢慢安住于当下。
-        """
+        """, lineSpacing: 10)
         
         tufuh_titleL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(0)
@@ -82,20 +84,20 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
             make.height.equalTo(20)
         }
         tufuh_enterBtn.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(10)
+            make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(24)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(44)
         }
         tufuh_contL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
-            make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(10)
+            make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(30)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
         }
         
         tufuh_lineV.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
-            make.top.equalTo(tufuh_contL.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
         }

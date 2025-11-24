@@ -24,7 +24,7 @@ class TUOKOUXIUSwiftHomeTopCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        contentView.backgroundColor = .orange
+        contentView.backgroundColor = .black
         tukou_initV()
     }
     required init?(coder: NSCoder) {
