@@ -130,21 +130,18 @@ class TUOKOUXIUSwiftHHHBigCollVCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftZTClr
         label.font = TUOKOUXIUSwiftFont.medium(12)
-        label.textAlignment = .left
         return label
     }()
     private let tufuh_scoreL2: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftZTClr
         label.font = TUOKOUXIUSwiftFont.medium(12)
-        label.textAlignment = .left
         return label
     }()
     private let tufuh_scoreL3: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftZTClr
         label.font = TUOKOUXIUSwiftFont.medium(12)
-        label.textAlignment = .left
         return label
     }()
     override init(frame: CGRect) {

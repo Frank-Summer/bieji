@@ -8,22 +8,20 @@ class TUOKOUXIUSwiftHomeContentCell5: UITableViewCell {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
         label.font = TUOKOUXIUSwiftFont.medium(18)
-        label.textAlignment = .left
         return label
     }()
     
     private let tufuh_contL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
+        label.textColor = TUOKOUXIUSwiftZTClr3A
         label.font = TUOKOUXIUSwiftFont.regular(15)
-        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = .gray
+        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
         return v
     }()
     
@@ -44,11 +42,11 @@ class TUOKOUXIUSwiftHomeContentCell5: UITableViewCell {
         contentView.addSubview(tufuh_lineV)
         
         tufuh_titleL.text = "身心科学"
-        tufuh_contL.text = """
+        tufuh_contL.setText("""
         温和低频与均匀声场，可能帮助降低主观压力感。
         稳态脉动（≈40–60 BPM）与呼吸同频，放慢心率节律。
         柔和能量分布（中低频为主），更易被大脑当作背景加工。
-        """
+        """, lineSpacing: 6)
         
         tufuh_titleL.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
@@ -65,7 +63,7 @@ class TUOKOUXIUSwiftHomeContentCell5: UITableViewCell {
         
         tufuh_lineV.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
-            make.top.equalTo(tufuh_contL.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
         }

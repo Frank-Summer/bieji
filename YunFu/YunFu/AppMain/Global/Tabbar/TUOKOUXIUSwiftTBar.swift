@@ -96,45 +96,66 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         let tufuh_count = titArr.count
 
         for i in 0..<tufuh_count {
-            let tufuh_btn = UIButton(type: .custom)
+            
 
             switch i {
             case 0:
-                tufuh_btn.frame = CGRect(x: 40, y: 20, width: 40, height: 40)
+                let tufuh_btn = UIButton(type: .custom)
+                tufuh_btn.frame = CGRect(x: 40, y: 24, width: 40, height: 40)
                 tufuh_btn.layer.cornerRadius = 20
                 let off = UIImage(named: "tab_explore_default")
                 let on = UIImage(named: "tab_explore_select")
                 tufuh_btn.setImage((off), for: .normal)
                 tufuh_btn.setImage((on), for: .selected)
+                tufuh_btn.addTarget(self, action: #selector(tukou_tabButTap(_:)), for: .touchUpInside)
+                tufuh_btn.tag = i
+                tufuh_btn.tukou_setEnlargeEdge(10)
+                self.tufuh_tabBV.addSubview(tufuh_btn)
+                self.tufuh_tabButArr.append(tufuh_btn)
             case 1:
+                let tufuh_btn = TUOKOUXIUJellyButton()
                 tufuh_btn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-60/2, y: 10, width: 60, height: 60)
-                tufuh_btn.backgroundColor = .gray
-                tufuh_btn.layer.cornerRadius = 30
-                let off = UIImage(named: "tab_home_stop")
-                let on = UIImage(named: "tab_home_play")
-                tufuh_btn.setImage((off), for: .normal)
-                tufuh_btn.setImage((on), for: .selected)
+                tufuh_btn.normalImage = UIImage(named: "tab_home_play")
+                tufuh_btn.selectedImage = UIImage(named: "tab_home_stop")
+                tufuh_btn.buttonColor = UIColor.gray // 可自定义颜色
+                tufuh_btn.mainText = "播放音乐"
+                tufuh_btn.subText = "东方禅境艺术"
+
+                tufuh_btn.addTarget(self, action: #selector(tukou_tabButTap(_:)), for: .touchUpInside)
+                tufuh_btn.tag = i
+                tufuh_btn.tukou_setEnlargeEdge(10)
+                self.tufuh_tabBV.addSubview(tufuh_btn)
+                self.tufuh_tabButArr.append(tufuh_btn)
+                //                tufuh_btn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-60/2, y: 10, width: 60, height: 60)
+                //                tufuh_btn.backgroundColor = TUOKOUXIUSwiftZTClr8A
+                //                tufuh_btn.layer.cornerRadius = 30
+                //                let off = UIImage(named: "tab_home_stop")
+                //                let on = UIImage(named: "tab_home_play")
+                //                tufuh_btn.setImage((off), for: .normal)
+                //                tufuh_btn.setImage((on), for: .selected)
+                //默认选中第二个btn
+                tufuh_btn.isSelected = true
+                tufuh_indexNum = 1
             case 2:
-                tufuh_btn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W-40-40, y: 20, width: 40, height: 40)
+                let tufuh_btn = UIButton(type: .custom)
+                tufuh_btn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W-40-40, y: 24, width: 40, height: 40)
                 tufuh_btn.layer.cornerRadius = 20
                 let off = UIImage(named: "tab_my_default")
                 let on = UIImage(named: "tab_my_select")
                 tufuh_btn.setImage((off), for: .normal)
                 tufuh_btn.setImage((on), for: .selected)
+                tufuh_btn.addTarget(self, action: #selector(tukou_tabButTap(_:)), for: .touchUpInside)
+                tufuh_btn.tag = i
+                tufuh_btn.tukou_setEnlargeEdge(10)
+                self.tufuh_tabBV.addSubview(tufuh_btn)
+                self.tufuh_tabButArr.append(tufuh_btn)
             default:
                 break
             }
-
-            tufuh_btn.addTarget(self, action: #selector(tukou_tabButTap(_:)), for: .touchUpInside)
-            tufuh_btn.tag = i
-
-            self.tufuh_tabBV.addSubview(tufuh_btn)
-            self.tufuh_tabButArr.append(tufuh_btn)
-
-            //默认选中第二个btn
-            if i == 1 {
-                tufuh_btn.isSelected = true
-            }
+            
+//            if i == 1 {
+//                
+//            }
         }
 
         self.tufuh_tabBV.backgroundColor = .clear
@@ -144,6 +165,35 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         let tufuh_index = sender.tag
         tukou_swiToVCAtInd(tufuh_index)
         
+        for (i, tufuh_btn) in self.tufuh_tabButArr.enumerated() {
+            switch i {
+            case 0:
+                if tufuh_btn.tag == sender.tag {
+                    tufuh_btn.isSelected = true
+                } else {
+                    tufuh_btn.isSelected = false
+                }
+            case 1: break
+                if tufuh_indexNum == 1 {
+                    tufuh_btn.isSelected = !tufuh_btn.isSelected
+                } else {
+                    if tufuh_btn.tag == sender.tag {
+                        tufuh_btn.isSelected = true
+                    } else {
+                        tufuh_btn.isSelected = false
+                    }
+                }
+            case 2:
+                if tufuh_btn.tag == sender.tag {
+                    tufuh_btn.isSelected = true
+                } else {
+                    tufuh_btn.isSelected = false
+                }
+            default:
+                break
+            }
+        }
+
         tufuh_indexNum = sender.tag
     }
     

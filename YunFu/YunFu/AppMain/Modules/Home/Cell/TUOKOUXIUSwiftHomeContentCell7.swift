@@ -2,44 +2,46 @@
 import UIKit
 import SnapKit
 
-class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell {
+class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITableViewDataSource {
     
     private let tufuh_titleL: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.semibold(22)
-        label.textAlignment = .left
-        return label
-    }()
-    
-    private lazy var tufuh_hintIV: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "home_blocking")
-        return imageView
-    }()
-    
-    private let tufuh_subTitleL: UILabel = {
-        let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.semibold(17)
-        label.textAlignment = .left
-        return label
-    }()
-    
-
-    private let tufuh_contL: UILabel = {
-        let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.regular(15)
-        label.textAlignment = .left
-        label.numberOfLines = 0
+        label.font = TUOKOUXIUSwiftFont.semibold(16)
         return label
     }()
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = .gray
+        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
         return v
+    }()
+    
+    private lazy var tufuh_tabV: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .grouped)
+        tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
+        
+        if #available(iOS 11.0, *) {
+            tableView.contentInsetAdjustmentBehavior = .never
+        } else {
+            if tableView.contentOffset.y == 0 {
+                tableView.contentInset = UIEdgeInsets(top: -34, left: 0, bottom: 0, right: 0)
+            }
+        }
+        
+        tableView.sectionHeaderTopPadding = 0
+
+        tableView.backgroundColor = .black
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
+        tableView.estimatedRowHeight = 0
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -55,16 +57,19 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell {
     
     private func tukou_initV() {
         contentView.addSubview(tufuh_titleL)
-        contentView.addSubview(tufuh_hintIV)
-        contentView.addSubview(tufuh_subTitleL)
-        contentView.addSubview(tufuh_contL)
+        
+        tufuh_tabV.frame = CGRect(x: 0, y: 60, width: TUOKOUXIUSwiftSCRE_W, height: 320)
+        contentView.addSubview(self.tufuh_tabV)
+        
+        tufuh_tabV.delegate = self
+        tufuh_tabV.dataSource = self
+        
+        tufuh_tabV.register(UITableViewCell.self, forCellReuseIdentifier: "TUOKOUXIUHHHTabVVDefCellId")
+        tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell9.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell9Id")
+        
         contentView.addSubview(tufuh_lineV)
         
         tufuh_titleL.text = "声音与乐器"
-        tufuh_subTitleL.text = "敲钵："
-        tufuh_contL.text = """
-        长尾泛音，4–7秒自然衰减
-        """
         
         tufuh_titleL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
@@ -73,26 +78,9 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell {
             make.height.equalTo(40)
         }
         
-        tufuh_hintIV.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_titleL.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(22)
-            make.width.height.equalTo(24)
-        }
-        tufuh_subTitleL.snp.makeConstraints { make in
-            make.left.equalTo(tufuh_hintIV.snp.right).offset(10)
-            make.top.equalTo(tufuh_titleL.snp.bottom).offset(10)
-            make.height.equalTo(24)
-        }
-
-        tufuh_contL.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_titleL.snp.bottom).offset(10)
-            make.left.equalTo(tufuh_subTitleL.snp.right).offset(10)
-            make.height.equalTo(24)
-        }
-        
         tufuh_lineV.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(22)
-            make.top.equalTo(tufuh_contL.snp.bottom).offset(10)
+            make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
         }
@@ -100,4 +88,38 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell {
 //    func tukou_contStr(_ string: String?) {
 //        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
 //    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 36
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 8
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell9Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell9
+//            cell.pdduo_contStr((pddds_dataArr[indexPath.row] as! String))
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let tufuh_v = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
+        tufuh_v.backgroundColor = TUOKOUXIUSwiftheiseC
+        return tufuh_v
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.01
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
+        footerView.backgroundColor = TUOKOUXIUSwiftheiseC
+        return footerView
+    }
 }

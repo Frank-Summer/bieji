@@ -12,7 +12,7 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
     var tufuh_topV: UIView?
     var tufuh_noNetV: UIView?
     var tufuh_tabN: Int = 0
-
+    var tufuh_updaW: TUOKOUXIUAppUpdW?
 //    var tufuh_isFirWil: Bool = false
 
     private var cancellables = Set<AnyCancellable>()
@@ -41,25 +41,52 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShoTabb"), object: nil)
     }
 
-//    func tukou_topVBianSe(_ notify: Notification) {
-//        guard let tufuh_string = notify.object as? String else { return }
-//
-//        if tufuh_string == "yes" {
-//            self.tufuh_topV!.backgroundColor = TUOKOUXIUSwiftheiseC
-//            self.tufuh_pageTitV.backgroundColor = TUOKOUXIUSwiftheiseC
-//        } else {
-//            self.tufuh_topV!.backgroundColor = TUOKOUXIUSwiftwuseC
-//            self.tufuh_pageTitV.backgroundColor = TUOKOUXIUSwiftwuseC
-//        }
-//    }
-    
+    func tufuh_updaWScroll(_ noti: Notification) {
+        guard let info = noti.userInfo,
+              let progress = info["progress"] as? CGFloat,
+              let updaW = self.tufuh_updaW else { return }
+        
+        // 非线性曲线（苹果弹性 + ease-out 混合）
+        // 更丝滑：前面非常慢，后面变快
+        let smoothP = pow(progress, 1.8)
+
+        // 计算动画参数
+        let moveY = smoothP * 82                               // 下移距离
+        let scale = 1 - smoothP * 0.06                         // 1 → 0.94（苹果浮层）
+        let alphaV = 1 - smoothP                               // 透明度
+        let shadowAlpha = max(0, 0.3 - smoothP * 0.3)          // 阴影淡出
+        let blurAlpha = 1 - smoothP                            // blur 透明度
+
+        let views = updaW.subviews
+
+        for v in views {
+
+            // transform：位移 + 缩放（丝滑核心）
+            let t = CGAffineTransform(translationX: 0, y: moveY)
+                .scaledBy(x: scale, y: scale)
+            v.transform = t
+
+            // alpha
+            v.alpha = alphaV
+
+            // 阴影动态变化
+            v.layer.shadowOpacity = Float(shadowAlpha)
+
+            // 如果是毛玻璃视图，调整其 alpha
+            if let blur = v as? UIVisualEffectView {
+                blur.alpha = blurAlpha
+            }
+        }
+
+        updaW.isHidden = (progress >= 0.999)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tufuh_tabN = 0
-//        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jzGFV(TUOKOUXIUSwiftKeyWinRoV)
-//        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUTopVBianSe"))
-//            .sink { [weak self] notification in self?.tukou_topVBianSe(notification) }
-//            .store(in: &cancellables)
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jzGFV(TUOKOUXIUSwiftKeyWinRoV)
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUUpdaWScroll"))
+            .sink { [weak self] notification in self?.tufuh_updaWScroll(notification) }
+            .store(in: &cancellables)
         
 //        self.view.backgroundColor = .orange
         
@@ -70,6 +97,79 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         
         tukou_clickRefresh2()
 //        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+            self.tufuh_updaW = TUOKOUXIUAppUpdW(frame: self.view.bounds)
+            let titleV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-314/2, y: 0, width: 314, height: 40), superView: self.tufuh_updaW!, bgColor: TUOKOUXIUSwiftZTClr5A)
+            titleV.layer.cornerRadius = 20
+            
+            let musicBtn = UIButton.tukou_bjBtn(CGRect(x: 8, y: 8, width: 24, height: 24), target: self, image: UIImage(named: "home_music"), superView: titleV, action: #selector(clickReplay))
+            musicBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            musicBtn.layer.cornerRadius = 12
+            
+            let musicL = UILabel.tukou_bjLabel(CGRect(x: musicBtn.frame.maxX + 8, y: 8, width: 120, height: 24), text: "东方禅境的艺术", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
+            
+            let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUSwiftZTClr3A)
+            
+            let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUSwiftZTClr3A)
+            
+            let contentV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-335/2, y: 40, width: 335, height: 80), superView: self.tufuh_updaW!, bgColor: .clear)
+            
+            let collectionBtn = UIButton.tukou_bjBtn(CGRect(x: 10, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_collection_default"), superView: contentV, action: #selector(clickCollect))
+            collectionBtn.setImage(UIImage(named: "home_collection_selected"), for: .selected)
+            collectionBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            collectionBtn.layer.cornerRadius = 20
+            
+            let replayBtn = UIButton.tukou_bjBtn(CGRect(x: 10+40+15, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_replay"), superView: contentV, action: #selector(clickReplay))
+            replayBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            replayBtn.layer.cornerRadius = 20
+            
+            let timerBtn = UIButton.tukou_bjBtn(CGRect(x: 335/2-105/2, y: 20, width: 105, height: 40), target: self, image: UIImage(named: "home_timer_default"), superView: contentV, action: #selector(clickTime))
+            timerBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            timerBtn.layer.cornerRadius = 20
+            timerBtn.titleLabel?.textColor = .white
+            timerBtn.setTitle("4:00:20", for: .normal)
+            timerBtn.titleLabel?.font = TUOKOUXIUSwiftFont.regular(14)
+            
+            let blockingBtn = UIButton.tukou_bjBtn(CGRect(x: 335-10-40-15-40, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_blocking"), superView: contentV, action: #selector(clickTiming))
+            blockingBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            blockingBtn.layer.cornerRadius = 20
+            
+            let shareBtn = UIButton.tukou_bjBtn(CGRect(x: 335-10-40, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_share"), superView: contentV, action: #selector(clickShare))
+            shareBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            shareBtn.layer.cornerRadius = 20
+            
+            self.view.addSubview(self.tufuh_updaW!)
+        }
+    }
+    
+    //点击音乐
+    @objc func clickMusic() {
+        print("点击音乐")
+    }
+    
+    //点击收藏
+    @objc func clickCollect() {
+        print("点击收藏")
+    }
+    
+    //点击重载
+    @objc func clickReplay() {
+        print("点击重载")
+    }
+    
+    //点击时间
+    @objc func clickTime() {
+        print("点击时间")
+    }
+    
+    //点击定时
+    @objc func clickTiming() {
+        print("点击定时")
+    }
+    
+    //点击分享
+    @objc func clickShare() {
+        print("点击分享")
     }
     
 //    func tukou_clickRefresh() {

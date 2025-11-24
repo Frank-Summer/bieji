@@ -2,29 +2,23 @@
 import UIKit
 import SnapKit
 
-class TUOKOUXIUSwiftHomeContentCell8: UITableViewCell {
- 
-    private let tufuh_titleL: UILabel = {
-        let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.medium(18)
-        label.textAlignment = .left
-        return label
-    }()
+enum TufuhItemNew3 {
+    case dict([String: Any])
+    case array([Any])
+}
+
+class TUOKOUXIUSwiftHomeContentCell8: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    private let tufuh_contL: UILabel = {
-        let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.regular(15)
-        label.textAlignment = .left
-        label.numberOfLines = 0
-        return label
-    }()
+    var tufuh_collcV: UICollectionView!
+    var tufuh_priDict: [String: Any] = [:]
+    
+    private var tufuh_dataArr: [TufuhItemNew3] = []
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         contentView.backgroundColor = .black
+        contentView.isUserInteractionEnabled = true
         tukou_initV()
     }
     
@@ -33,30 +27,103 @@ class TUOKOUXIUSwiftHomeContentCell8: UITableViewCell {
     }
     
     private func tukou_initV() {
-        contentView.addSubview(tufuh_titleL)
-        contentView.addSubview(tufuh_contL)
-        
-        tufuh_titleL.text = "东方意象"
-        tufuh_contL.text = """
-        敲钵回响象征“收束与释怀”，余音延长时间感。
-        木鱼弱节律如禅定计数，“念起即觉”。
-        吟诵远近交替，构建“内外一体”的心灵殿堂。
-        """
-        
-        tufuh_titleL.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.left.equalToSuperview().offset(22)
-            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-44)
-            make.height.equalTo(20)
-        }
 
-        tufuh_contL.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_titleL.snp.bottom).offset(10)
-            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
-            make.left.equalToSuperview().offset(22)
-        }
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        tufuh_collcV = UICollectionView(frame: CGRect(x: 0, y: 12, width: TUOKOUXIUSwiftSCRE_W, height: 134 * TUOKOUXIUDeviceInfo.scaleX), collectionViewLayout: layout)
+        tufuh_collcV.delegate = self
+        tufuh_collcV.dataSource = self
+        tufuh_collcV.backgroundColor = TUOKOUXIUSwiftheiseC
+        tufuh_collcV.showsHorizontalScrollIndicator = false
+        
+        tufuh_collcV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "TUOKOUXIUHHHTabVHisDefCellId")
+        tufuh_collcV.register(TUOKOUXIUSwiftHHHCollVCell3.self, forCellWithReuseIdentifier: "TUOKOUXIUHHHTabCollVCellId")
+        tufuh_collcV.register(TUOKOUXIUSwiftHHHCollReuV.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "TUOKOUXIUHHHTbColHeReuVId")
+        tufuh_collcV.register(TUOKOUXIUSwiftHHHCollReuV.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "TUOKOUXIUHHHTbColFoReuVId")
+        tufuh_collcV.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "TUOKOUXIUHHHTabVHisDefSuppVId")
+        tufuh_collcV.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "TUOKOUXIUHHHTabVHisDefSuppVId")
+        
+        contentView.addSubview(tufuh_collcV)
+        
     }
 //    func tukou_contStr(_ string: String?) {
 //        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
 //    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return min(tufuh_dataArr.count, 20)
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        switch tufuh_dataArr[indexPath.row] {
+//        case .dict(let dict):
+//            tufuh_clkItemBlk?(dict)
+//        case .array(let arr):
+//            tufuh_clkItemArrBlk?(arr)
+//        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        if tufuh_dataArr.isEmpty {
+//            return collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHHHTabVHisDefCellId", for: indexPath)
+//        }
+
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHHHTabCollVCellId", for: indexPath) as! TUOKOUXIUSwiftHHHCollVCell3
+        cell.tukou_resModel(["name":""])
+//        switch tufuh_dataArr[indexPath.row] {
+//        case .dict(let dict):
+//            cell.tukou_resModel(dict)
+//        case .array(_): break
+//        }
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        if tufuh_dataArr.isEmpty { return .zero }
+        return CGSize(width: 180 * TUOKOUXIUDeviceInfo.scaleX, height: 134 * TUOKOUXIUDeviceInfo.scaleX)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: 10, height: 134 * TUOKOUXIUDeviceInfo.scaleX)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: 10, height: 134 * TUOKOUXIUDeviceInfo.scaleX)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionFooter {
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TUOKOUXIUHHHTbColFoReuVId", for: indexPath)
+        } else if kind == UICollectionView.elementKindSectionHeader {
+            return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TUOKOUXIUHHHTbColHeReuVId", for: indexPath)
+        }
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "TUOKOUXIUHHHTabVHisDefSuppVId", for: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
+    
+    func tukou_resData(_ dataArray: [Any]) {
+        tufuh_dataArr = dataArray.map { item in
+            if let dict = item as? [String: Any] {
+                return TufuhItemNew3.dict(dict)
+            } else if let arr = item as? [Any] {
+                return TufuhItemNew3.array(arr)
+            } else {
+                return TufuhItemNew3.dict([:])
+            }
+        }
+        tufuh_collcV.reloadData()
+    }
 }
+
