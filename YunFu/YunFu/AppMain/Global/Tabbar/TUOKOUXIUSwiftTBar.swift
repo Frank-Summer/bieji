@@ -7,10 +7,6 @@ import UIKit
 class TUOKOUXIUSwiftTBar: UIViewController {
     
     var tufuh_tabbVCArr: [UIViewController] = []
-    
-    var tufuh_isFirL = false
-    var tufuh_isGTTabH = false
-    var tufuh_isShoAd = false
     var tufuh_mDict: [String: Any]?
     var tufuh_indexNum: Int = 0
     var tufuh_tabBV: UIView!
@@ -18,14 +14,10 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     var tufuh_contV: UIView!
     var tufuh_selInd: Int = -1
     var tufuh_catheDict: [Int: UIViewController] = [:]
+    
     private var cancellables = Set<AnyCancellable>()
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUShuaXinTabb"))
-//            .sink { [weak self] _ in self?.tukou_shuaXTabb() }
-//            .store(in: &cancellables)
-        
         
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUHidTabb"))
             .sink { [weak self] _ in self?.tukou_hidTabb() }
@@ -47,17 +39,38 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                 )
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+//        let tabH = TUOKOUXIUDeviceInfo.tukou_tabBarHeight + 30
+//        tufuh_tabBV.frame = CGRect(
+//            x: 0,
+//            y: view.bounds.height - tabH,
+//            width: view.bounds.width,
+//            height: tabH
+//        )
+        
+        view.bringSubviewToFront(tufuh_tabBV)
+    }
+    
     private func tukou_setTabBar() {
-        let tabHeight = TUOKOUXIUDeviceInfo.tukou_tabBarHeight+30
-        tufuh_tabBV = UIView(frame: CGRect(x: 0, y: view.bounds.height - tabHeight, width: view.bounds.width, height: tabHeight))
-        tufuh_tabBV.backgroundColor = .blue
+        let tabHeight = TUOKOUXIUDeviceInfo.tukou_tabBarHeight + 30
+        tufuh_tabBV = UIView(
+            frame: CGRect(x: 0,
+                          y: view.bounds.height - tabHeight,
+                          width: view.bounds.width,
+                          height: tabHeight)
+        )
+        
+        tufuh_tabBV.backgroundColor = .clear     // 透明
+        
         view.addSubview(tufuh_tabBV)
         tufuh_tabButArr = []
     }
     
     
     private func tukou_setContainerV() {
-        tufuh_contV = UIView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height - tufuh_tabBV.bounds.height))
+        tufuh_contV = UIView(frame: view.bounds)   // 全屏
         view.addSubview(tufuh_contV)
     }
     
@@ -101,6 +114,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             switch i {
             case 0:
                 let tufuh_btn = UIButton(type: .custom)
+                tufuh_btn.backgroundColor = TUOKOUXIUSwiftZTClr3A
                 tufuh_btn.frame = CGRect(x: 40, y: 24, width: 40, height: 40)
                 tufuh_btn.layer.cornerRadius = 20
                 let off = UIImage(named: "tab_explore_default")
@@ -138,6 +152,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                 tufuh_indexNum = 1
             case 2:
                 let tufuh_btn = UIButton(type: .custom)
+                tufuh_btn.backgroundColor = TUOKOUXIUSwiftZTClr3A
                 tufuh_btn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W-40-40, y: 24, width: 40, height: 40)
                 tufuh_btn.layer.cornerRadius = 20
                 let off = UIImage(named: "tab_my_default")
@@ -152,12 +167,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             default:
                 break
             }
-            
-//            if i == 1 {
-//                
-//            }
         }
-
         self.tufuh_tabBV.backgroundColor = .clear
     }
     
@@ -198,61 +208,17 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     }
     
     func tukou_hidTabb() {
-        var f = tufuh_tabBV.frame
-        guard f.origin.y != view.frame.height else { return }
-        f.origin.y = view.frame.height
-        tufuh_tabBV.frame = f
-        tufuh_contV.frame = view.bounds
+        tufuh_tabBV.frame.origin.y = view.bounds.height
+        tufuh_contV.frame = view.bounds  // 保持全屏
     }
 
     func tukou_shoTabb() {
-        var f = tufuh_tabBV.frame
-        guard f.origin.y != view.frame.height - TUOKOUXIUDeviceInfo.tukou_tabBarHeight-30 else { return }
-        f.origin.y = view.frame.height - TUOKOUXIUDeviceInfo.tukou_tabBarHeight-30
-        tufuh_tabBV.frame = f
-        tufuh_contV.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height - TUOKOUXIUDeviceInfo.tukou_tabBarHeight-30)
+        let tabH = tufuh_tabBV.bounds.height
+        tufuh_tabBV.frame.origin.y = view.bounds.height - tabH
+        tufuh_contV.frame = view.bounds
     }
-
-//    func tukou_shuaXTabb() {
-//        for (i, tufuh_btn) in self.tufuh_tabButArr.enumerated() {
-//            switch i {
-//            case 0:
-//                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_hh_ite_off", andIsOne: false), for: .normal)
-//                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_hh_ite_on", andIsOne: false), for: .selected)
-//            case 1:
-//                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_tas_ite_off", andIsOne: false), for: .normal)
-//                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_tas_ite_on", andIsOne: false), for: .selected)
-//            case 2:
-//                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_st_ite_off", andIsOne: false), for: .normal)
-//                tufuh_btn.setImage(TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_st_ite_on", andIsOne: false), for: .selected)
-//            default:
-//                break
-//            }
-//
-//            tufuh_btn.titleLabel?.textAlignment = .center
-//            tufuh_btn.imageView?.contentMode = .scaleAspectFit
-//
-//            let tufuh_spac: CGFloat = 2.0
-//            let tufuh_imgS = tufuh_btn.imageView?.frame.size ?? .zero
-//            let tufuh_titS = tufuh_btn.titleLabel?.frame.size ?? .zero
-//
-//            tufuh_btn.imageEdgeInsets = UIEdgeInsets(top: -tufuh_titS.height - tufuh_spac,
-//                                                     left: 0,
-//                                                     bottom: 0,
-//                                                     right: -tufuh_titS.width)
-//            tufuh_btn.titleEdgeInsets = UIEdgeInsets(top: 0,
-//                                                     left: -tufuh_imgS.width,
-//                                                     bottom: -tufuh_imgS.height - tufuh_spac,
-//                                                     right: 0)
-//
-//            if TUOKOUXIUSwiftConstIX.isIPhoneXOrLater() {
-//                tufuh_btn.contentEdgeInsets = UIEdgeInsets(top: -15, left: 0, bottom: 15, right: 0)
-//            }
-//        }
-//    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
 }

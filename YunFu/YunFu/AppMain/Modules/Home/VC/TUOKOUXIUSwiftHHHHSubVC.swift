@@ -201,7 +201,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
                 if !self.tufuh_dataTreArr.isEmpty {
                     self.tufuh_dataTreArr.removeAll()
                 }
-                NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShuaXinTabb"), object: nil)
+
                 self.tufuh_dataTreArr = tufuh_resArr
                 self.tufuh_tabV.reloadData()
                 

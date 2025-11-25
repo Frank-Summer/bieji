@@ -152,12 +152,12 @@ class TUOKOUXIUSSStringUtils: NSObject {
 }
 
 
-class TUOKOUXIUAppUpdW: UIWindow {
+class TUOKOUXIUMusicW: UIWindow {
 
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
 
-        self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H, width: TUOKOUXIUSwiftSCRE_W, height: 120)
+        self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H, width: TUOKOUXIUSwiftSCRE_W, height: 40)
         self.isHidden = false
         self.backgroundColor = .clear
         self.windowLevel = .alert
@@ -170,8 +170,72 @@ class TUOKOUXIUAppUpdW: UIWindow {
 
     func tukou_loadUI() {
         UIView.animate(withDuration: 0.1) {
-            self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H-120-110-20, width: TUOKOUXIUSwiftSCRE_W, height: 120)
+            self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H-120-110-20, width: TUOKOUXIUSwiftSCRE_W, height: 40)
         }
+    }
+    func tukou_updateUI() {
+        UIView.animate(withDuration: 0.1) {
+            self.frame = CGRect(x: 0, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 44 + 32 + 10, width: TUOKOUXIUSwiftSCRE_W, height: 40)
+        }
+    }
+}
+
+class TUOKOUXIUToolsW: UIWindow {
+
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
+
+        self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H, width: TUOKOUXIUSwiftSCRE_W, height: 80)
+        self.isHidden = false
+        self.backgroundColor = .clear
+        self.windowLevel = .alert
+        self.tukou_loadUI()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    func tukou_loadUI() {
+        UIView.animate(withDuration: 0.1) {
+            self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H-80-110-20, width: TUOKOUXIUSwiftSCRE_W, height: 80)
+        }
+    }
+}
+
+class TUOKOUXIUTopTypeViewW: UIWindow {
+
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
+
+        self.frame = CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 44 - 20, width: TUOKOUXIUSwiftSCRE_W-40, height: 32)
+        self.isHidden = false
+        self.backgroundColor = .clear
+        self.windowLevel = .alert
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+}
+
+
+class TUOKOUXIUselectTypeW: UIWindow {
+
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
+
+        self.frame = CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 24, width: 152, height: 196)
+        self.isHidden = false
+        self.backgroundColor = .black
+        self.windowLevel = .alert
+        self.layer.cornerRadius = 28
+        self.layer.borderColor = TUOKOUXIUSwiftZTClr10A.cgColor
+        self.layer.borderWidth = 1
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
 }
 

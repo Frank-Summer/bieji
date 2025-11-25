@@ -823,22 +823,22 @@ class TUOKOUXIUSwiftPagTitV: UIView {
 //        tufuh_endB = components.b
 //    }
     
-    func tukou_getRGBComponents(_ color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        return (r: red, g: green, b: blue)
-    }
+//    func tukou_getRGBComponents(_ color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+//        var red: CGFloat = 0
+//        var green: CGFloat = 0
+//        var blue: CGFloat = 0
+//        var alpha: CGFloat = 0
+//        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+//        return (r: red, g: green, b: blue)
+//    }
 
-    var tufuh_resSeleInd: Int = 0 {
-        didSet {
-            if tufuh_resSeleInd >= 0 && tufuh_resSeleInd < tufuh_btnMArr.count {
-                tukou_btnAction(tufuh_btnMArr[tufuh_resSeleInd])
-            }
-        }
-    }
+//    var tufuh_resSeleInd: Int = 0 {
+//        didSet {
+//            if tufuh_resSeleInd >= 0 && tufuh_resSeleInd < tufuh_btnMArr.count {
+//                tukou_btnAction(tufuh_btnMArr[tufuh_resSeleInd])
+//            }
+//        }
+//    }
 
     func tukou_size(_ string: String, font: UIFont) -> CGSize {
         let attrs = [NSAttributedString.Key.font: font]

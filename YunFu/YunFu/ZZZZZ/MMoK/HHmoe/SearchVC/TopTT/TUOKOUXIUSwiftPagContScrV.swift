@@ -16,7 +16,7 @@ class TUOKOUXIUSwiftPagContScrV: UIView, UIScrollViewDelegate {
 
     private weak var tufuh_pareVC: UIViewController?
     private var tufuh_childVCArr: [UIViewController] = []
-    private lazy var tufuh_scrV: UIScrollView = {
+    lazy var tufuh_scrV: UIScrollView = {
         let s = UIScrollView()
         s.bounces = false
         s.isPagingEnabled = true

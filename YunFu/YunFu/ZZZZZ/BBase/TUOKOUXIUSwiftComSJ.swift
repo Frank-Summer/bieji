@@ -12,13 +12,9 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     
     private override init() {}
     
-    var tufuh_isHTTZ: Bool = false
     var tufuh_isOutBFV: Bool = false
 
     var tufuh_isPushEnabled: Bool = false
-    var tufuh_isDSJu: Bool = false
-    var tufuh_isADXS: Bool = false
-    var tufuh_isHenPinMP: Bool = false
     
     var tufuh_dataDict: [String: Any]?
     var tufuh_dsJiDict: [String: Any]?
