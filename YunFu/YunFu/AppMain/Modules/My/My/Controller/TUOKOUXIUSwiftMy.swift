@@ -123,8 +123,10 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
                 let vc = MyHistoryViewController()
                 self.navigationController?.pushViewController(vc, animated: true)
             },
-            onMyRecent: {
-                print("点击 最近播放")
+            onMyRecent: { [weak self] in
+                guard let self = self else { return }
+                let vc = MyHistoryViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         ))
         // 给组件增加上下 padding 8pt
