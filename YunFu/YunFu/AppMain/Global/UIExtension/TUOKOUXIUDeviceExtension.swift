@@ -152,15 +152,15 @@ class TUOKOUXIUSSStringUtils: NSObject {
 }
 
 
-class TUOKOUXIUMusicW: UIWindow {
+class TUOKOUXIUMusicW: UIView {
 
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
 
         self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H, width: TUOKOUXIUSwiftSCRE_W, height: 40)
-        self.isHidden = false
+//        self.isHidden = false
         self.backgroundColor = .clear
-        self.windowLevel = .alert
+//        self.windowLevel = .alert
         self.tukou_loadUI()
     }
 
@@ -180,15 +180,15 @@ class TUOKOUXIUMusicW: UIWindow {
     }
 }
 
-class TUOKOUXIUToolsW: UIWindow {
+class TUOKOUXIUToolsW: UIView {
 
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
 
         self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H, width: TUOKOUXIUSwiftSCRE_W, height: 80)
-        self.isHidden = false
+//        self.isHidden = false
         self.backgroundColor = .clear
-        self.windowLevel = .alert
+//        self.windowLevel = .alert
         self.tukou_loadUI()
     }
 
@@ -225,17 +225,48 @@ class TUOKOUXIUselectTypeW: UIWindow {
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
 
-        self.frame = CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 24, width: 152, height: 196)
+        self.frame = CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H)
         self.isHidden = false
-        self.backgroundColor = .black
+        self.backgroundColor = .clear
         self.windowLevel = .alert
-        self.layer.cornerRadius = 28
-        self.layer.borderColor = TUOKOUXIUSwiftZTClr10A.cgColor
-        self.layer.borderWidth = 1
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+}
+
+class TUOKOUXIUTopselectTypeW: UIWindow {
+
+    override init(frame: CGRect = .zero) {
+        super.init(frame: frame)
+
+        self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H)
+        self.isHidden = false
+        self.backgroundColor = .black
+        self.windowLevel = .alert
+        self.tukou_addTapGesture(target: self, action: #selector(clickTopselectTypeW))
+        self.tukou_loadUI()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    func tukou_loadUI() {
+        UIView.animate(withDuration: 0.25) {
+            self.frame = CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H)
+        }
+    }
+    
+    @objc func clickTopselectTypeW() {
+        UIView.animate(withDuration: 0.25) {
+            self.frame = CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H)
+        }
+        TUOKOUXIUSwiftDelaBlk(0.25) {
+            self.isHidden = true
+            self.removeFromSuperview()
+        }
     }
 }
 

@@ -10,7 +10,7 @@ class TUOKOUXIUSwiftHomeTopCell: UITableViewCell {
 //    }()
     private let tufuh_playerIV: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "icon_tukou_bg")
+//        imageView.image = UIImage(named: "icon_tukou_bg")
         return imageView
     }()
     private let tufuh_contL: UILabel = {

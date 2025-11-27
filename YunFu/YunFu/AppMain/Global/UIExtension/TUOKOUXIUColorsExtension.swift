@@ -10,11 +10,15 @@ let TUOKOUXIUSwiftZTClr2A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255
 let TUOKOUXIUSwiftZTClr3A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.6)
 let TUOKOUXIUSwiftZTClr4A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.3)
 let TUOKOUXIUSwiftZTClr5A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.1)
+let TUOKOUXIUSwiftZTClr10A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.2)
+let TUOKOUXIUSwiftZTClr8A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.9)
+let TUOKOUXIUSwiftZTClr11A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.4)
+
+
 let TUOKOUXIUSwiftZTClr6A  = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.7)
 let TUOKOUXIUSwiftZTClr7A  = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.5)
-let TUOKOUXIUSwiftZTClr8A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.9)
 let TUOKOUXIUSwiftZTClr9A  = UIColor(red: 0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 0.2)
-let TUOKOUXIUSwiftZTClr10A  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 0.2)
+
 
 let TUOKOUXIUSwiftZTClr    = UIColor(red: 14/255.0, green: 136/255.0, blue: 253/255.0, alpha: 1.0)
 let TUOKOUXIUSwiftZTClr2   = UIColor(red: 38/255.0, green: 38/255.0, blue: 38/255.0, alpha: 1.0)

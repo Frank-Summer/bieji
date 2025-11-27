@@ -331,31 +331,11 @@ class TUOKOUXIUSwiftPagTitV: UIView {
                 tufuh_indiV.center.x = button.center.x
             }
             
-//            if tufuh_configure.tufuh_titGradiEffe {
-//                for btn in tufuh_btnMArr {
-//                    btn.titleLabel?.textColor = tufuh_configure.tufuh_titClr
-//                }
-//                button.titleLabel?.textColor = tufuh_configure.tufuh_titSeleClr
-//            }
         } else {
             for btn in tufuh_btnMArr {
                 btn.titleLabel?.font = tufuh_configure.tufuh_titFont
             }
             button.titleLabel?.font = tufuh_configure.tufuh_titSeleFon
-
-//            if tufuh_configure.tufuh_titGradiEffe {
-//                for btn in tufuh_btnMArr {
-//                    btn.titleLabel?.textColor = tufuh_configure.tufuh_titClr
-//                    btn.titleLabel?.font = tufuh_configure.tufuh_titFont
-//                }
-//                button.titleLabel?.textColor = tufuh_configure.tufuh_titSeleClr
-//                button.titleLabel?.font = tufuh_configure.tufuh_titSeleFon
-//            } else {
-//                for btn in tufuh_btnMArr {
-//                    btn.titleLabel?.font = tufuh_configure.tufuh_titFont
-//                }
-//                button.titleLabel?.font = tufuh_configure.tufuh_titSeleFon
-//            }
         }
     }
     private func tukou_seledBtnCen(_ centerBtn: UIButton) {

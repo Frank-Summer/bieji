@@ -25,7 +25,6 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
         button.backgroundColor = TUOKOUXIUSwiftZTClr5A
         button.layer.cornerRadius = 12
         button.titleLabel?.font = TUOKOUXIUSwiftFont.medium(16)
-        button.titleLabel?.textColor = TUOKOUXIUSwiftbaiseC
         button.setTitle("进入", for: .normal)
         button.addTarget(self, action: #selector(tukou_goToMore), for: .touchUpInside)
         return button
