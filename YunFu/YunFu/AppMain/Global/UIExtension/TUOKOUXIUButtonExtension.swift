@@ -4,7 +4,7 @@ import UIKit
 extension UIButton {
 
     @discardableResult
-    static func tukou_bjBtn(_ frame: CGRect,
+    static func tukou_bjBtnNoImage(_ frame: CGRect,
                            target: AnyObject?,
                            title: String? = nil,
                            superView: UIView,

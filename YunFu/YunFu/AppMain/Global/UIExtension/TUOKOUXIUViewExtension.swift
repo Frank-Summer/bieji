@@ -57,23 +57,44 @@ extension UIView {
     }
 }
 
-class TUOKOUXIUZMTitV: UIView {
-    
-    @objc(initHintInView:)
-    init(hintIn superView: UIView) {
-        super.init(frame: superView.bounds)
-        self.backgroundColor = TUOKOUXIUSwiftheiseC.withAlphaComponent(0.5)
-        superView.addSubview(self)
-        self.frame = CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H)
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    func tukou_closeView() {
-        self.isHidden = true
-        self.removeFromSuperview()
+extension UIView {
+
+    /// 为 UIView 设置指定圆角 + 边框（不裁剪边框）
+    func tukou_setViewCorners(
+        _ corners: UIRectCorner,
+        radius: CGFloat,
+        borderColor: UIColor? = nil,
+        borderWidth: CGFloat = 0
+    ) {
+        DispatchQueue.main.async {
+            let path = UIBezierPath(
+                roundedRect: self.bounds,
+                byRoundingCorners: corners,
+                cornerRadii: CGSize(width: radius, height: radius)
+            )
+
+            // mask layer（用于裁剪内容）
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = path.cgPath
+            self.layer.mask = maskLayer
+
+            // 如果需要边框
+            if let borderColor = borderColor, borderWidth > 0 {
+                // 移除旧的 borderLayer
+                self.layer.sublayers?
+                    .filter { $0.name == "tukou_borderLayer" }
+                    .forEach { $0.removeFromSuperlayer() }
+
+                let borderLayer = CAShapeLayer()
+                borderLayer.name = "tukou_borderLayer"
+                borderLayer.path = path.cgPath
+                borderLayer.strokeColor = borderColor.cgColor
+                borderLayer.fillColor = UIColor.clear.cgColor
+                borderLayer.lineWidth = borderWidth
+                borderLayer.frame = self.bounds
+                self.layer.addSublayer(borderLayer)
+            }
+        }
     }
 }
 

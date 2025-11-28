@@ -22,14 +22,8 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITa
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         
-        if #available(iOS 11.0, *) {
-            tableView.contentInsetAdjustmentBehavior = .never
-        } else {
-            if tableView.contentOffset.y == 0 {
-                tableView.contentInset = UIEdgeInsets(top: -34, left: 0, bottom: 0, right: 0)
-            }
-        }
-        
+        tableView.contentInsetAdjustmentBehavior = .never
+
         tableView.sectionHeaderTopPadding = 0
 
         tableView.backgroundColor = .black

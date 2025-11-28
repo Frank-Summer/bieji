@@ -22,13 +22,7 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         
-        if #available(iOS 11.0, *) {
-            tableView.contentInsetAdjustmentBehavior = .never
-        } else {
-            if tableView.contentOffset.y == 0 {
-                tableView.contentInset = UIEdgeInsets(top: -34, left: 0, bottom: 0, right: 0)
-            }
-        }
+        tableView.contentInsetAdjustmentBehavior = .never
         
         tableView.sectionHeaderTopPadding = 0
 
@@ -250,7 +244,6 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
 
     func numberOfSections(in tableView: UITableView) -> Int {
 //        if self.tufuh_dataTreArr.isEmpty { return 0 }
-//        return self.tufuh_dataTreArr.count + 2 + 1
         return 2
     }
 
