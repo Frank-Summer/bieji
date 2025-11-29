@@ -7,30 +7,30 @@ class TUOKOUXIUSwiftHomeContentCell4: UITableViewCell {
     private let tufuh_titleL: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.semibold(20)
+        label.font = TUOKOUXIUSwiftFont.semibold(16)
         return label
     }()
     
     private let tufuh_subTitleL: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.medium(18)
+        label.font = TUOKOUXIUSwiftFont.semibold(14)
         return label
     }()
     
     private let tufuh_contL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftZTClr3A
-        label.font = TUOKOUXIUSwiftFont.regular(15)
+        label.textColor = TUOKOUXIUWhiteA60
+        label.font = TUOKOUXIUSwiftFont.regular(14)
         label.numberOfLines = 0
         return label
     }()
     
-    private lazy var tufuh_lineV: UIView = {
-        let v = UIView()
-        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
-        return v
-    }()
+//    private lazy var tufuh_lineV: UIView = {
+//        let v = UIView()
+//        v.backgroundColor = TUOKOUXIUWhiteA10
+//        return v
+//    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,7 +47,7 @@ class TUOKOUXIUSwiftHomeContentCell4: UITableViewCell {
         contentView.addSubview(tufuh_titleL)
         contentView.addSubview(tufuh_subTitleL)
         contentView.addSubview(tufuh_contL)
-        contentView.addSubview(tufuh_lineV)
+//        contentView.addSubview(tufuh_lineV)
         
         tufuh_titleL.text = "工作原理"
         tufuh_subTitleL.text = "音乐结构"
@@ -58,30 +58,30 @@ class TUOKOUXIUSwiftHomeContentCell4: UITableViewCell {
         """, lineSpacing: 6)
         
         tufuh_titleL.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
-            make.top.equalToSuperview().offset(10)
-            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-44)
+            make.left.equalToSuperview().offset(24)
+            make.top.equalToSuperview().offset(16)
+            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-24)
             make.height.equalTo(40)
         }
         tufuh_subTitleL.snp.makeConstraints { make in
             make.top.equalTo(tufuh_titleL.snp.bottom).offset(10)
-            make.left.equalToSuperview().offset(22)
-            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-44)
+            make.left.equalToSuperview().offset(24)
+            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-24)
             make.height.equalTo(20)
         }
 
         tufuh_contL.snp.makeConstraints { make in
             make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(10)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(24)
         }
         
-        tufuh_lineV.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
-            make.bottom.equalToSuperview().offset(-1)
-            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
-            make.height.equalTo(1)
-        }
+//        tufuh_lineV.snp.makeConstraints { make in
+//            make.left.equalToSuperview().offset(24)
+//            make.bottom.equalToSuperview().offset(-1)
+//            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+//            make.height.equalTo(1)
+//        }
     }
 //    func tukou_contStr(_ string: String?) {
 //        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)

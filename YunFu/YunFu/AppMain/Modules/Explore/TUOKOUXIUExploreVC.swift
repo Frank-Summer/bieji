@@ -52,28 +52,32 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         
         view.backgroundColor = TUOKOUXIUSwiftheiseC
         tukou_topVi()
-        if TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() == 0 {
-            tukou_noNetwV()
-            return
-        }
 
-        tukou_creTabV()
+        tukou_testNet()
+    }
+    
+    @objc func tukou_testNet() {
+        if (TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() != 0) {
+            self.tukou_creTabV()
+        } else {
+            self.tukou_noNetwV()
+        }
     }
     
     func tukou_topVi() {
-        tufuh_topV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 76), superView: self.view, bgColor: TUOKOUXIUSwiftZTClr12A)
+        tufuh_topV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 76), superView: self.view, bgColor: TUOKOUXIUWhiteA5)
         UIImageView.tukou_bjImageV(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-72/2, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 29, width: 72, height: 18), superView: tufuh_topV!, image: UIImage(named: "Explore-title"))
         let preBtn = UIButton.tukou_bjBtn(CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 18, width: 40, height: 40), target: self, image: UIImage(named: "Explore-present"), superView: tufuh_topV!, action: #selector(clickPresent))
         preBtn.backgroundColor = .black
         preBtn.layer.cornerRadius = 20
         preBtn.layer.borderWidth = 1
-        preBtn.layer.borderColor = TUOKOUXIUSwiftZTClr11A.cgColor
+        preBtn.layer.borderColor = TUOKOUXIUWhiteA40.cgColor
         
         let vipBtn = UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W - 20 - 40, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 18, width: 40, height: 40), target: self, image: UIImage(named: "Explore-vip"), superView: tufuh_topV!, action: #selector(clickVip))
         vipBtn.backgroundColor = .black
         vipBtn.layer.cornerRadius = 20
         vipBtn.layer.borderWidth = 1
-        vipBtn.layer.borderColor = TUOKOUXIUSwiftZTClr11A.cgColor
+        vipBtn.layer.borderColor = TUOKOUXIUWhiteA40.cgColor
     }
     
     @objc func clickPresent() {
@@ -169,43 +173,35 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         if !self.tufuh_dataTreArr.isEmpty {
             self.tufuh_dataTreArr.removeAll()
         }
-        let tufuh_h = TUOKOUXIUSwiftSCRE_H - TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight - 56 - TUOKOUXIUDeviceInfo.tukou_tabBarHeight
-        self.tufuh_noNetV = UIView.tukou_bjView(
-            CGRect(x: 0, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 60, width: TUOKOUXIUSwiftSCRE_W, height: tufuh_h),
-            superView: self.view,
-            bgColor: TUOKOUXIUSwiftheiseC
-        )
+        self.tufuh_noNetV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H), superView: self.view, bgColor: TUOKOUXIUSwiftheiseC)
+
+        UIImageView.tukou_bjImageV(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-30, y: TUOKOUXIUSwiftSCRE_H/2-12-16-60, width: 60, height: 60), superView: self.tufuh_noNetV!, image: UIImage(named: "net"))
         
-        let tufuh_lL = UILabel.tukou_bjLabel(
-            CGRect(x: 0, y: tufuh_h/2 - 12, width: TUOKOUXIUSwiftSCRE_W, height: 20),
-            text: "The current network status is abnormal,",
-            superView: self.tufuh_noNetV!,
-            textAlignment: .center,
-            font: TUOKOUXIUSwiftFont.medium(16),
-            textColor: TUOKOUXIUSwiftbaiseC
-        )
+        let label1 = UILabel.tukou_bjLabel(CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H/2-12, width: TUOKOUXIUSwiftSCRE_W, height: 24),
+                                            text: "网络连接失败",
+                                           superView: self.tufuh_noNetV!,
+                                            textAlignment: .center,
+                                           font: TUOKOUXIUSwiftFont.semibold(16),
+                                            textColor: TUOKOUXIUSwiftbaiseC)
         
-        let tufuh_lL2 = UILabel.tukou_bjLabel(
-            CGRect(x: 0, y: tufuh_lL.frame.maxY + 6, width: TUOKOUXIUSwiftSCRE_W, height: 20),
-            text: "please try again later.",
-            superView: self.tufuh_noNetV!,
-            textAlignment: .center,
-            font: TUOKOUXIUSwiftFont.medium(16),
-            textColor: TUOKOUXIUSwiftbaiseC
-        )
+        let label2 = UILabel.tukou_bjLabel(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-110, y: label1.frame.maxY, width: 220, height: 50),
+                                            text: "别急，好饭不怕晚，请检查当前网络状态后再试试",
+                                           superView: self.tufuh_noNetV!,
+                                            textAlignment: .center,
+                                           font: TUOKOUXIUSwiftFont.regular(14),
+                                            textColor: TUOKOUXIUWhiteA60)
+        label2.numberOfLines = 0
         
-        UIButton.tukou_bjBtn(
-            CGRect(x: TUOKOUXIUSwiftSCRE_W/2 - 45, y: tufuh_lL2.frame.maxY + 24, width: 90, height: 36),
-            target: self,
-            imageName: "",
-            superView: self.tufuh_noNetV!,
-            action: #selector(tukou_creTabV),
-            font: TUOKOUXIUSwiftFont.semibold(14),
-            title: "Retry",
-            color: TUOKOUXIUSwiftbaiseC,
-            bgColor: TUOKOUXIUSwiftZTClr,
-            cornerRadius: 5
-        )
+        UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-30, y: label2.frame.maxY + 24, width: 60, height: 40),
+                             target: self,
+                             imageName: "",
+                             superView: self.tufuh_noNetV!,
+                             action: #selector(tukou_testNet),
+                             font: TUOKOUXIUSwiftFont.semibold(14),
+                             title: "重试",
+                             color: TUOKOUXIUSwiftbaiseC,
+                             bgColor: TUOKOUXIUWhiteA10,
+                             cornerRadius: 12)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -237,12 +233,12 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         }
         
         let tufuh_v = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: height))
-        tufuh_v.backgroundColor = TUOKOUXIUSwiftZTClr12A
+        tufuh_v.backgroundColor = TUOKOUXIUWhiteA5
 
         tufuh_v.tukou_setViewCorners(
             [.bottomLeft, .bottomRight],
             radius: 32,
-            borderColor: TUOKOUXIUSwiftZTClr5A,
+            borderColor: TUOKOUXIUWhiteA10,
             borderWidth: 1
         )
         if tufuh_headOpen {
@@ -281,8 +277,8 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
                 }
 
                 if btnV.isSelected {
-                    btnV.backgroundColor = TUOKOUXIUSwiftZTClr5A
-                    btnV.layer.borderColor = TUOKOUXIUSwiftZTClr3A.cgColor
+                    btnV.backgroundColor = TUOKOUXIUWhiteA10
+                    btnV.layer.borderColor = TUOKOUXIUWhiteA60.cgColor
                     btnV.layer.borderWidth = 1
                 } else {
                     btnV.backgroundColor = TUOKOUXIUSwiftwuseC
@@ -322,8 +318,8 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
                     btnV.isSelected = true
                 }
                 if btnV.isSelected {
-                    btnV.backgroundColor = TUOKOUXIUSwiftZTClr5A
-                    btnV.layer.borderColor = TUOKOUXIUSwiftZTClr3A.cgColor
+                    btnV.backgroundColor = TUOKOUXIUWhiteA10
+                    btnV.layer.borderColor = TUOKOUXIUWhiteA60.cgColor
                     btnV.layer.borderWidth = 1
                 } else {
                     btnV.backgroundColor = TUOKOUXIUSwiftwuseC
@@ -340,7 +336,7 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         UIView.tukou_bjView(CGRect(x: 0, y: 0, width: 1, height: height), superView: tufuh_v, bgColor: .black)
         UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W-1, y: 0, width: 1, height: height), superView: tufuh_v, bgColor: .black)
         let botBtn = UIButton.tukou_bjBtnNoImage(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-36/2, y: height-16, width: 36, height: 6), target: self, superView: tufuh_v, action: #selector(clickOpenHeadView))
-        botBtn.backgroundColor = TUOKOUXIUSwiftZTClr4A
+        botBtn.backgroundColor = TUOKOUXIUWhiteA30
         botBtn.layer.cornerRadius = 3
         botBtn.tukou_setEnlargeEdge(9)
         return tufuh_v

@@ -48,9 +48,10 @@ class TUOKOUXIUSwiftHHHCollVCell2: UICollectionViewCell {
             make.top.left.equalToSuperview()
         }
         tufuh_contentL.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(250 * TUOKOUXIUDeviceInfo.scaleX)
-            make.left.equalToSuperview().offset(15 * TUOKOUXIUDeviceInfo.scaleX)
-            make.right.equalToSuperview().offset(-15 * TUOKOUXIUDeviceInfo.scaleX)
+            make.bottom.equalToSuperview().offset(-24)
+            make.left.equalToSuperview().offset(24)
+            make.right.equalToSuperview().offset(-24)
+            make.height.equalTo(48)
         }
     }
     
@@ -63,7 +64,9 @@ class TUOKOUXIUSwiftHHHCollVCell2: UICollectionViewCell {
             tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
         }
         tufuh_coverIV.image = UIImage(named: "icon_tukou_bg")
-        tufuh_contentL.text = "风在山谷里转一遍，带着悠远的回响"
-        
+        tufuh_contentL.setText("""
+        风在山谷里转一遍，带着悠远
+        的回响
+        """, lineSpacing: 6)
     }
 }

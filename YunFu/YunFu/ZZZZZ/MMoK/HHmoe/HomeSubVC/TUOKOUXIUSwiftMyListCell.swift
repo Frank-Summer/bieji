@@ -122,7 +122,7 @@ class TUOKOUXIUSwiftMyListCell: UICollectionViewCell {
     }()
     private lazy var tufuh_titL: TUOKOUXIUSwiftVerAligTopL = {
         let label = TUOKOUXIUSwiftVerAligTopL()
-        label.textColor = TUOKOUXIUSwiftZTClr4A
+        label.textColor = TUOKOUXIUWhiteA30
         label.font = TUOKOUXIUSwiftFont.regular(12)
         label.tufuh_verAlig = .top
         label.numberOfLines = 2

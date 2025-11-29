@@ -23,7 +23,7 @@ class TUOKOUXIUSwiftHHHHisCell: UICollectionViewCell {
     
     private lazy var tufuh_titL: TUOKOUXIUSwiftVerAligTopL = {
             let label = TUOKOUXIUSwiftVerAligTopL()
-            label.textColor = TUOKOUXIUSwiftZTClr4A
+            label.textColor = TUOKOUXIUWhiteA30
             label.font = TUOKOUXIUSwiftFont.regular(12)
             label.numberOfLines = 2
             label.tufuh_verAlig = .top
@@ -42,7 +42,7 @@ class TUOKOUXIUSwiftHHHHisCell: UICollectionViewCell {
     
     private lazy var tufuh_currTL: UILabel = {
             let label = UILabel()
-            label.backgroundColor = TUOKOUXIUSwiftZTClr6A
+            label.backgroundColor = TUOKOUXIUBlackA70
             label.textColor = TUOKOUXIUSwiftbaiseC
         label.font = TUOKOUXIUSwiftFont.medium(10)
             label.textAlignment = .center
@@ -52,7 +52,7 @@ class TUOKOUXIUSwiftHHHHisCell: UICollectionViewCell {
         }()
     private lazy var tufuh_totalV: UIView = {
         let v = UIView()
-        v.backgroundColor = TUOKOUXIUSwiftZTClr3A
+        v.backgroundColor = TUOKOUXIUWhiteA60
         return v
     }()
 

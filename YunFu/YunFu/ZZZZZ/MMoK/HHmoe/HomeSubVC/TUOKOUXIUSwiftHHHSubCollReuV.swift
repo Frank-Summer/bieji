@@ -14,7 +14,7 @@ class TUOKOUXIUSwiftHHHSubCollReuV: UICollectionReusableView {
             superView: self,
             textAlignment: .center,
             font: TUOKOUXIUSwiftFont.regular(15),
-            textColor: TUOKOUXIUSwiftZTClr4A
+            textColor: TUOKOUXIUWhiteA30
         )
     }
     

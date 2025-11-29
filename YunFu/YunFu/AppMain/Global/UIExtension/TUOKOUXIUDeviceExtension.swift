@@ -208,7 +208,7 @@ class TUOKOUXIUTopTypeViewW: UIWindow {
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
 
-        self.frame = CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 44 - 20, width: TUOKOUXIUSwiftSCRE_W-40, height: 32)
+        self.frame = CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 12, width: TUOKOUXIUSwiftSCRE_W-40, height: 32)
         self.isHidden = false
         self.backgroundColor = .clear
         self.windowLevel = .alert

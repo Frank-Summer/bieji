@@ -7,14 +7,14 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
     private let tufuh_titleL: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.semibold(22)
+        label.font = TUOKOUXIUSwiftFont.semibold(24)
         label.textAlignment = .center
         return label
     }()
     
     private let tufuh_subTitleL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftZTClr3A
+        label.textColor = TUOKOUXIUWhiteA60
         label.font = TUOKOUXIUSwiftFont.regular(14)
         label.textAlignment = .center
         return label
@@ -22,9 +22,9 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
     
     private lazy var tufuh_enterBtn: UIButton = {
         let button = UIButton(type: .custom)
-        button.backgroundColor = TUOKOUXIUSwiftZTClr5A
+        button.backgroundColor = TUOKOUXIUWhiteA10
         button.layer.cornerRadius = 12
-        button.titleLabel?.font = TUOKOUXIUSwiftFont.medium(16)
+        button.titleLabel?.font = TUOKOUXIUSwiftFont.semibold(16)
         button.setTitle("进入", for: .normal)
         button.addTarget(self, action: #selector(tukou_goToMore), for: .touchUpInside)
         return button
@@ -39,7 +39,7 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
+        v.backgroundColor = TUOKOUXIUWhiteA10
         return v
     }()
     
@@ -72,30 +72,30 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
         
         tufuh_titleL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(0)
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(12)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W)
-            make.height.equalTo(30)
+            make.height.equalTo(34)
         }
         tufuh_subTitleL.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_titleL.snp.bottom).offset(10)
+            make.top.equalTo(tufuh_titleL.snp.bottom).offset(4)
             make.left.equalToSuperview().offset(0)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W)
-            make.height.equalTo(20)
+            make.height.equalTo(24)
         }
         tufuh_enterBtn.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(20)
+            make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(28)
             make.left.equalToSuperview().offset(24)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(44)
         }
         tufuh_contL.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
-            make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(30)
+            make.left.equalToSuperview().offset(24)
+            make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(32)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
         }
         
         tufuh_lineV.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(24)
             make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)

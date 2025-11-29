@@ -135,43 +135,43 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             self.tufuh_musicW = TUOKOUXIUMusicW(frame: self.view.bounds)
             self.tufuh_toolsW = TUOKOUXIUToolsW(frame: self.view.bounds)
-            let titleV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-314/2, y: 0, width: 314, height: 40), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUSwiftZTClr5A)
+            let titleV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-314/2, y: 0, width: 314, height: 40), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUWhiteA10)
             titleV.layer.cornerRadius = 20
             titleV.tukou_addTapGesture(target: self, action: #selector(clickMusic))
             tufuh_ttitleV = titleV
             let musicIV = UIImageView.tukou_bjImageV(CGRect(x: 8, y: 8, width: 24, height: 24), superView: titleV, image: UIImage(named: "home_music"))
-            musicIV.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            musicIV.backgroundColor = TUOKOUXIUWhiteA10
             musicIV.layer.cornerRadius = 12
             musicIV.layer.masksToBounds = true
             
             let musicL = UILabel.tukou_bjLabel(CGRect(x: musicIV.frame.maxX + 8, y: 8, width: 120, height: 24), text: "东方禅境的艺术", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
             
-            let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUSwiftZTClr3A)
+            let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUWhiteA60)
             
-            let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUSwiftZTClr3A)
+            let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
             
             let contentV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-335/2, y: 0, width: 335, height: 80), superView: self.tufuh_toolsW!, bgColor: .clear)
             let intervalWidth = (335-20-40*4-48)/4
             let collectionBtn = UIButton.tukou_bjBtn(CGRect(x: 10, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_collection_default"), superView: contentV, action: #selector(clickCollect(_:)))
             collectionBtn.setImage(UIImage(named: "home_collection_selected"), for: .selected)
-            collectionBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            collectionBtn.backgroundColor = TUOKOUXIUWhiteA10
             collectionBtn.layer.cornerRadius = 20
             
             tufuh_replayBtn = UIButton.tukou_bjBtn(CGRect(x: Int(collectionBtn.frame.maxX) + intervalWidth, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_replay"), superView: contentV, action: #selector(clickReplay))
-            tufuh_replayBtn!.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            tufuh_replayBtn!.backgroundColor = TUOKOUXIUWhiteA10
             tufuh_replayBtn!.layer.cornerRadius = 20
             
             tufuh_timerBtn = UIButton.tukou_bjBtn(CGRect(x: 335/2-48/2, y: 16, width: 48, height: 48), target: self, image: UIImage(named: "home_timer_default"), superView: contentV, action: #selector(clickTime))
-            tufuh_timerBtn!.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            tufuh_timerBtn!.backgroundColor = TUOKOUXIUWhiteA10
             tufuh_timerBtn!.layer.cornerRadius = 24
             tufuh_timerBtn!.titleLabel?.font = TUOKOUXIUSwiftFont.regular(14)
             
             tufuh_blockingBtn = UIButton.tukou_bjBtn(CGRect(x: 335/2-48/2+48 + intervalWidth, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_blocking"), superView: contentV, action: #selector(clickTiming))
-            tufuh_blockingBtn!.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            tufuh_blockingBtn!.backgroundColor = TUOKOUXIUWhiteA10
             tufuh_blockingBtn!.layer.cornerRadius = 20
             
             let shareBtn = UIButton.tukou_bjBtn(CGRect(x: 335-10-40, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_share"), superView: contentV, action: #selector(clickShare))
-            shareBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+            shareBtn.backgroundColor = TUOKOUXIUWhiteA10
             shareBtn.layer.cornerRadius = 20
             self.view.addSubview(self.tufuh_musicW!)
             self.view.addSubview(self.tufuh_toolsW!)
@@ -189,10 +189,10 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         self.tufuh_musicW!.tuks_spheight = 72
         tufuh_ttitleV?.removeFromSuperview()
         tufuh_ttitleV = nil
-        tufuh_ttitleV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: 256, height: 72), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUSwiftZTClr5A)
+        tufuh_ttitleV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: 256, height: 72), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUWhiteA10)
         tufuh_ttitleV?.layer.cornerRadius = 20
         let musicTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 0, width: 256, height: 40), text: "东方禅境", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.semibold(24), textColor: .white)
-        let musicSubTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 40, width: 256, height: 32), text: "空灵东方之声，抚平内在涟漪", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUSwiftZTClr3A)
+        let musicSubTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 40, width: 256, height: 32), text: "空灵东方之声，抚平内在涟漪", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
         tufuh_pageTitV.isHidden = true
         tufuh_homeSceneBtn?.isHidden = true
         
@@ -200,9 +200,9 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         tufuh_pageContScrV.tufuh_scrV.isScrollEnabled = false
         
         self.tufuh_topTypeV = TUOKOUXIUTopTypeViewW(frame: self.view.bounds)
-        let titleV = UIView.tukou_bjView(CGRect(x: 6, y: 0, width: 86, height: 32), superView: self.tufuh_topTypeV!, bgColor: TUOKOUXIUSwiftZTClr9A)
+        let titleV = UIView.tukou_bjView(CGRect(x: 6, y: 0, width: 86, height: 32), superView: self.tufuh_topTypeV!, bgColor: TUOKOUXIUBlackA20)
         titleV.layer.cornerRadius = 16
-        titleV.layer.borderColor = TUOKOUXIUSwiftZTClr10A.cgColor
+        titleV.layer.borderColor = TUOKOUXIUWhiteA20.cgColor
         titleV.layer.borderWidth = 1
         titleV.tukou_addTapGesture(target: self, action: #selector(clickBackType))
         
@@ -211,9 +211,9 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         let musicL = UILabel.tukou_bjLabel(CGRect(x: titleIV.frame.maxX + 6, y: 4, width: 42, height: 24), text: "瑜伽0", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: .white)
         
         let moreBtn = UIButton.tukou_bjBtn(CGRect(x: titleV.frame.maxX + 8, y: 0, width: 32, height: 32), target: self, image: UIImage(named: "home_scene_x"), superView: self.tufuh_topTypeV!, action: #selector(clickTypeVOpen))
-//        moreBtn.backgroundColor = TUOKOUXIUSwiftZTClr5A
+//        moreBtn.backgroundColor = TUOKOUXIUWhiteA10
         moreBtn.layer.cornerRadius = 16
-        moreBtn.layer.borderColor = TUOKOUXIUSwiftZTClr10A.cgColor
+        moreBtn.layer.borderColor = TUOKOUXIUWhiteA20.cgColor
         moreBtn.layer.borderWidth = 1
         
         self.view.addSubview(self.tufuh_topTypeV!)
@@ -235,20 +235,20 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         tufuh_pageContScrV.tufuh_scrV.isScrollEnabled = true
         
         self.tufuh_musicW = TUOKOUXIUMusicW(frame: self.view.bounds)
-        let titleV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-314/2, y: 0, width: 314, height: 40), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUSwiftZTClr5A)
+        let titleV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-314/2, y: 0, width: 314, height: 40), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUWhiteA10)
         titleV.layer.cornerRadius = 20
         titleV.tukou_addTapGesture(target: self, action: #selector(clickMusic))
         tufuh_ttitleV = titleV
         let musicIV = UIImageView.tukou_bjImageV(CGRect(x: 8, y: 8, width: 24, height: 24), superView: titleV, image: UIImage(named: "home_music"))
-        musicIV.backgroundColor = TUOKOUXIUSwiftZTClr5A
+        musicIV.backgroundColor = TUOKOUXIUWhiteA10
         musicIV.layer.cornerRadius = 12
         musicIV.layer.masksToBounds = true
         
         let musicL = UILabel.tukou_bjLabel(CGRect(x: musicIV.frame.maxX + 8, y: 8, width: 120, height: 24), text: "东方禅境的艺术", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
         
-        let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUSwiftZTClr3A)
+        let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUWhiteA60)
         
-        let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUSwiftZTClr3A)
+        let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
         
         self.view.addSubview(self.tufuh_musicW!)
     }
@@ -259,9 +259,9 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
 
         tufuh_selectTypeV = TUOKOUXIUselectTypeW(frame: self.view.bounds)
         self.view.addSubview(self.tufuh_selectTypeV!)
-        let botV = UIView.tukou_bjView(CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 24, width: 152, height: 196), superView: tufuh_selectTypeV!, bgColor: .black)
+        let botV = UIView.tukou_bjView(CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 10, width: 152, height: 196), superView: tufuh_selectTypeV!, bgColor: .black)
         botV.layer.cornerRadius = 28
-        botV.layer.borderColor = TUOKOUXIUSwiftZTClr10A.cgColor
+        botV.layer.borderColor = TUOKOUXIUWhiteA20.cgColor
         botV.layer.borderWidth = 1
         tufuh_selectTypeV!.tukou_addTapGesture(target: self, action: #selector(clickCloseTypeUpdateV))
         let pan = UIPanGestureRecognizer(target: self, action: #selector(clickCloseTypeUpdateV))
@@ -287,7 +287,7 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
             typeBtn.titleLabel?.font = TUOKOUXIUSwiftFont.regular(14)
             typeBtn.tag = i
             if tufuh_string == "瑜伽0" {
-                typeBtn.backgroundColor = TUOKOUXIUSwiftZTClr10A
+                typeBtn.backgroundColor = TUOKOUXIUWhiteA20
             }
             if i == tufuh_arr.count - 1 {
                 self.tufuh_scrV.contentSize = CGSize(width: 152, height: btnY + 32)
@@ -473,7 +473,7 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         
         let tufuh_conf = TUOKOUXIUSwiftPagTitVConf.tukou_pageTitVCon()
 //        tufuh_conf.tufuh_titGradiEffe = true
-        tufuh_conf.tufuh_titClr = TUOKOUXIUSwiftZTClr2A
+        tufuh_conf.tufuh_titClr = TUOKOUXIUWhiteA40
         tufuh_conf.tufuh_titSeleClr = TUOKOUXIUSwiftbaiseC
         tufuh_conf.tufuh_indicClr = TUOKOUXIUSwiftwuseC
         tufuh_conf.tufuh_indicHei = 0.1
@@ -487,10 +487,10 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         
         let pageTitV: TUOKOUXIUSwiftPagTitV
 
-        tufuh_conf.tufuh_titFont = TUOKOUXIUSwiftFont.medium(15)
-        tufuh_conf.tufuh_titSeleFon = TUOKOUXIUSwiftFont.semibold(19)
+        tufuh_conf.tufuh_titFont = TUOKOUXIUSwiftFont.semibold(16)
+        tufuh_conf.tufuh_titSeleFon = TUOKOUXIUSwiftFont.semibold(20)
         pageTitV = TUOKOUXIUSwiftPagTitV.tukou_pageTitVWithFra(frame:
-            CGRect(x: 15, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+20, width: TUOKOUXIUSwiftSCRE_W - 70, height: 44),
+            CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+12, width: TUOKOUXIUSwiftSCRE_W - 20 - 64, height: 32),
             delegate: self,
             titleNames: tufuh_arr,
             configure: tufuh_conf
@@ -530,13 +530,11 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
     }
 
     func tukou_topVi() {
-        self.tufuh_topIV = UIImageView.tukou_bjImageV(CGRect(x: 0, y: 0, width: Int(TUOKOUXIUSwiftSCRE_W), height: Int(TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight) + 44 + 20), superView: self.view, image: UIImage(named: "home_top_shadow"))
+        self.tufuh_topV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 48), superView: self.view, bgColor: TUOKOUXIUSwiftwuseC)
+        self.tufuh_topIV = UIImageView.tukou_bjImageV(CGRect(x: 0, y: 0, width: Int(TUOKOUXIUSwiftSCRE_W), height: Int(TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight) + 48), superView: self.view, image: UIImage(named: "home_top_shadow"))
         
-        self.tufuh_topV = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 44 + 20))
-        self.tufuh_topV!.backgroundColor = TUOKOUXIUSwiftwuseC
-        self.view.addSubview(self.tufuh_topV!)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [self] in
-            self.tufuh_homeSceneBtn = UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W-32-10, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+26, width: 32, height: 32), target: self, image: UIImage(named: "home_scene"), superView: self.tufuh_topV!, action: #selector(tukou_zhankai))
+            self.tufuh_homeSceneBtn = UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W-24-20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+16, width: 24, height: 24), target: self, image: UIImage(named: "home_scene"), superView: self.tufuh_topV!, action: #selector(tukou_zhankai))
             self.tufuh_homeSceneBtn?.tukou_setEnlargeEdge(10)
         }
         
@@ -553,7 +551,7 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         tufuh_topSelectTypeV = UIView.tukou_bjView(CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H), superView: self.view, bgColor: .black)
         
         tufuh_topSelectTypeV!.tukou_addTapGesture(target: self, action: #selector(clickCloseTopSelectTypeV))
-        tufuh_container = UIView.tukou_bjView(CGRect(x: 0, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+12, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H-(TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+12)), superView: tufuh_topSelectTypeV!, bgColor: TUOKOUXIUSwiftZTClr5A)
+        tufuh_container = UIView.tukou_bjView(CGRect(x: 0, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+12, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H-(TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+12)), superView: tufuh_topSelectTypeV!, bgColor: TUOKOUXIUWhiteA10)
         
         tufuh_container!.layer.cornerRadius = 32
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
@@ -567,7 +565,7 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         )
         tufuh_scrTypeV.showsVerticalScrollIndicator = false
 
-        let dianV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-18, y: 12, width: 36, height: 6), superView: tufuh_container!, bgColor: TUOKOUXIUSwiftZTClr3A)
+        let dianV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-18, y: 12, width: 36, height: 6), superView: tufuh_container!, bgColor: TUOKOUXIUWhiteA60)
         dianV.layer.cornerRadius = 3
         
         let tufuh_arr: [String] = ["瑜伽0","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5","瑜伽6","瑜伽7","瑜伽8","瑜伽9","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5","瑜伽6","瑜伽7","瑜伽8"]
@@ -582,10 +580,10 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
             typeIconIV.layer.cornerRadius = 24
             typeIconIV.layer.masksToBounds = true
             typeIconIV.layer.borderWidth = 1
-            typeIconIV.layer.borderColor = TUOKOUXIUSwiftZTClr5A.cgColor
-            let typeL = UILabel.tukou_bjLabel(CGRect(x: typeIconIV.frame.maxX + 10, y: 0, width: TUOKOUXIUSwiftSCRE_W-(typeIconIV.frame.maxX + 10)-20, height: 48), text: tufuh_string, superView: typeV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(16), textColor: TUOKOUXIUSwiftZTClr3A)
+            typeIconIV.layer.borderColor = TUOKOUXIUWhiteA10.cgColor
+            let typeL = UILabel.tukou_bjLabel(CGRect(x: typeIconIV.frame.maxX + 10, y: 0, width: TUOKOUXIUSwiftSCRE_W-(typeIconIV.frame.maxX + 10)-20, height: 48), text: tufuh_string, superView: typeV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(16), textColor: TUOKOUXIUWhiteA60)
             if tufuh_string == "瑜伽0" {
-                typeIconIV.backgroundColor = TUOKOUXIUSwiftZTClr5A
+                typeIconIV.backgroundColor = TUOKOUXIUWhiteA10
                 typeIconIV.layer.borderWidth = 0
                 typeL.textColor = .white
             }
@@ -646,24 +644,26 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
     func tukou_noNetwV() {
         guard self.tufuh_noNetV == nil else { return }
 
-        let height = TUOKOUXIUSwiftSCRE_H - TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight - 56 - TUOKOUXIUDeviceInfo.tukou_tabBarHeight
-        self.tufuh_noNetV = UIView.tukou_bjView(CGRect(x: 0, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 60, width: TUOKOUXIUSwiftSCRE_W, height: height), superView: self.view, bgColor: TUOKOUXIUSwiftheiseC)
+        self.tufuh_noNetV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H), superView: self.view, bgColor: TUOKOUXIUSwiftheiseC)
 
-        let label1 = UILabel.tukou_bjLabel(CGRect(x: 0, y: height/2-12, width: TUOKOUXIUSwiftSCRE_W, height: 20),
+        UIImageView.tukou_bjImageV(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-30, y: TUOKOUXIUSwiftSCRE_H/2-12-16-60, width: 60, height: 60), superView: self.tufuh_noNetV!, image: UIImage(named: "net"))
+        
+        let label1 = UILabel.tukou_bjLabel(CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H/2-12, width: TUOKOUXIUSwiftSCRE_W, height: 24),
                                             text: "网络连接失败",
                                            superView: self.tufuh_noNetV!,
                                             textAlignment: .center,
-                                           font: TUOKOUXIUSwiftFont.medium(16),
+                                           font: TUOKOUXIUSwiftFont.semibold(16),
                                             textColor: TUOKOUXIUSwiftbaiseC)
         
-        let label2 = UILabel.tukou_bjLabel(CGRect(x: 0, y: label1.frame.maxY + 6, width: TUOKOUXIUSwiftSCRE_W, height: 20),
+        let label2 = UILabel.tukou_bjLabel(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-110, y: label1.frame.maxY, width: 220, height: 50),
                                             text: "别急，好饭不怕晚，请检查当前网络状态后再试试",
                                            superView: self.tufuh_noNetV!,
                                             textAlignment: .center,
-                                            font: TUOKOUXIUSwiftFont.medium(16),
-                                            textColor: TUOKOUXIUSwiftbaiseC)
+                                           font: TUOKOUXIUSwiftFont.regular(14),
+                                            textColor: TUOKOUXIUWhiteA60)
+        label2.numberOfLines = 0
         
-        UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-45, y: label2.frame.maxY + 24, width: 90, height: 36),
+        UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-30, y: label2.frame.maxY + 24, width: 60, height: 40),
                              target: self,
                              imageName: "",
                              superView: self.tufuh_noNetV!,
@@ -671,8 +671,8 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
                              font: TUOKOUXIUSwiftFont.semibold(14),
                              title: "重试",
                              color: TUOKOUXIUSwiftbaiseC,
-                             bgColor: TUOKOUXIUSwiftZTClr,
-                             cornerRadius: 5)
+                             bgColor: TUOKOUXIUWhiteA10,
+                             cornerRadius: 12)
     }
 
 }

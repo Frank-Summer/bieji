@@ -115,7 +115,7 @@ class TUOKOUXIUExploreCollVCell2: UICollectionViewCell {
             tufuh_lockIV.tukou_setIVCorners(
                 [.bottomLeft, .topRight],
                 radius: 20,
-                borderColor: TUOKOUXIUSwiftZTClr5A,
+                borderColor: TUOKOUXIUWhiteA10,
                 borderWidth: 1
             )
             tufuh_lockIV.image = UIImage(named: "icon_tukou_logo")

@@ -24,7 +24,7 @@ class TUOKOUXIUSwiftHomeContentCell2: UITableViewCell, UICollectionViewDelegate,
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
+        v.backgroundColor = TUOKOUXIUWhiteA10
         return v
     }()
     
@@ -46,7 +46,7 @@ class TUOKOUXIUSwiftHomeContentCell2: UITableViewCell, UICollectionViewDelegate,
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
-        tufuh_collcV = UICollectionView(frame: CGRect(x: 0, y: 42, width: TUOKOUXIUSwiftSCRE_W, height: 185 * TUOKOUXIUDeviceInfo.scaleX), collectionViewLayout: layout)
+        tufuh_collcV = UICollectionView(frame: CGRect(x: 0, y: 60, width: TUOKOUXIUSwiftSCRE_W, height: 185 * TUOKOUXIUDeviceInfo.scaleX), collectionViewLayout: layout)
         tufuh_collcV.delegate = self
         tufuh_collcV.dataSource = self
         tufuh_collcV.backgroundColor = TUOKOUXIUSwiftheiseC
@@ -64,13 +64,13 @@ class TUOKOUXIUSwiftHomeContentCell2: UITableViewCell, UICollectionViewDelegate,
         
         
         tufuh_titleL.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.left.equalToSuperview().offset(22)
+            make.top.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(24)
             make.height.equalTo(32)
         }
         
         tufuh_lineV.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(24)
             make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
@@ -115,11 +115,11 @@ class TUOKOUXIUSwiftHomeContentCell2: UITableViewCell, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 185 * TUOKOUXIUDeviceInfo.scaleX)
+        return CGSize(width: 16, height: 185 * TUOKOUXIUDeviceInfo.scaleX)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 185 * TUOKOUXIUDeviceInfo.scaleX)
+        return CGSize(width: 16, height: 185 * TUOKOUXIUDeviceInfo.scaleX)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -135,12 +135,13 @@ class TUOKOUXIUSwiftHomeContentCell2: UITableViewCell, UICollectionViewDelegate,
         return .zero
     }
     
+    //列间距
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 16
     }
-    
+    //一行的话不生效
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 0.01
     }
     
     func tukou_resData(_ dataArray: [Any]) {

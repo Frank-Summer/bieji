@@ -83,10 +83,6 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
         
         self.view.backgroundColor = .black
         
-        if TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() == 0 {
-            self.tukou_noNetwV()
-            return
-        }
         self.tukou_testNet()
     }
     
@@ -212,25 +208,26 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
 
         if self.tufuh_noNetV != nil { return }
 
-        let tufuh_h = TUOKOUXIUSwiftSCRE_H - (TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 60) - TUOKOUXIUDeviceInfo.tukou_tabBarHeight
-        self.tufuh_noNetV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: tufuh_h),
-                                                 superView: self.view,
-                                                 bgColor: TUOKOUXIUSwiftheiseC)
+        self.tufuh_noNetV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H), superView: self.view, bgColor: TUOKOUXIUSwiftheiseC)
 
-        let tufuh_lL = UILabel.tukou_bjLabel(CGRect(x: 0, y: tufuh_h/2 - 12, width: TUOKOUXIUSwiftSCRE_W, height: 20),
-                                              text: "网络连接失败",
-                                              superView: self.tufuh_noNetV!,
-                                              textAlignment: .center,
-                                              font: TUOKOUXIUSwiftFont.medium(16),
-                                              textColor: TUOKOUXIUSwiftbaiseC)
-        let tufuh_lL2 = UILabel.tukou_bjLabel(CGRect(x: 0, y: tufuh_lL.frame.maxY + 6, width: TUOKOUXIUSwiftSCRE_W, height: 20),
-                                               text: "别急，好饭不怕晚，请检查当前网络状态后再试试",
-                                               superView: self.tufuh_noNetV!,
-                                               textAlignment: .center,
-                                               font: TUOKOUXIUSwiftFont.medium(16),
-                                               textColor: TUOKOUXIUSwiftbaiseC)
+        UIImageView.tukou_bjImageV(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-30, y: TUOKOUXIUSwiftSCRE_H/2-12-16-60, width: 60, height: 60), superView: self.tufuh_noNetV!, image: UIImage(named: "net"))
         
-        UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W/2 - 90/2, y: tufuh_lL2.frame.maxY + 24, width: 90, height: 36),
+        let label1 = UILabel.tukou_bjLabel(CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H/2-12, width: TUOKOUXIUSwiftSCRE_W, height: 24),
+                                            text: "网络连接失败",
+                                           superView: self.tufuh_noNetV!,
+                                            textAlignment: .center,
+                                           font: TUOKOUXIUSwiftFont.semibold(16),
+                                            textColor: TUOKOUXIUSwiftbaiseC)
+        
+        let label2 = UILabel.tukou_bjLabel(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-110, y: label1.frame.maxY, width: 220, height: 50),
+                                            text: "别急，好饭不怕晚，请检查当前网络状态后再试试",
+                                           superView: self.tufuh_noNetV!,
+                                            textAlignment: .center,
+                                           font: TUOKOUXIUSwiftFont.regular(14),
+                                            textColor: TUOKOUXIUWhiteA60)
+        label2.numberOfLines = 0
+        
+        UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-30, y: label2.frame.maxY + 24, width: 60, height: 40),
                              target: self,
                              imageName: "",
                              superView: self.tufuh_noNetV!,
@@ -238,8 +235,8 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
                              font: TUOKOUXIUSwiftFont.semibold(14),
                              title: "重试",
                              color: TUOKOUXIUSwiftbaiseC,
-                             bgColor: TUOKOUXIUSwiftZTClr,
-                             cornerRadius: 5)
+                             bgColor: TUOKOUXIUWhiteA10,
+                             cornerRadius: 12)
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -252,21 +249,21 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
             return TUOKOUXIUSwiftSCRE_H
         } else {
             if indexPath.row == 0 {
-                return 400
+                return 418  //content 224
             } else if indexPath.row == 1 {
-                return 247 * TUOKOUXIUDeviceInfo.scaleX
+                return 185 * TUOKOUXIUDeviceInfo.scaleX + 28 + 32 + 16
             } else if indexPath.row == 2 {
-                return 340 * TUOKOUXIUDeviceInfo.scaleX
+                return 320 * TUOKOUXIUDeviceInfo.scaleX + 32
             } else if indexPath.row == 3 {
-                return 200
+                return 16 + 24 + 10 + 20 + 80 + 20 //content 80
             } else if indexPath.row == 4 {
-                return 200
+                return 10 + 20 + 10 + 120 //content 120
             } else if indexPath.row == 5 {
-                return 200
+                return 10 + 20 + 10 + 80  //content 80
             } else if indexPath.row == 6 {
-                return 380
+                return 16 + 24 + 10 + 262 + 12 //content 262
             } else if indexPath.row == 7 {
-                return 170 * TUOKOUXIUDeviceInfo.scaleX
+                return 16 + 16 + 134
             }
         }
         return 0.01
@@ -310,32 +307,41 @@ class TUOKOUXIUSwiftHHHHSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeTopCellId", for: indexPath) as! TUOKOUXIUSwiftHomeTopCell
+            cell.backgroundColor = TUOKOUXIUSwiftheiseC
 //            cell.pdduo_contStr((pddds_dataArr[indexPath.row] as! String))
             return cell
         } else {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell1Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell1
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             } else if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell2Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell2
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             } else if indexPath.row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell3Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell3
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             } else if indexPath.row == 3 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell4Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell4
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             } else if indexPath.row == 4 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell5Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell5
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             } else if indexPath.row == 5 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell6Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell6
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             } else if indexPath.row == 6 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell7Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell7
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             } else if indexPath.row == 7 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell8Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell8
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             }
         }

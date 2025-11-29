@@ -36,13 +36,13 @@ class AlarmDurationPicker: UIView {
 
     private func setupUI() {
 
-        container.backgroundColor = TUOKOUXIUSwiftZTClr5A
+        container.backgroundColor = TUOKOUXIUWhiteA10
         container.layer.cornerRadius = 32
         container.clipsToBounds = true
         self.addSubview(container)
         container.frame = CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: 635)
         
-        handleBar.backgroundColor = TUOKOUXIUSwiftZTClr4A
+        handleBar.backgroundColor = TUOKOUXIUWhiteA30
         handleBar.layer.cornerRadius = 3
         container.addSubview(handleBar)
         handleBar.frame = CGRect(x: (UIScreen.main.bounds.width - 36)/2, y: 12, width: 36, height: 6)
@@ -58,7 +58,7 @@ class AlarmDurationPicker: UIView {
             picker.selectRow(index, inComponent: 0, animated: false)
         }
         
-        let AlarmClockV = UIView.tukou_bjView(CGRect(x: 20, y: picker.frame.maxY + 40, width: UIScreen.main.bounds.width - 40, height: 52), superView: container, bgColor: TUOKOUXIUSwiftZTClr5A)
+        let AlarmClockV = UIView.tukou_bjView(CGRect(x: 20, y: picker.frame.maxY + 40, width: UIScreen.main.bounds.width - 40, height: 52), superView: container, bgColor: TUOKOUXIUWhiteA10)
         AlarmClockV.layer.cornerRadius = 8
         
         let AlarmClockIV = UIImageView.tukou_bjImageV(CGRect(x: 16, y: 12, width: 24, height: 24), superView: AlarmClockV, image: UIImage(named: "home_notification"))
@@ -71,7 +71,7 @@ class AlarmDurationPicker: UIView {
         AlarmClockV.addSubview(AlarmClockSW)
         AlarmClockSW.addTarget(self, action: #selector(alarmClockSwitchValueChanged(_:)), for: .valueChanged)
         
-        let InterceptionV = UIView.tukou_bjView(CGRect(x: 20, y: AlarmClockV.frame.maxY + 16, width: UIScreen.main.bounds.width - 40, height: 52), superView: container, bgColor: TUOKOUXIUSwiftZTClr5A)
+        let InterceptionV = UIView.tukou_bjView(CGRect(x: 20, y: AlarmClockV.frame.maxY + 16, width: UIScreen.main.bounds.width - 40, height: 52), superView: container, bgColor: TUOKOUXIUWhiteA10)
         InterceptionV.layer.cornerRadius = 8
         
         let InterceptionIV = UIImageView.tukou_bjImageV(CGRect(x: 16, y: 12, width: 24, height: 24), superView: InterceptionV, image: UIImage(named: "home_blocking"))
@@ -83,7 +83,7 @@ class AlarmDurationPicker: UIView {
         InterceptionSW.addTarget(self, action: #selector(interceptionSwitchValueChanged(_:)), for: .valueChanged)
 
         let cancelBtn = UIButton.tukou_bjBtn(CGRect(x: 16, y: InterceptionV.frame.maxY + 40, width: 155, height: 44), target: self, title: "取消", superView: container, action: #selector(cancelAction))
-        cancelBtn.layer.borderColor = TUOKOUXIUSwiftZTClr11A.cgColor
+        cancelBtn.layer.borderColor = TUOKOUXIUWhiteA40.cgColor
         cancelBtn.layer.borderWidth = 1
         cancelBtn.layer.cornerRadius = 12
         cancelBtn.titleLabel?.font = TUOKOUXIUSwiftFont.medium(16)

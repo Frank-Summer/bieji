@@ -13,7 +13,7 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITa
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
+        v.backgroundColor = TUOKOUXIUWhiteA10
         return v
     }()
     
@@ -52,7 +52,7 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITa
     private func tukou_initV() {
         contentView.addSubview(tufuh_titleL)
         
-        tufuh_tabV.frame = CGRect(x: 0, y: 60, width: TUOKOUXIUSwiftSCRE_W, height: 320)
+        tufuh_tabV.frame = CGRect(x: 0, y: 50, width: TUOKOUXIUSwiftSCRE_W, height: 272)
         contentView.addSubview(self.tufuh_tabV)
         
         tufuh_tabV.delegate = self
@@ -66,14 +66,14 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITa
         tufuh_titleL.text = "声音与乐器"
         
         tufuh_titleL.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
-            make.top.equalToSuperview().offset(10)
-            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-44)
+            make.left.equalToSuperview().offset(24)
+            make.top.equalToSuperview().offset(12)
+            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(40)
         }
         
         tufuh_lineV.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(24)
             make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
@@ -84,7 +84,7 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITa
 //    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 36
+        return 34
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
