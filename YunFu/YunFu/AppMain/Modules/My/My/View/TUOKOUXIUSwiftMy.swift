@@ -150,8 +150,8 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
     }
     
     // MARK: - 点击设置按钮 → 跳转到设置页
-        @objc private func openSettings() {
-            let vc = MySettingViewController()
-            navigationController?.pushViewController(vc, animated: true)
-        }
+    @objc private func openSettings() {
+        let vc = SettingsViewController()   // UIKit 控制器
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

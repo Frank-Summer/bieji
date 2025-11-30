@@ -7,19 +7,17 @@
 
 import UIKit
 
-final class MyAccountSecurityViewModels {
+final class AccountSecurityViewModels {
     
-    // MARK: - Output
-    var sections: [AccountSecuritySection] = []
-    
-    // 数据更新回调
-    var onReload: (() -> Void)?
-    
-    init() {
-        loadData()
+    let router: AccountSecurityRouter
+    private(set) var sections: [AccountSecuritySection] = []
+
+    init(router: AccountSecurityRouter) {
+        self.router = router
+        load()
     }
-    
-    private func loadData() {
+
+    func load() {
         sections = [
             AccountSecuritySection(
                 header: "手机",
@@ -32,7 +30,7 @@ final class MyAccountSecurityViewModels {
             AccountSecuritySection(
                 header: "Apple",
                 items: [
-                    AccountSecurityItem(title: "Apple",value:"huoshangfenghou@gm...",state: "已绑定", icon: "chevron_right", action: {
+                    AccountSecurityItem(title: "Apple",value:"huoshangfenghou@gmadsdasdasdasasdas",state: "已绑定", icon: "chevron_right", action: {
                         print("打开账号信息")
                     })
                 ]
@@ -40,27 +38,23 @@ final class MyAccountSecurityViewModels {
             AccountSecuritySection(
                 header: "注销账号",
                 items: [
-                    AccountSecurityItem(title: "注销账号", value:"",state: "",icon: "chevron_right", action: {
+                    AccountSecurityItem(title: "注销账号", value:"",state: "",icon: "chevron_right", action: { [weak self] in
+                        self?.router.openDeleteAccount()
+                        })
+                ]
+            ),
+            
+            AccountSecuritySection(
+                header: "退出登录",
+                items: [
+                    AccountSecurityItem(title: "退出登录", value:"",state: "",icon: "chevron_right", action: {
                         print("打开账号信息")
                     })
                 ]
             ),
         ]
-        
-        onReload?()
     }
+    
+  
 }
 
-// MARK: - Model
-struct AccountSecuritySection {
-    let header: String
-    let items: [AccountSecurityItem]
-}
-
-struct AccountSecurityItem {
-    let title: String
-    let value: String
-    let state: String
-    let icon: String
-    let action: (() -> Void)?
-}
