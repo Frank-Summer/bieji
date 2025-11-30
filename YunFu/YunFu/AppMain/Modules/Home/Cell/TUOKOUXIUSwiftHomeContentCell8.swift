@@ -31,7 +31,7 @@ class TUOKOUXIUSwiftHomeContentCell8: UITableViewCell, UICollectionViewDelegate,
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
-        tufuh_collcV = UICollectionView(frame: CGRect(x: 0, y: 12, width: TUOKOUXIUSwiftSCRE_W, height: 134 * TUOKOUXIUDeviceInfo.scaleX), collectionViewLayout: layout)
+        tufuh_collcV = UICollectionView(frame: CGRect(x: 0, y: 16, width: TUOKOUXIUSwiftSCRE_W, height: 134), collectionViewLayout: layout)
         tufuh_collcV.delegate = self
         tufuh_collcV.dataSource = self
         tufuh_collcV.backgroundColor = TUOKOUXIUSwiftheiseC
@@ -81,15 +81,15 @@ class TUOKOUXIUSwiftHomeContentCell8: UITableViewCell, UICollectionViewDelegate,
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 //        if tufuh_dataArr.isEmpty { return .zero }
-        return CGSize(width: 180 * TUOKOUXIUDeviceInfo.scaleX, height: 134 * TUOKOUXIUDeviceInfo.scaleX)
+        return CGSize(width: 180, height: 134)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 134 * TUOKOUXIUDeviceInfo.scaleX)
+        return CGSize(width: 16, height: 134)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 134 * TUOKOUXIUDeviceInfo.scaleX)
+        return CGSize(width: 16, height: 134)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -105,12 +105,13 @@ class TUOKOUXIUSwiftHomeContentCell8: UITableViewCell, UICollectionViewDelegate,
         return .zero
     }
     
+    //列间距
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 16
     }
-    
+    //一行的话不生效
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 0.01
     }
     
     func tukou_resData(_ dataArray: [Any]) {

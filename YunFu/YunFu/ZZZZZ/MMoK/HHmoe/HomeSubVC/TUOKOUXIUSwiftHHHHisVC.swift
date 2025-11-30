@@ -324,7 +324,7 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
                 self.tufuh_botV = nil
                 self.tufuh_botV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H),
                                                      superView: self.view,
-                                                     bgColor: TUOKOUXIUSwiftZTClr7A)
+                                                     bgColor: TUOKOUXIUBlackA50)
 
                 let botV = UIView.tukou_bjView(CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H - 150, width: TUOKOUXIUSwiftSCRE_W, height: 150),
                                                superView: self.tufuh_botV!,
@@ -412,7 +412,7 @@ class TUOKOUXIUSwiftHHHHisVC: TUOKOUXIUSwiftBaseVC, UICollectionViewDelegate, UI
                 self.tufuh_botV = nil
                 self.tufuh_botV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H),
                                                      superView: self.view,
-                                                     bgColor: TUOKOUXIUSwiftZTClr7A)
+                                                     bgColor: TUOKOUXIUBlackA50)
 
                 let botV = UIView.tukou_bjView(CGRect(x: 0, y: TUOKOUXIUSwiftSCRE_H - 150, width: TUOKOUXIUSwiftSCRE_W, height: 150),
                                                superView: self.tufuh_botV!,

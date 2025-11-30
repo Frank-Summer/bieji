@@ -17,6 +17,47 @@ extension UIImageView {
     }
 }
 
+extension UIImageView {
+
+    /// 设置指定圆角和边框
+    func tukou_setIVCorners(
+        _ corners: UIRectCorner,
+        radius: CGFloat,
+        borderColor: UIColor? = nil,
+        borderWidth: CGFloat = 0
+    ) {
+        DispatchQueue.main.async {
+            let path = UIBezierPath(
+                roundedRect: self.bounds,
+                byRoundingCorners: corners,
+                cornerRadii: CGSize(width: radius, height: radius)
+            )
+
+            // mask layer (裁剪内容)
+            let maskLayer = CAShapeLayer()
+            maskLayer.path = path.cgPath
+            self.layer.mask = maskLayer
+
+            // 如果需要边框
+            if let borderColor = borderColor, borderWidth > 0 {
+                // 移除旧的 borderLayer
+                self.layer.sublayers?
+                    .filter { $0.name == "tukou_borderLayer" }
+                    .forEach { $0.removeFromSuperlayer() }
+
+                let borderLayer = CAShapeLayer()
+                borderLayer.name = "tukou_borderLayer"
+                borderLayer.path = path.cgPath
+                borderLayer.strokeColor = borderColor.cgColor
+                borderLayer.fillColor = UIColor.clear.cgColor
+                borderLayer.lineWidth = borderWidth
+                borderLayer.frame = self.bounds
+                self.layer.addSublayer(borderLayer)
+            }
+        }
+    }
+}
+
 extension UIScrollView {
 
     @discardableResult

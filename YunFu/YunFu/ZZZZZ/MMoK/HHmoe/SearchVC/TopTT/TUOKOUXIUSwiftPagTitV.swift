@@ -331,31 +331,11 @@ class TUOKOUXIUSwiftPagTitV: UIView {
                 tufuh_indiV.center.x = button.center.x
             }
             
-//            if tufuh_configure.tufuh_titGradiEffe {
-//                for btn in tufuh_btnMArr {
-//                    btn.titleLabel?.textColor = tufuh_configure.tufuh_titClr
-//                }
-//                button.titleLabel?.textColor = tufuh_configure.tufuh_titSeleClr
-//            }
         } else {
             for btn in tufuh_btnMArr {
                 btn.titleLabel?.font = tufuh_configure.tufuh_titFont
             }
             button.titleLabel?.font = tufuh_configure.tufuh_titSeleFon
-
-//            if tufuh_configure.tufuh_titGradiEffe {
-//                for btn in tufuh_btnMArr {
-//                    btn.titleLabel?.textColor = tufuh_configure.tufuh_titClr
-//                    btn.titleLabel?.font = tufuh_configure.tufuh_titFont
-//                }
-//                button.titleLabel?.textColor = tufuh_configure.tufuh_titSeleClr
-//                button.titleLabel?.font = tufuh_configure.tufuh_titSeleFon
-//            } else {
-//                for btn in tufuh_btnMArr {
-//                    btn.titleLabel?.font = tufuh_configure.tufuh_titFont
-//                }
-//                button.titleLabel?.font = tufuh_configure.tufuh_titSeleFon
-//            }
         }
     }
     private func tukou_seledBtnCen(_ centerBtn: UIButton) {
@@ -823,22 +803,22 @@ class TUOKOUXIUSwiftPagTitV: UIView {
 //        tufuh_endB = components.b
 //    }
     
-    func tukou_getRGBComponents(_ color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        return (r: red, g: green, b: blue)
-    }
+//    func tukou_getRGBComponents(_ color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
+//        var red: CGFloat = 0
+//        var green: CGFloat = 0
+//        var blue: CGFloat = 0
+//        var alpha: CGFloat = 0
+//        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+//        return (r: red, g: green, b: blue)
+//    }
 
-    var tufuh_resSeleInd: Int = 0 {
-        didSet {
-            if tufuh_resSeleInd >= 0 && tufuh_resSeleInd < tufuh_btnMArr.count {
-                tukou_btnAction(tufuh_btnMArr[tufuh_resSeleInd])
-            }
-        }
-    }
+//    var tufuh_resSeleInd: Int = 0 {
+//        didSet {
+//            if tufuh_resSeleInd >= 0 && tufuh_resSeleInd < tufuh_btnMArr.count {
+//                tukou_btnAction(tufuh_btnMArr[tufuh_resSeleInd])
+//            }
+//        }
+//    }
 
     func tukou_size(_ string: String, font: UIFont) -> CGSize {
         let attrs = [NSAttributedString.Key.font: font]

@@ -16,7 +16,7 @@ class TUOKOUXIUSwiftHomeContentCell3: UITableViewCell, UICollectionViewDelegate,
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
+        v.backgroundColor = TUOKOUXIUWhiteA10
         return v
     }()
     
@@ -54,7 +54,7 @@ class TUOKOUXIUSwiftHomeContentCell3: UITableViewCell, UICollectionViewDelegate,
         contentView.addSubview(tufuh_lineV)
         
         tufuh_lineV.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(24)
             make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
@@ -99,11 +99,11 @@ class TUOKOUXIUSwiftHomeContentCell3: UITableViewCell, UICollectionViewDelegate,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 320 * TUOKOUXIUDeviceInfo.scaleX)
+        return CGSize(width: 16, height: 320 * TUOKOUXIUDeviceInfo.scaleX)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: 10, height: 320 * TUOKOUXIUDeviceInfo.scaleX)
+        return CGSize(width: 16, height: 320 * TUOKOUXIUDeviceInfo.scaleX)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -119,12 +119,13 @@ class TUOKOUXIUSwiftHomeContentCell3: UITableViewCell, UICollectionViewDelegate,
         return .zero
     }
     
+    //列间距
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 16
     }
-    
+    //一行的话不生效
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
+        return 0.01
     }
     
     func tukou_resData(_ dataArray: [Any]) {

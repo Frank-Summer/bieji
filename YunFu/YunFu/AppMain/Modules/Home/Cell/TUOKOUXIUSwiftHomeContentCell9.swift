@@ -13,15 +13,15 @@ class TUOKOUXIUSwiftHomeContentCell9: UITableViewCell {
     private let tufuh_subTitleL: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.medium(14)
+        label.font = TUOKOUXIUSwiftFont.semibold(14)
         return label
     }()
     
 
     private let tufuh_contL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftZTClr3A
-        label.font = TUOKOUXIUSwiftFont.medium(14)
+        label.textColor = TUOKOUXIUWhiteA60
+        label.font = TUOKOUXIUSwiftFont.regular(14)
         label.numberOfLines = 0
         return label
     }()
@@ -50,7 +50,7 @@ class TUOKOUXIUSwiftHomeContentCell9: UITableViewCell {
         
         tufuh_hintIV.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(0)
-            make.left.equalToSuperview().offset(20)
+            make.left.equalToSuperview().offset(24)
             make.width.height.equalTo(24)
         }
         tufuh_subTitleL.snp.makeConstraints { make in

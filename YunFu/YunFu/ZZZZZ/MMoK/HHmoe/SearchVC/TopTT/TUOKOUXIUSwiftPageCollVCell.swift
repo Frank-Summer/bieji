@@ -34,7 +34,7 @@ class TUOKOUXIUSwiftPageCollVCell: UICollectionViewCell {
 
         tufuh_camIV.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_cam_tag", andIsOne: false)
 
-        tufuh_titL.textColor = TUOKOUXIUSwiftZTClr4A
+        tufuh_titL.textColor = TUOKOUXIUWhiteA30
         tufuh_titL.font = TUOKOUXIUSwiftFont.regular(12)
         tufuh_titL.numberOfLines = 2
         tufuh_titL.tufuh_verAlig = .top
@@ -43,7 +43,7 @@ class TUOKOUXIUSwiftPageCollVCell: UICollectionViewCell {
         tufuh_typeL.font = TUOKOUXIUSwiftFont.semibold(8)
         tufuh_typeL.text = "New"
 
-        tufuh_paraL.textColor = TUOKOUXIUSwiftZTClr3A
+        tufuh_paraL.textColor = TUOKOUXIUWhiteA60
         tufuh_paraL.font = TUOKOUXIUSwiftFont.semibold(8)
 
         contentView.addSubview(tufuh_coverIV)

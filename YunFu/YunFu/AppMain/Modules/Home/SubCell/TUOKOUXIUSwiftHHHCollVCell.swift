@@ -9,16 +9,18 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
 
     private let tufuh_coverIV: UIImageView = {
         let iv = UIImageView()
-        iv.backgroundColor = TUOKOUXIUSwiftheiseC
+        iv.backgroundColor = TUOKOUXIUWhiteA5
         iv.contentMode = .scaleAspectFill
         iv.tukou_roundCor(20)
         iv.clipsToBounds = true
+        iv.layer.borderWidth = 1
+        iv.layer.borderColor = TUOKOUXIUSmallWhiteA10.cgColor
         return iv
     }()
     private let tufuh_playingIV: UIImageView = {
         let iv = UIImageView()
         iv.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_cam_tag", andIsOne: false)
-        iv.tukou_roundCor(20)
+        iv.tukou_roundCor(40)
         iv.clipsToBounds = true
         return iv
     }()
@@ -47,10 +49,6 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
     }
     private func tukou_conSubV() {
         contentView.backgroundColor = TUOKOUXIUSwiftheiseC
-        contentView.tukou_roundCor(20)
-        contentView.clipsToBounds = true
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = TUOKOUXIUSwiftZTClr3.cgColor
         
         contentView.addSubview(tufuh_coverIV)
         contentView.addSubview(tufuh_playingIV)
@@ -65,19 +63,19 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
         }
         
         tufuh_playingIV.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(30 * TUOKOUXIUDeviceInfo.scaleX)
-            make.left.equalToSuperview().offset(32 * TUOKOUXIUDeviceInfo.scaleX)
+            make.top.equalToSuperview().offset(40 * TUOKOUXIUDeviceInfo.scaleX)
+            make.left.equalToSuperview().offset(144 * TUOKOUXIUDeviceInfo.scaleX/2 - 40)
             make.size.equalTo(CGSize(width: 80, height: 80))
         }
         
         tufuh_typeL.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(135 * TUOKOUXIUDeviceInfo.scaleX)
-            make.left.equalToSuperview().offset(10 * TUOKOUXIUDeviceInfo.scaleX)
+            make.bottom.equalToSuperview().offset(-31)
+            make.left.equalToSuperview().offset(12)
             make.height.equalTo(22)
         }
         tufuh_contentL.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_typeL.snp.bottom).offset(1)
-            make.left.equalToSuperview().offset(10 * TUOKOUXIUDeviceInfo.scaleX)
+            make.top.equalTo(tufuh_typeL.snp.bottom).offset(2)
+            make.left.equalToSuperview().offset(12)
             make.height.equalTo(17)
         }
     }

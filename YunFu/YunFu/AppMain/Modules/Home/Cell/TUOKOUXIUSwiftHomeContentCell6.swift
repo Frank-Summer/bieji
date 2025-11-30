@@ -7,21 +7,21 @@ class TUOKOUXIUSwiftHomeContentCell6: UITableViewCell {
     private let tufuh_titleL: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
-        label.font = TUOKOUXIUSwiftFont.medium(18)
+        label.font = TUOKOUXIUSwiftFont.semibold(14)
         return label
     }()
     
     private let tufuh_contL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftZTClr3A
-        label.font = TUOKOUXIUSwiftFont.regular(15)
+        label.textColor = TUOKOUXIUWhiteA60
+        label.font = TUOKOUXIUSwiftFont.regular(13)
         label.numberOfLines = 0
         return label
     }()
     
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
-        v.backgroundColor = TUOKOUXIUSwiftZTClr5A
+        v.backgroundColor = TUOKOUXIUWhiteA10
         return v
     }()
     
@@ -50,7 +50,7 @@ class TUOKOUXIUSwiftHomeContentCell6: UITableViewCell {
         
         tufuh_titleL.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(24)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-44)
             make.height.equalTo(20)
         }
@@ -58,11 +58,11 @@ class TUOKOUXIUSwiftHomeContentCell6: UITableViewCell {
         tufuh_contL.snp.makeConstraints { make in
             make.top.equalTo(tufuh_titleL.snp.bottom).offset(10)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(24)
         }
         
         tufuh_lineV.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(22)
+            make.left.equalToSuperview().offset(24)
             make.bottom.equalToSuperview().offset(-1)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)

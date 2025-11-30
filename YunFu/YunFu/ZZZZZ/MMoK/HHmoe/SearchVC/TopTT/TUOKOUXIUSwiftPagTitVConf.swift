@@ -52,7 +52,7 @@ class TUOKOUXIUSwiftPagTitVConf: NSObject {
     
     private var _tufuh_titClr: UIColor?
     var tufuh_titClr: UIColor {
-        get { _tufuh_titClr ?? TUOKOUXIUSwiftZTClr3A }
+        get { _tufuh_titClr ?? TUOKOUXIUWhiteA60 }
         set { _tufuh_titClr = newValue }
     }
     
