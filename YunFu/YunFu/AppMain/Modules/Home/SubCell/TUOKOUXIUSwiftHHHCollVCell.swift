@@ -48,7 +48,7 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     private func tukou_conSubV() {
-        contentView.backgroundColor = TUOKOUXIUSwiftheiseC
+        contentView.backgroundColor = TUOKOUXIUSwiftwuseC
         
         contentView.addSubview(tufuh_coverIV)
         contentView.addSubview(tufuh_playingIV)

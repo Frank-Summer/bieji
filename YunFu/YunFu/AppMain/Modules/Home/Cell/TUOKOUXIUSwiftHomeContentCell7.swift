@@ -26,7 +26,7 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITa
 
         tableView.sectionHeaderTopPadding = 0
 
-        tableView.backgroundColor = .black
+        tableView.backgroundColor = TUOKOUXIUSwiftwuseC
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
         tableView.estimatedRowHeight = 0
         tableView.estimatedSectionHeaderHeight = 0
@@ -41,7 +41,7 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITa
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        contentView.backgroundColor = .black
+        contentView.backgroundColor = TUOKOUXIUSwiftwuseC
         tukou_initV()
     }
     
@@ -94,6 +94,7 @@ class TUOKOUXIUSwiftHomeContentCell7: UITableViewCell, UITableViewDelegate, UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell9Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell9
 //            cell.pdduo_contStr((pddds_dataArr[indexPath.row] as! String))
+        cell.backgroundColor = TUOKOUXIUSwiftwuseC
         return cell
     }
     

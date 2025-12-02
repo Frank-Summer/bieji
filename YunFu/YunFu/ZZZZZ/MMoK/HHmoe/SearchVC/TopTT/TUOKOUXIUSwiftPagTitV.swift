@@ -22,12 +22,6 @@ class TUOKOUXIUSwiftPagTitV: UIView {
     var tufuh_allBtnWid: CGFloat = 0
     var tufuh_sigBtnInd: Int = 0
     var tufuh_sigBtnClk: Bool = false
-//    var tufuh_staR: CGFloat = 0
-//    var tufuh_staG: CGFloat = 0
-//    var tufuh_staB: CGFloat = 0
-//    var tufuh_endR: CGFloat = 0
-//    var tufuh_endG: CGFloat = 0
-//    var tufuh_endB: CGFloat = 0
     var tufuh_seleInd: Int = 0
     private var tufuh_titArr: [String]
     
@@ -253,12 +247,6 @@ class TUOKOUXIUSwiftPagTitV: UIView {
             tufuh_btnMArr.append(btn)
             tufuh_scrollV.addSubview(btn)
         }
-        
-//        if tufuh_configure.tufuh_titGradiEffe {
-//            tukou_setStaClr(tufuh_configure.tufuh_titClr)
-//            tukou_setEndClr(tufuh_configure.tufuh_titSeleClr)
-//        }
-        
 
         if tufuh_configure.tufuh_shoVerSepar {
             for _ in 0..<tufuh_titleCount - 1 {
@@ -416,10 +404,6 @@ class TUOKOUXIUSwiftPagTitV: UIView {
                 tukou_indicScrStyOther(progress: progress, originalBtn: originalBtn, targetBtn: targetBtn)
             }
         }
-
-//        if tufuh_configure.tufuh_titGradiEffe {
-//            tukou_titGradiEffe(progress: progress, originalBtn: originalBtn, targetBtn: targetBtn)
-//        }
 
         let selectedFont = tufuh_configure.tufuh_titSeleFon
         let defaultFont = TUOKOUXIUSwiftFont.regular(15)
@@ -762,63 +746,6 @@ class TUOKOUXIUSwiftPagTitV: UIView {
             }
         }
     }
-
-//    func tukou_titGradiEffe(progress: CGFloat, originalBtn: UIButton, targetBtn: UIButton) {
-//        let targetProgress = progress
-//        let originalProgress = 1.0 - targetProgress
-//        
-//        let r = tufuh_endR - tufuh_staR
-//        let g = tufuh_endG - tufuh_staG
-//        let b = tufuh_endB - tufuh_staB
-//        
-//        let originalColor = UIColor(
-//            red: tufuh_staR + r * originalProgress,
-//            green: tufuh_staG + g * originalProgress,
-//            blue: tufuh_staB + b * originalProgress,
-//            alpha: 1.0
-//        )
-//        
-//        let targetColor = UIColor(
-//            red: tufuh_staR + r * targetProgress,
-//            green: tufuh_staG + g * targetProgress,
-//            blue: tufuh_staB + b * targetProgress,
-//            alpha: 1.0
-//        )
-//        
-//        originalBtn.setTitleColor(originalColor, for: .normal)
-//        targetBtn.setTitleColor(targetColor, for: .normal)
-//    }
-    
-//    private func tukou_setStaClr(_ color: UIColor) {
-//        let components = tukou_getRGBComponents(color)
-//        tufuh_staR = components.r
-//        tufuh_staG = components.g
-//        tufuh_staB = components.b
-//    }
-//
-//    private func tukou_setEndClr(_ color: UIColor) {
-//        let components = tukou_getRGBComponents(color)
-//        tufuh_endR = components.r
-//        tufuh_endG = components.g
-//        tufuh_endB = components.b
-//    }
-    
-//    func tukou_getRGBComponents(_ color: UIColor) -> (r: CGFloat, g: CGFloat, b: CGFloat) {
-//        var red: CGFloat = 0
-//        var green: CGFloat = 0
-//        var blue: CGFloat = 0
-//        var alpha: CGFloat = 0
-//        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-//        return (r: red, g: green, b: blue)
-//    }
-
-//    var tufuh_resSeleInd: Int = 0 {
-//        didSet {
-//            if tufuh_resSeleInd >= 0 && tufuh_resSeleInd < tufuh_btnMArr.count {
-//                tukou_btnAction(tufuh_btnMArr[tufuh_resSeleInd])
-//            }
-//        }
-//    }
 
     func tukou_size(_ string: String, font: UIFont) -> CGSize {
         let attrs = [NSAttributedString.Key.font: font]

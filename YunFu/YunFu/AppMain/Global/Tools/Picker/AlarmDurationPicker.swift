@@ -51,7 +51,7 @@ class AlarmDurationPicker: UIView {
 
         picker.dataSource = self
         picker.delegate = self
-        picker.backgroundColor = .clear
+        picker.backgroundColor = TUOKOUXIUSwiftwuseC
         container.addSubview(picker)
         picker.frame = CGRect(x: 22, y: 106, width: UIScreen.main.bounds.width - 44, height: 240)
         if let index = durations.firstIndex(of: 15) {

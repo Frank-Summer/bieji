@@ -23,8 +23,8 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
     private lazy var tufuh_enterBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.backgroundColor = TUOKOUXIUWhiteA10
-        button.layer.cornerRadius = 12
-        button.titleLabel?.font = TUOKOUXIUSwiftFont.semibold(16)
+        button.layer.cornerRadius = 24
+        button.titleLabel?.font = TUOKOUXIUSwiftFont.semibold(17)
         button.setTitle("进入", for: .normal)
         button.addTarget(self, action: #selector(tukou_goToMore), for: .touchUpInside)
         return button
@@ -46,7 +46,7 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        contentView.backgroundColor = .black
+//        contentView.backgroundColor = .black
         tukou_initV()
     }
     
@@ -86,7 +86,7 @@ class TUOKOUXIUSwiftHomeContentCell1: UITableViewCell {
             make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(28)
             make.left.equalToSuperview().offset(24)
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
-            make.height.equalTo(44)
+            make.height.equalTo(48)
         }
         tufuh_contL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)

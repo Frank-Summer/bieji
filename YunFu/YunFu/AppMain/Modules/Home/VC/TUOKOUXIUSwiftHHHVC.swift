@@ -150,7 +150,7 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
             
             let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
             
-            let contentV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-335/2, y: 0, width: 335, height: 80), superView: self.tufuh_toolsW!, bgColor: .clear)
+            let contentV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-335/2, y: 0, width: 335, height: 80), superView: self.tufuh_toolsW!, bgColor: TUOKOUXIUSwiftwuseC)
             let intervalWidth = (335-20-40*4-48)/4
             let collectionBtn = UIButton.tukou_bjBtn(CGRect(x: 10, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_collection_default"), superView: contentV, action: #selector(clickCollect(_:)))
             collectionBtn.setImage(UIImage(named: "home_collection_selected"), for: .selected)
@@ -270,7 +270,7 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         self.tufuh_scrV = UIScrollView.tukou_bjScrollV(
             CGRect(x: 0, y: 16, width: 152, height: 164),
             superView: botV,
-            bgColor: .clear
+            bgColor: TUOKOUXIUSwiftwuseC
         )
         self.tufuh_scrV.showsVerticalScrollIndicator = false
         
@@ -561,7 +561,7 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         let tufuh_scrTypeV = UIScrollView.tukou_bjScrollV(
             CGRect(x: 20, y: 30, width: TUOKOUXIUSwiftSCRE_W - 70, height: TUOKOUXIUSwiftSCRE_H-(TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight+12)-30),
             superView: tufuh_container!,
-            bgColor: .clear
+            bgColor: TUOKOUXIUSwiftwuseC
         )
         tufuh_scrTypeV.showsVerticalScrollIndicator = false
 
@@ -573,10 +573,10 @@ class TUOKOUXIUSwiftHHHVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, 
         for i in 0...tufuh_arr.count - 1 {
             let tufuh_string = tufuh_arr[i]
             let btnY = 30 + i * (48 + 20)
-            let typeV = UIView.tukou_bjView(CGRect(x: 0, y: btnY, width: Int(TUOKOUXIUSwiftSCRE_W), height: 48), superView: tufuh_scrTypeV, bgColor: .clear)
+            let typeV = UIView.tukou_bjView(CGRect(x: 0, y: btnY, width: Int(TUOKOUXIUSwiftSCRE_W), height: 48), superView: tufuh_scrTypeV, bgColor: TUOKOUXIUSwiftwuseC)
             typeV.tukou_addTapGesture(target: self, action: #selector(clickTypeUpdate(_:)))
             let typeIconIV = UIImageView.tukou_bjImageV(CGRect(x: 20, y: 0, width: 48, height: 48), superView: typeV, image: UIImage(named: "sleep"))
-            typeIconIV.backgroundColor = .clear
+            typeIconIV.backgroundColor = TUOKOUXIUSwiftwuseC
             typeIconIV.layer.cornerRadius = 24
             typeIconIV.layer.masksToBounds = true
             typeIconIV.layer.borderWidth = 1

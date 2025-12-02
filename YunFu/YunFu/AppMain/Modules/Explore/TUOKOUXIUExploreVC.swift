@@ -11,6 +11,7 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
     var tufuh_dataTreArr: [[String: Any]] = []
     var tufuh_dataTDict: [String: Any] = [:]
     var tufuh_headOpen: Bool = false
+    
 
     private var cancellables = Set<AnyCancellable>()
     
@@ -18,11 +19,8 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
-        
         tableView.contentInsetAdjustmentBehavior = .never
-
         tableView.sectionHeaderTopPadding = 0
-
         tableView.backgroundColor = .black
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
         tableView.estimatedRowHeight = 0
@@ -51,9 +49,11 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         tufuh_dataTDict = [:]
         
         view.backgroundColor = TUOKOUXIUSwiftheiseC
-        tukou_topVi()
-
+        
         tukou_testNet()
+        
+        UIImageView.tukou_bjImageV(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-72/2, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 29, width: 72, height: 18), superView: self.view, image: UIImage(named: "Explore-title"))
+        UIImageView.tukou_bjImageV(CGRect(x: 0, y: 0, width: Int(TUOKOUXIUSwiftSCRE_W), height: Int(TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight) + 76), superView: self.view, image: UIImage(named: "home_top_shadow"))
     }
     
     @objc func tukou_testNet() {
@@ -64,108 +64,22 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         }
     }
     
-    func tukou_topVi() {
-        tufuh_topV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 76), superView: self.view, bgColor: TUOKOUXIUWhiteA5)
-        UIImageView.tukou_bjImageV(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-72/2, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 29, width: 72, height: 18), superView: tufuh_topV!, image: UIImage(named: "Explore-title"))
-        let preBtn = UIButton.tukou_bjBtn(CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 18, width: 40, height: 40), target: self, image: UIImage(named: "Explore-present"), superView: tufuh_topV!, action: #selector(clickPresent))
-        preBtn.backgroundColor = .black
-        preBtn.layer.cornerRadius = 20
-        preBtn.layer.borderWidth = 1
-        preBtn.layer.borderColor = TUOKOUXIUWhiteA40.cgColor
-        
-        let vipBtn = UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W - 20 - 40, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 18, width: 40, height: 40), target: self, image: UIImage(named: "Explore-vip"), superView: tufuh_topV!, action: #selector(clickVip))
-        vipBtn.backgroundColor = .black
-        vipBtn.layer.cornerRadius = 20
-        vipBtn.layer.borderWidth = 1
-        vipBtn.layer.borderColor = TUOKOUXIUWhiteA40.cgColor
-    }
-    
-    @objc func clickPresent() {
-        print("点击赠送")
-    }
-    
-    @objc func clickVip() {
-        print("点击vip")
-    }
-    
     @objc func tukou_creTabV() {
-//        if !tufuh_dataTreArr.isEmpty {
-//            return
-//        }
         if (tufuh_noNetV != nil) {
             tufuh_noNetV!.removeFromSuperview()
             tufuh_noNetV = nil
         }
         
-        self.tufuh_tabV.frame = CGRect(x: 0, y: tufuh_topV!.frame.maxY, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H - tufuh_topV!.frame.maxY)
+        self.tufuh_tabV.frame = CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H)
         self.view.addSubview(self.tufuh_tabV)
-        
         self.tufuh_tabV.delegate = self
         self.tufuh_tabV.dataSource = self
-        
         self.tufuh_tabV.register(UITableViewCell.self, forCellReuseIdentifier: "TUOKOUXIUExploreTabVVDefCellId")
-
         self.tufuh_tabV.register(TUOKOUXIUExploreCell1.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell1Id")
         self.tufuh_tabV.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell2Id")
         self.tufuh_tabV.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell3Id")
         self.tufuh_tabV.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell4Id")
         self.tufuh_tabV.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell5Id")
-
-    }
-    
-    func tukou_reqSouSuo(isPull: Bool) {
-        guard TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() != 0 else {
-            TUOKOUXIUSwiftKeyWindow()!.makeToast("The network is abnormal. Please check the network link!", duration: 2.0, position: .center)
-            return
-        }
-        
-        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jzGFV(TUOKOUXIUSwiftKeyWinRoV)
-        
-        let tufuh_arr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_routesArr
-        guard tufuh_arr.count >= 6 else {
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_tipsV()
-            return
-        }
-        
-        var tufuh_psDict = self.tufuh_dataTDict
-        tufuh_psDict["bid"] = TUOKOUXIUSSApp.tukou_idfi()
-
-        guard tufuh_arr.count > 5,
-              let fifthItem = tufuh_arr[5] as? [String: Any],
-              let tufuh_url = fifthItem["cd"] as? String else {
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_tipsV()
-            return
-        }
-
-        let tufuh_ba64Str = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_shuJJM(["cd": tufuh_url, "ps": [tufuh_psDict]])
-        if TUOKOUXISSUUtils.tukou_isStringEmpty(tufuh_ba64Str) {
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_tipsV()
-            return
-        }
-        
-        TUOKOUXIUSwiftWWWL.tukou_shared.tukou_requWithURL(TUOKOUXIUSwiftConst.TUOKOUXIUjkzx, pars: [tufuh_ba64Str]) { [weak self] dataDict, isSuccess in
-            guard let self = self else { return }
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
-            
-            if isSuccess {
-                if let str = dataDict as? String {
-                    self.tukou_checkCode(str) { success in
-                        if success {
-                            self.tukou_reqSouSuo(isPull: false)
-                        }
-                    }
-                    return
-                }
-                
-                guard let tufuh_resArr = dataDict as? [[String: Any]] else { return }
-                
-            } else {
-
-            }
-        }
     }
 
     func tukou_noNetwV() {
@@ -205,7 +119,6 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-//        if self.tufuh_dataTreArr.isEmpty { return 0 }
         return 1
     }
 
@@ -218,9 +131,9 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if tufuh_headOpen {
-            return 524
+            return 524 + TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 76
         } else {
-            return 112
+            return 112 + TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 76
         }
     }
     
@@ -231,7 +144,7 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         } else {
             height = 112
         }
-        
+        let staY: CGFloat = TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 76.0
         let tufuh_v = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: height))
         tufuh_v.backgroundColor = TUOKOUXIUWhiteA5
 
@@ -260,7 +173,7 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
                 let col = i % columnCount
                 
                 let btnX = leftPadding + col * (itemW + columnSpacing)
-                let btnY = row * (itemH + rowSpacing) + 1
+                let btnY = Int(staY) + row * (itemH + rowSpacing) + 1
 
                 let btnV = UIButton.tukou_bjBtnNoImage(
                     CGRect(x: btnX, y: btnY, width: itemW, height: itemH),
@@ -286,14 +199,12 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
                     btnV.layer.borderWidth = 0
                 }
 
-                // 图标
                 let typeIconIV = UIImageView.tukou_bjImageV(
                     CGRect(x: itemW/2-32/2, y: 12, width: 32, height: 32),
                     superView: btnV,
                     image: UIImage(named: tufuh_arr2[i])
                 )
 
-                // 文案
                 let _ = UILabel.tukou_bjLabel(
                     CGRect(x: 0, y: Int(typeIconIV.frame.maxY) + 10, width: itemW, height: 17),
                     text: tufuh_arr[i],
@@ -311,7 +222,7 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
                 let tufuh_string = tufuh_arr[i]
                 let tufuh_string2 = tufuh_arr2[i]
                 let btnX = 20 + i * (76 + 10)
-                let btnV = UIButton.tukou_bjBtnNoImage(CGRect(x: btnX, y: 1, width: 76, height: 87), target: self, superView: tufuh_v, action: #selector(clickTypeUpdate(_:)))
+                let btnV = UIButton.tukou_bjBtnNoImage(CGRect(x: btnX, y: Int(staY) + 1, width: 76, height: 87), target: self, superView: tufuh_v, action: #selector(clickTypeUpdate(_:)))
                 btnV.layer.cornerRadius = 20
                 btnV.tag = i
                 if i == 2 {
@@ -332,10 +243,12 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
                 let _ = UILabel.tukou_bjLabel(CGRect(x: 0, y: typeIconIV.frame.maxY + 10, width: 76, height: 17), text: tufuh_string, superView: btnV, textAlignment: .center, font: TUOKOUXIUSwiftFont.regular(12), textColor: TUOKOUXIUSwiftbaiseC)
             }
         }
-        UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 1), superView: tufuh_v, bgColor: .black)
-        UIView.tukou_bjView(CGRect(x: 0, y: 0, width: 1, height: height), superView: tufuh_v, bgColor: .black)
-        UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W-1, y: 0, width: 1, height: height), superView: tufuh_v, bgColor: .black)
-        let botBtn = UIButton.tukou_bjBtnNoImage(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-36/2, y: height-16, width: 36, height: 6), target: self, superView: tufuh_v, action: #selector(clickOpenHeadView))
+
+        UIView.tukou_bjView(CGRect(x: 0, y: staY, width: 1, height: height), superView: tufuh_v, bgColor: .black)
+        UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W-1, y: staY, width: 1, height: height), superView: tufuh_v, bgColor: .black)
+        let botV = UIView.tukou_bjView(CGRect(x: 22, y: staY+height-34, width: TUOKOUXIUSwiftSCRE_W-44, height: 34), superView: tufuh_v, bgColor: TUOKOUXIUSwiftwuseC)
+                botV.tukou_addTapGesture(target: self, action: #selector(clickOpenHeadView))
+        let botBtn = UIButton.tukou_bjBtnNoImage(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-36/2, y: staY+height-16, width: 36, height: 6), target: self, superView: tufuh_v, action: #selector(clickOpenHeadView))
         botBtn.backgroundColor = TUOKOUXIUWhiteA30
         botBtn.layer.cornerRadius = 3
         botBtn.tukou_setEnlargeEdge(9)
@@ -347,7 +260,6 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         tufuh_tabV.reloadData()
     }
                                              
-    //点击更新类型
     @objc func clickTypeUpdate(_ btn: UIButton) {
         let _ = btn.tag
     }
@@ -369,24 +281,32 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell1Id", for: indexPath) as! TUOKOUXIUExploreCell1
+            cell.backgroundColor = TUOKOUXIUSwiftheiseC
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell2Id", for: indexPath) as! TUOKOUXIUExploreCell2
+            cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = false
             cell.tukou_nameString("活跃")
+            cell.TUOKOUXIUclkItemBlk = { [weak self] model in
+                self!.showDetail()
+            }
             return cell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell3Id", for: indexPath) as! TUOKOUXIUExploreCell2
+            cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = false
             cell.tukou_nameString("助眠")
             return cell
         } else if indexPath.row == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell4Id", for: indexPath) as! TUOKOUXIUExploreCell2
+            cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = false
             cell.tukou_nameString("放松")
             return cell
         } else if indexPath.row == 4 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell5Id", for: indexPath) as! TUOKOUXIUExploreCell2
+            cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = true
             cell.tukou_nameString("专注")
             return cell
@@ -396,5 +316,11 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         cell.backgroundColor = TUOKOUXIUSwiftheiseC
         return cell
     }
-
+    
+    func showDetail() {
+        print("点击显示详情")
+        
+        let picker = ExploreDetailView()
+        picker.show(in: self.view)
+    }
 }

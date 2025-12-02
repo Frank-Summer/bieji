@@ -31,7 +31,7 @@ class TUOKOUXIUSwiftHomeContentCell2: UITableViewCell, UICollectionViewDelegate,
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
-        contentView.backgroundColor = .black
+//        contentView.backgroundColor = .black
         contentView.isUserInteractionEnabled = true
         tukou_initV()
     }
@@ -49,7 +49,7 @@ class TUOKOUXIUSwiftHomeContentCell2: UITableViewCell, UICollectionViewDelegate,
         tufuh_collcV = UICollectionView(frame: CGRect(x: 0, y: 60, width: TUOKOUXIUSwiftSCRE_W, height: 185 * TUOKOUXIUDeviceInfo.scaleX), collectionViewLayout: layout)
         tufuh_collcV.delegate = self
         tufuh_collcV.dataSource = self
-        tufuh_collcV.backgroundColor = TUOKOUXIUSwiftheiseC
+        tufuh_collcV.backgroundColor = TUOKOUXIUSwiftwuseC
         tufuh_collcV.showsHorizontalScrollIndicator = false
         
         tufuh_collcV.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "TUOKOUXIUHHHTabVHisDefCellId")

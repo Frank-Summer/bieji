@@ -2,6 +2,8 @@
 import UIKit
 import SnapKit
 
+typealias TUOKOUXIU_ClkItemBlk = (_ dict: [String: Any]) -> Void
+
 //enum TufuhItemNew {
 //    case dict([String: Any])
 //    case array([Any])
@@ -13,6 +15,8 @@ class TUOKOUXIUExploreCell2: UITableViewCell, UICollectionViewDelegate, UICollec
     var tufuh_priDict: [String: Any] = [:]
     var tufuh_isLock: Bool = false
 //    private var tufuh_dataArr: [TufuhItemNew] = []
+    
+    var TUOKOUXIUclkItemBlk: TUOKOUXIU_ClkItemBlk?
     
     private let tufuh_titleL: UILabel = {
         let label = UILabel()
@@ -73,7 +77,7 @@ class TUOKOUXIUExploreCell2: UITableViewCell, UICollectionViewDelegate, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        switch tufuh_dataArr[indexPath.row] {
 //        case .dict(let dict):
-//            tufuh_clkItemBlk?(dict)
+        TUOKOUXIUclkItemBlk?(["id":"111"])
 //        case .array(let arr):
 //            tufuh_clkItemArrBlk?(arr)
 //        }
