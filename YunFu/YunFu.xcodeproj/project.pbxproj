@@ -413,7 +413,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 65C565KHM4;
+				DEVELOPMENT_TEAM = BYRP6L2B45;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -439,7 +439,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YunFu/ZZZZZ/SSFangK/MyOpenSSL/lib",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -549,7 +549,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 65C565KHM4;
+				DEVELOPMENT_TEAM = BYRP6L2B45;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -575,7 +575,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/YunFu/ZZZZZ/SSFangK/MyOpenSSL/lib",
 				);
-				MARKETING_VERSION = 1.2.3;
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
