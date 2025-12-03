@@ -120,6 +120,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window?.makeKeyAndVisible()
     }
 }
-
-
-///测试
