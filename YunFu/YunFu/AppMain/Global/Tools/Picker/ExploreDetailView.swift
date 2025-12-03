@@ -61,14 +61,14 @@ class ExploreDetailView: UIView, UITableViewDelegate, UITableViewDataSource {
         
         self.tufuh_tabV.register(UITableViewCell.self, forCellReuseIdentifier: "TUOKOUXIUHHHTabVVDefCellId")
         
-        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell1.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell1Id")
-        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell2.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell2Id")
-        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell3.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell3Id")
-        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell4.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell4Id")
-        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell5.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell5Id")
-        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell6.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell6Id")
-        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell7.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell7Id")
-        self.tufuh_tabV.register(TUOKOUXIUSwiftHomeContentCell8.self, forCellReuseIdentifier: "TUOKOUXIUSwiftHomeContentCell8Id")
+        self.tufuh_tabV.register(HomeSubContentCell1.self, forCellReuseIdentifier: "HomeSubContentCell1Id")
+        self.tufuh_tabV.register(HomeSubContentCell2.self, forCellReuseIdentifier: "HomeSubContentCell2Id")
+        self.tufuh_tabV.register(HomeSubContentCell3.self, forCellReuseIdentifier: "HomeSubContentCell3Id")
+        self.tufuh_tabV.register(HomeSubContentCell4.self, forCellReuseIdentifier: "HomeSubContentCell4Id")
+        self.tufuh_tabV.register(HomeSubContentCell5.self, forCellReuseIdentifier: "HomeSubContentCell5Id")
+        self.tufuh_tabV.register(HomeSubContentCell6.self, forCellReuseIdentifier: "HomeSubContentCell6Id")
+        self.tufuh_tabV.register(HomeSubContentCell7.self, forCellReuseIdentifier: "HomeSubContentCell7Id")
+        self.tufuh_tabV.register(HomeSubContentCell8.self, forCellReuseIdentifier: "HomeSubContentCell8Id")
     }
 
     private func setupGesture() {
@@ -175,35 +175,35 @@ class ExploreDetailView: UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell1Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell1
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell1Id", for: indexPath) as! HomeSubContentCell1
             cell.backgroundColor = TUOKOUXIUSwiftwuseC
             return cell
         } else if indexPath.row == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell2Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell2
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell2Id", for: indexPath) as! HomeSubContentCell2
             cell.backgroundColor = TUOKOUXIUSwiftwuseC
             return cell
         } else if indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell3Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell3
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell3Id", for: indexPath) as! HomeSubContentCell3
             cell.backgroundColor = TUOKOUXIUSwiftwuseC
             return cell
         } else if indexPath.row == 3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell4Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell4
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell4Id", for: indexPath) as! HomeSubContentCell4
             cell.backgroundColor = TUOKOUXIUSwiftwuseC
             return cell
         } else if indexPath.row == 4 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell5Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell5
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell5Id", for: indexPath) as! HomeSubContentCell5
             cell.backgroundColor = TUOKOUXIUSwiftwuseC
             return cell
         } else if indexPath.row == 5 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell6Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell6
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell6Id", for: indexPath) as! HomeSubContentCell6
             cell.backgroundColor = TUOKOUXIUSwiftwuseC
             return cell
         } else if indexPath.row == 6 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell7Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell7
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell7Id", for: indexPath) as! HomeSubContentCell7
             cell.backgroundColor = TUOKOUXIUSwiftwuseC
             return cell
         } else if indexPath.row == 7 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUSwiftHomeContentCell8Id", for: indexPath) as! TUOKOUXIUSwiftHomeContentCell8
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell8Id", for: indexPath) as! HomeSubContentCell8
             cell.backgroundColor = TUOKOUXIUSwiftwuseC
             return cell
         }
