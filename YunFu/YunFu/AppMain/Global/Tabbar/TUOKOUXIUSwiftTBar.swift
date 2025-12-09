@@ -169,6 +169,19 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     
     @objc func clickPlayAndPause() {
         tufuh_rightBtn?.isSelected = !tufuh_rightBtn!.isSelected
+        if tufuh_rightBtn?.isSelected == true {
+            print("暂停")
+            NotificationCenter.default.post(
+                name: Notification.Name("TUOKOUXIUAudioPause"),
+                object: nil
+            )
+        } else {
+            print("播放")
+            NotificationCenter.default.post(
+                name: Notification.Name("TUOKOUXIUAudioPlay"),
+                object: nil
+            )
+        }
     }
     
     @objc func clicktabCenterBtn() {
@@ -216,6 +229,19 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             }
         } else if sender.tag == 1 {
             sender.isSelected = !sender.isSelected
+            if sender.isSelected {
+                print("播放")
+                NotificationCenter.default.post(
+                    name: Notification.Name("TUOKOUXIUAudioPlay"),
+                    object: nil
+                )
+            } else {
+                print("暂停")
+                NotificationCenter.default.post(
+                    name: Notification.Name("TUOKOUXIUAudioPause"),
+                    object: nil
+                )
+            }
             let tufuh_btn0 = self.tufuh_tabButArr[0]
             if tufuh_btn0.isSelected {
                 tufuh_btn0.isSelected = !tufuh_btn0.isSelected

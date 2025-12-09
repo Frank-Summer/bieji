@@ -72,14 +72,14 @@ class TUOKOUXIUSwiftBaseVC: UIViewController {
         
         let tufuh_staSArr = tufuh_dict["staticresources"] as? [[String: Any]] ?? []
         
-        let sLcom = TUOKOUXIUSwiftComSJ.tukou_sLcom
-        if sLcom.tufuh_staSArr.isEmpty {
-            sLcom.tufuh_staSArr = tufuh_staSArr
-        }
-        
-        if sLcom.tufuh_hhTabsArr.isEmpty {
-            sLcom.tufuh_hhTabsArr = tufuh_dict["toptabs"] as! [Any]
-        }
+//        let sLcom = TUOKOUXIUSwiftComSJ.tukou_sLcom
+//        if sLcom.tufuh_staSArr.isEmpty {
+//            sLcom.tufuh_staSArr = tufuh_staSArr
+//        }
+//        
+//        if sLcom.tufuh_hhTabsArr.isEmpty {
+//            sLcom.tufuh_hhTabsArr = tufuh_dict["toptabs"] as! [Any]
+//        }
 
 //        if TUOKOUXISSUUtils.tukou_isStringEmpty(sLcom.tufuh_ic_adPl) {
 //            tukou_goAdPl(true)
@@ -282,7 +282,7 @@ class TUOKOUXIUSwiftBaseVC: UIViewController {
                 
                 if let dataDic = dataDict as? [String: Any], let dataObject = dataDic["data"] {
                     if let dataArray = dataObject as? [[String: Any]], !dataArray.isEmpty {
-                        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_routesArr = dataArray
+//                        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_routesArr = dataArray
                         
                         if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_iconUrlExist {
                             self.tufuh_block?(true)

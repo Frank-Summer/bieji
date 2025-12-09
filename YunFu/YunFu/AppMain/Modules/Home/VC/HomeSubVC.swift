@@ -5,7 +5,7 @@ import AVFoundation
 class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSource {
     private var isPlayerSetup = false
     var tufuh_num: Int = 0
-
+    
     // MARK: - 公共/UI
     private let playerView = VideoPlayerView()           // 只创建一次
     private let loadingView: UIActivityIndicatorView = {
@@ -30,9 +30,30 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         tableView.dataSource = self
         return tableView
     }()
+    
+    func playAudio(with url: URL) {
+        let item = AVPlayerItem(url: url)
+
+        if audioPlayer == nil {
+            audioPlayer = AVPlayer(playerItem: item)
+        } else {
+            audioPlayer?.replaceCurrentItem(with: item)
+        }
+
+        audioPlayer?.volume = 1.0
+        audioPlayer?.play()
+    }
+    
+    func stopAudio() {
+        audioPlayer?.pause()
+        audioPlayer = nil
+    }
 
     // MARK: - 播放器状态
-    let videoURL: URL               // 当前子控制器视频 URL（初始化注入）
+    let videoURL: URL?               // 当前子控制器视频 URL（初始化注入）
+    //音频
+    private var audioPlayer: AVPlayer?
+    let audioURL: URL?
     var player: AVPlayer?          // AVPlayer 类属性（可复用或替换 item）
     private var observedItem: AVPlayerItem? // 当前正在监听的 item（用于安全移除 KVO）
 
@@ -40,8 +61,9 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     private var didSetupPlayerInCell = false
 
     // MARK: - 生命周期
-    init(videoURL: URL) {
+    init(videoURL: URL, audioURL: URL) {
         self.videoURL = videoURL
+        self.audioURL = audioURL
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -63,15 +85,41 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         tufuh_tabV.register(HomeSubContentCell1.self, forCellReuseIdentifier: "HomeSubContentCell1Id")
         tufuh_tabV.register(HomeSubContentCell2.self, forCellReuseIdentifier: "HomeSubContentCell2Id")
         tufuh_tabV.register(HomeSubContentCell3.self, forCellReuseIdentifier: "HomeSubContentCell3Id")
-
+        tufuh_tabV.register(HomeSubContentCell4.self, forCellReuseIdentifier: "HomeSubContentCell4Id")
+        tufuh_tabV.register(HomeSubContentCell5.self, forCellReuseIdentifier: "HomeSubContentCell5Id")
+        tufuh_tabV.register(HomeSubContentCell6.self, forCellReuseIdentifier: "HomeSubContentCell6Id")
+        tufuh_tabV.register(HomeSubContentCell7.self, forCellReuseIdentifier: "HomeSubContentCell7Id")
+        tufuh_tabV.register(HomeSubContentCell8.self, forCellReuseIdentifier: "HomeSubContentCell8Id")
+        
         // loading
         view.addSubview(loadingView)
         loadingView.center = view.center
         loadingView.startAnimating()
+        
+//        if (self.audioURL != nil) {
+//            playAudio(with: self.audioURL)
+//        }
 
         // 监听前后台恢复
         NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive),
                                                name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioPause),
+                                               name: Notification.Name("TUOKOUXIUAudioPause"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(audioPlay),
+                                               name: Notification.Name("TUOKOUXIUAudioPlay"), object: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
+            if let audioURL = self.audioURL {
+                playAudio(with: audioURL)
+            }
+        }
+    }
+    
+    @objc private func audioPause() {
+        audioPlayer?.pause()
+    }
+    
+    @objc private func audioPlay() {
+        audioPlayer?.play()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -109,12 +157,14 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                 self.playerView.play()
             }
         }
+//        audioPlayer?.play()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // 暂停并保留 item（如果你希望切走时销毁，可以调用 cleanup()）
         playerView.pause()
+//        audioPlayer?.pause()
     }
 
     deinit {
@@ -267,13 +317,14 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         removeObserverFromCurrentItem()
 
         // 创建新的 item 并监听 status
-        let item = AVPlayerItem(url: videoURL)
+        let item = AVPlayerItem(url: videoURL!)
         observedItem = item
         item.addObserver(self, forKeyPath: "status", options: [.new, .initial], context: nil)
 
         // 创建或替换 player
         if player == nil {
             player = AVPlayer(playerItem: item)
+            player?.isMuted = true
             playerView.setPlayer(player)
         } else {
             // 替换 currentItem（player 已存在）
@@ -284,7 +335,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             }
         }
         // 让 layer 的显示属性设置正确
-        playerView.configure(url: videoURL)
+        playerView.configure(url: videoURL!)
         playerView.refreshLayer()
     }
 
@@ -305,6 +356,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
 
         if player == nil {
             player = AVPlayer(playerItem: newItem)
+            player?.isMuted = true
             playerView.setPlayer(player)
         } else {
             player?.replaceCurrentItem(with: newItem)
@@ -320,7 +372,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                 firstCell.containerView.addSubview(playerView)
             }
         }
-
+        playAudio(with: audioURL!)
         // 切换后等待 status == .readyToPlay 的 KVO 回调触发播放（observeValue 中处理）
     }
 
@@ -367,14 +419,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
 
     // MARK: - 回前台恢复
     @objc private func appDidBecomeActive() {
-        // 激活 audio session（避免某些机型回前台黑屏）
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            // 忽略错误
-        }
-
+//        audioPlayer?.play()
         playerView.refreshLayer()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { [weak self] in
             guard let self = self else { return }
@@ -395,6 +440,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     // MARK: - 供外部调用：手动销毁播放器（如果父 VC 切走并想释放）
     func destroyPlayer() {
         playerView.pause()
+        audioPlayer?.pause()
         removeObserverFromCurrentItem()
         playerView.cleanup()
         player = nil

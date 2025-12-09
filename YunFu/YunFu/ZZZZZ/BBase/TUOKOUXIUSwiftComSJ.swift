@@ -12,62 +12,35 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     
     private override init() {}
     
-    var tufuh_isOutBFV: Bool = false
+//    var tufuh_dataDict: [String: Any]?
+//    var tufuh_dsJiDict: [String: Any]?
+    
+//    var tufuh_zmArr: NSMutableArray = NSMutableArray()
 
-    var tufuh_isPushEnabled: Bool = false
+//    var tufuh_dsijuArr: [Any] = []
+//    var tufuh_dsJiArr: [Any] = []
     
-    var tufuh_dataDict: [String: Any]?
-    var tufuh_dsJiDict: [String: Any]?
-    
-    var tufuh_zmArr: NSMutableArray = NSMutableArray()
-
-    var tufuh_dsijuArr: [Any] = []
-    var tufuh_dsJiArr: [Any] = []
-    
-    var tufuh_zmSet: NSMutableSet = NSMutableSet()
-    var tufuh_staSArr: [Any] = []
-    var tufuh_hhTabsArr: [Any] = []
-    var tufuh_xkgDict: [String: Any]?
-    var tufuh_routesArr: [Any] = []
+//    var tufuh_zmSet: NSMutableSet = NSMutableSet()
+//    var tufuh_staSArr: [Any] = []
+//    var tufuh_hhTabsArr: [Any] = []
+//    var tufuh_xkgDict: [String: Any]?
+//    var tufuh_routesArr: [Any] = []
     
     var tufuh_iconUrl: String?
     var tufuh_iconUrlExist: Bool = false
-    var tufuh_ic_hh_titPl: String?
-    var tufuh_ic_adPl: String?
+//    var tufuh_ic_hh_titPl: String?
+//    var tufuh_ic_adPl: String?
     
-    var tufuh_seasNum: Int = 0
-    var tufuh_jiCode: Int = 0
-    var tufuh_jiNum: Int = 0
+//    var tufuh_seasNum: Int = 0
+//    var tufuh_jiCode: Int = 0
+//    var tufuh_jiNum: Int = 0
     
     var tufuh_v_placeStr: String?
-    var tufuh_jiclaIdCode: Int = 0
-
     
-    var tufuh_huazhi: String?
-    var tufuh_jiName: String?
-    var tufuh_name: String?
-    var tufuh_hbUrl: String?
-    var tufuh_pingfen: String?
-    
-    
-    var tufuh_expConArr: [Any] = []
-    
-    var tufuh_isGouMaiVpYue: Bool = false
-    var tufuh_isXianShiZM: Bool = false
-    var tufuh_isLandSXSAD: Bool = false
-    var tufuh_isPhotoXS: Bool = false
-    var tufuh_isHenP: Bool = false
-    var tufuh_isBFRet: Bool = false
-    
-    var tufuh_bfyeKey: [String: Any]?
-    var tufuh_dataStr: String?
-    var tufuh_scode: Int = 0
+//    var tufuh_dataStr: String?
 
     var tufuh_isTrial: Bool = false
-    var tufuh_subPriStr: String?
-    var tufuh_isDQKaiGuan: Bool = false
-    var tufuh_fwqFailCode: Int = 0
-    var tufuh_fwqFailStr: String?
+//    var tufuh_subPriStr: String?
     
     private var tufuh_loadV: UIView?
     
@@ -182,9 +155,9 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
             }
         }
         
-        if !TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOutBFV {
-            task.resume()
-        }
+//        if !TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOutBFV {
+//            task.resume()
+//        }
     }
     
     func tukou_unzipFile(at zipURL: URL) -> Bool {
@@ -345,43 +318,43 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
         return result
     }
         
-    func tukou_backReqUrl(url: URL) -> NSMutableURLRequest {
-        let request = NSMutableURLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.setValue(TUOKOUXIUSSApp.tukou_locaLang(), forHTTPHeaderField: "cl")
-        request.setValue(TUOKOUXIUSSApp.tukou_sysVer(), forHTTPHeaderField: "osver")
-        request.setValue("2", forHTTPHeaderField: "prodid")
-        request.setValue(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftAppId, forHTTPHeaderField: "appid")
-        request.setValue(TUOKOUXIUSSApp.tukou_phoDevCo(), forHTTPHeaderField: "idid")
-        request.setValue(TUOKOUXIUSSApp.tukou_idfi(), forHTTPHeaderField: "bid")
-        request.setValue(TUOKOUXIUSSApp.tukou_sysVer(), forHTTPHeaderField: "os-version")
-        request.setValue(TUOKOUXIUSSApp.tukou_appVer(), forHTTPHeaderField: "app-version")
-        
-        let countryCode = Locale.current.regionCode ?? ""
-        let countryName = Locale.current.localizedString(forRegionCode: countryCode) ?? ""
-        request.setValue(countryName, forHTTPHeaderField: "country")
-        request.setValue(countryCode, forHTTPHeaderField: "countrycode")
-        
-        let vpn = TUOKOUXIUSSApp.tukou_isVPN() ? "1" : "2"
-        request.setValue(vpn, forHTTPHeaderField: "vpn")
-        
-        var lat = "2"
-        var idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-        if idfa.isEmpty || idfa == "00000000-0000-0000-0000-000000000000" {
-            idfa = "00000000-0000-0000-0000-000000000000"
-        } else {
-            lat = "1"
-        }
-        request.setValue(idfa, forHTTPHeaderField: "idfa")
-        request.setValue(TUOKOUXIUSSApp.tukou_phoIFv(), forHTTPHeaderField: "idfv")
-        request.setValue(lat, forHTTPHeaderField: "lat")
-        
-        let push = self.tufuh_isPushEnabled ? "1" : "2"
-        request.setValue(push, forHTTPHeaderField: "push")
-        
-        return request
-    }
+//    func tukou_backReqUrl(url: URL) -> NSMutableURLRequest {
+//        let request = NSMutableURLRequest(url: url)
+//        request.httpMethod = "POST"
+//        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+//        request.setValue(TUOKOUXIUSSApp.tukou_locaLang(), forHTTPHeaderField: "cl")
+//        request.setValue(TUOKOUXIUSSApp.tukou_sysVer(), forHTTPHeaderField: "osver")
+//        request.setValue("2", forHTTPHeaderField: "prodid")
+//        request.setValue(TUOKOUXIUSwiftConst.TUOKOUXIUSwiftAppId, forHTTPHeaderField: "appid")
+//        request.setValue(TUOKOUXIUSSApp.tukou_phoDevCo(), forHTTPHeaderField: "idid")
+//        request.setValue(TUOKOUXIUSSApp.tukou_idfi(), forHTTPHeaderField: "bid")
+//        request.setValue(TUOKOUXIUSSApp.tukou_sysVer(), forHTTPHeaderField: "os-version")
+//        request.setValue(TUOKOUXIUSSApp.tukou_appVer(), forHTTPHeaderField: "app-version")
+//        
+//        let countryCode = Locale.current.regionCode ?? ""
+//        let countryName = Locale.current.localizedString(forRegionCode: countryCode) ?? ""
+//        request.setValue(countryName, forHTTPHeaderField: "country")
+//        request.setValue(countryCode, forHTTPHeaderField: "countrycode")
+//        
+//        let vpn = TUOKOUXIUSSApp.tukou_isVPN() ? "1" : "2"
+//        request.setValue(vpn, forHTTPHeaderField: "vpn")
+//        
+//        var lat = "2"
+//        var idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+//        if idfa.isEmpty || idfa == "00000000-0000-0000-0000-000000000000" {
+//            idfa = "00000000-0000-0000-0000-000000000000"
+//        } else {
+//            lat = "1"
+//        }
+//        request.setValue(idfa, forHTTPHeaderField: "idfa")
+//        request.setValue(TUOKOUXIUSSApp.tukou_phoIFv(), forHTTPHeaderField: "idfv")
+//        request.setValue(lat, forHTTPHeaderField: "lat")
+//        
+//        let push = self.tufuh_isPushEnabled ? "1" : "2"
+//        request.setValue(push, forHTTPHeaderField: "push")
+//        
+//        return request
+//    }
         
     func tukou_currVC() -> UIViewController? {
         guard var rVC = TUOKOUXIUSwiftKeyWindow()!.rootViewController else {

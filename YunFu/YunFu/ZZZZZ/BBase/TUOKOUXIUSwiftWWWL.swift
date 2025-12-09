@@ -32,71 +32,72 @@ class TUOKOUXIUSwiftWWWL : NSObject {
             self.tukou_dealResObj(resObj, error: error, completion: completion)
         }
     }
-    
+
     @discardableResult
-    private func tukou_POST(_ url: String,
-                            pars: Any?,
-                            completion: @escaping TUOKOUXIUHttReqComp) -> DataRequest? {
-        return tukou_reqWitHttUrl(url, pars: pars, completion: completion)
+    func tukou_POST(_ url: String,
+                    pars: Any?,
+                    completion: @escaping TUOKOUXIUHttReqComp) -> DataRequest? {
+        return tukou_request(method: .post, url: url, pars: pars, completion: completion)
+    }
+
+    @discardableResult
+    func tukou_GET(_ url: String,
+                   pars: Any?,
+                   completion: @escaping TUOKOUXIUHttReqComp) -> DataRequest? {
+        return tukou_request(method: .get, url: url, pars: pars, completion: completion)
+    }
+
+    @discardableResult
+    func tukou_PUT(_ url: String,
+                   pars: Any?,
+                   completion: @escaping TUOKOUXIUHttReqComp) -> DataRequest? {
+        return tukou_request(method: .put, url: url, pars: pars, completion: completion)
+    }
+
+    @discardableResult
+    func tukou_DELETE(_ url: String,
+                      pars: Any?,
+                      completion: @escaping TUOKOUXIUHttReqComp) -> DataRequest? {
+        return tukou_request(method: .delete, url: url, pars: pars, completion: completion)
     }
     
-    @discardableResult
-    private func tukou_reqWitHttUrl(_ url: String,
-                                    pars: Any?,
-                                    completion: @escaping TUOKOUXIUHttReqComp) -> DataRequest? {
+    private func tukou_reqWithMethod(_ method: HTTPMethod,
+                                     url: String,
+                                     pars: Any?,
+                                     completion: @escaping TUOKOUXIUHttReqComp) {
         
         let fullURL = "\(baseURL)\(url)"
         
         var headers: HTTPHeaders = [:]
         httpHeaders.forEach { headers[$0.key] = $0.value }
-
+        
         var clientDict = httpHeaders
         clientDict["network"] = TUOKOUXIUSwiftNetUt.tukou_getNetT()
-
+        
         if let clientData = try? JSONSerialization.data(withJSONObject: clientDict, options: []),
            let clientStr = String(data: clientData, encoding: .utf8) {
             headers["client"] = clientStr
         }
         
-        let encoding: ParameterEncoding = JSONEncoding.default
-        let request: DataRequest
+        let encoding: ParameterEncoding =
+            (method == .get || method == .delete) ? URLEncoding.default : JSONEncoding.default
         
-        if let params = pars as? [String: Any] {
-            request = AF.request(fullURL,
-                                 method: .post,
-                                 parameters: params,
+        let request = AF.request(fullURL,
+                                 method: method,
+                                 parameters: pars as? [String: Any],
                                  encoding: encoding,
                                  headers: headers)
-        } else if let arr = pars as? [Any] {
-            var urlRequest = try! URLRequest(url: fullURL, method: .post, headers: headers)
-            urlRequest.timeoutInterval = timeout
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: arr, options: [])
-
-            request = AF.request(urlRequest)
-                .validate(contentType: [
-                    "application/json",
-                    "text/html",
-                    "text/json",
-                    "text/plain",
-                    "text/javascript",
-                    "text/xml",
-                    "image/*"
-                ])
-        } else {
-            request = AF.request(fullURL,
-                                 method: .post,
-                                 parameters: nil,
-                                 encoding: encoding,
-                                 headers: headers)
-        }
         
+        handleResponse(request, completion: completion)
+    }
+    
+    private func handleResponse(_ request: DataRequest,
+                                completion: @escaping TUOKOUXIUHttReqComp) {
         request.responseData { response in
             switch response.result {
             case .success(let data):
                 do {
                     let jsonObj = try JSONSerialization.jsonObject(with: data, options: [])
-                    
                     if let dict = jsonObj as? [String: Any] {
                         completion(dict, nil)
                     } else if let arr = jsonObj as? [Any] {
@@ -113,6 +114,94 @@ class TUOKOUXIUSwiftWWWL : NSObject {
                 completion(nil, error)
             }
         }
+    }
+    
+    @discardableResult
+    private func tukou_request(method: HTTPMethod,
+                               url: String?,
+                               pars: Any?,
+                               completion: @escaping TUOKOUXIUHttReqComp) -> DataRequest? {
+
+        guard let url = url else {
+            completion(nil, NSError(domain: "url nil", code: -999, userInfo: nil))
+            return nil
+        }
+        
+        let fullURL = "\(baseURL)\(url)"
+
+        // -------------------------
+        // 构建 Headers
+        // -------------------------
+        var headers: HTTPHeaders = [:]
+        httpHeaders.forEach { headers[$0.key] = $0.value }
+
+        var clientDict = httpHeaders
+        clientDict["network"] = TUOKOUXIUSwiftNetUt.tukou_getNetT()
+        
+        if let clientData = try? JSONSerialization.data(withJSONObject: clientDict, options: []),
+           let clientStr = String(data: clientData, encoding: .utf8) {
+            headers["client"] = clientStr
+        }
+
+        // -------------------------
+        // 构建 URLRequest（统一设置 timeout）
+        // -------------------------
+        var urlRequest = try! URLRequest(url: fullURL, method: method, headers: headers)
+        urlRequest.timeoutInterval = timeout        // 🔥 单个请求超时控制
+
+        // GET/DELETE 通常放到 URL，POST/PUT 放到 body
+        if let params = pars as? [String: Any] {
+            if method == .get || method == .delete {
+                let encoded = try! URLEncoding.default.encode(urlRequest, with: params)
+                urlRequest = encoded
+            } else {
+                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            }
+        }
+
+        // -------------------------
+        // 发起请求
+        // -------------------------
+        let request = AF.request(urlRequest)
+            .validate(contentType: [
+                "application/json",
+                "text/html",
+                "text/json",
+                "text/plain",
+                "text/javascript",
+                "text/xml",
+                "image/*"
+            ])
+
+        // -------------------------
+        // 统一解析（保持你原有逻辑）
+        // -------------------------
+        request.responseData { response in
+            switch response.result {
+            case .success(let data):
+                do {
+                    let jsonObj = try JSONSerialization.jsonObject(with: data, options: [])
+
+                    if let dict = jsonObj as? [String : Any] {
+                        completion(dict, nil)
+                    } else if let arr = jsonObj as? [Any] {
+                        completion(arr, nil)
+                    } else {
+                        let str = String(data: data, encoding: .utf8)
+                        completion(str ?? data, nil)
+                    }
+
+                } catch {
+                    let str = String(data: data, encoding: .utf8)
+                    completion(str ?? data, error)
+                }
+
+            case .failure(let error):
+                completion(nil, error)
+            }
+        }
+
         return request
     }
     
@@ -120,9 +209,6 @@ class TUOKOUXIUSwiftWWWL : NSObject {
                                   error: Error?,
                                   completion: ((_ dataDict: Any?, _ isSuccess: Bool) -> Void)?) {
         if let error = error {
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_fwqFailCode = (error as NSError).code
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_fwqFailStr = error.localizedDescription
-            
             if (error as NSError).code == 3840 {
                 return
             }
@@ -144,19 +230,7 @@ class TUOKOUXIUSwiftWWWL : NSObject {
         
         let dataDict: Any? = resObj["data"] ?? resObj
         let code = (resObj["code"] as? Int) ?? -1
-        var msg: String = "no data"
-        
-        if code == 0 {
-            if let jsonData = try? JSONSerialization.data(withJSONObject: resObj, options: .prettyPrinted),
-               let jsonString = String(data: jsonData, encoding: .utf8) {
-                TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_fwqFailStr = jsonString
-            } else {
-                msg = (dataDict as? [String: Any])?["msg"] as? String ?? "no msg"
-                if msg.count < 200 {
-                    TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_fwqFailStr = msg
-                }
-            }
-        }
+        let msg: String = "no data"
         
         if code == 1003 {
             completion?("1003", true)

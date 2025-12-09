@@ -514,8 +514,19 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             URL(string: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")!,
             URL(string: "https://test-streams.mux.dev/pts_shift/master.m3u8")!
         ]
+        let urls2 = [
+            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!,
+            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
+            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")!,
+            URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Owl/Epic_Nature_Sounds/Owl_-_Ocean_Waves.mp3")!,
+            URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Micaela_Tobis/Spring_Forest/Micaela_Tobis_-_Birds_In_The_Forest.mp3")!,
+            URL(string: "https://cdn.pixabay.com/audio/2021/09/27/audio_f3556c07df.mp3")!,
+            URL(string: "https://cdn.pixabay.com/audio/2021/11/16/audio_50a7fe36cb.mp3")!,
+            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
+            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!
+        ]
         for (i, item) in tabsArr.enumerated() {
-            let v1 = HomeSubVC(videoURL: urls[i])
+            let v1 = HomeSubVC(videoURL: urls[i], audioURL: urls2[i])
             v1.tufuh_num = i
             childVCs.append(v1)
         }

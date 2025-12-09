@@ -3,6 +3,7 @@ import UIKit
 import Foundation
 import IQKeyboardManagerSwift
 import Combine
+import AVFoundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -14,7 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, options: [])
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("AudioSession 初始化失败: \(error)")
+        }
         TUOKOUXIUSwiftNetUt.tukou_regObsNetSta()
         
         IQKeyboardManager.shared.enable = true
@@ -22,10 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         IQKeyboardManager.shared.enableAutoToolbar = false
         
         if (TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() != 0) {
-
-                self.tukou_enter()
-                return true
-
+            self.tukou_enter()
+            return true
         } else {
             NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)
                 .sink { [weak self] _ in self?.tukou_entBackG() }
@@ -50,11 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     private func tukou_entForegr() {
         if let souT = self.tufuh_souT {
             souT.cancel()
-        }
-        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_xkgDict != nil {
-            NotificationCenter.default.removeObserver(self, name: UIApplication.didEnterBackgroundNotification, object: nil)
-            NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
-            return
         }
 
         self.fuhan_creaDispT()
