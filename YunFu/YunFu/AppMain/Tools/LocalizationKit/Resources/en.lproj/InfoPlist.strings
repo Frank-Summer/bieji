@@ -1,0 +1,23 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by FrankS on 9/23/25.
+  
+*/
+"CFBundleDisplayName" = "bieji";
+
+"login_placeholder" = "phone number";
+"login_agreement" = "I have read and agree to the Privacy Policy and Terms of Use.";
+"login_code" = "Get Code";
+"login_hint" = "Unregistered phone numbers will be registered automatically.";
+"login_Apple" = "Sign in with Apple";
+"login_Google" = "Sign in with Google";
+
+"login_enter_code" = "Enter verification code";
+"login_enter_hint" = "Please enter the 6-digit verification code sent to your phone.";
+"login_resend" = "Resend Code";
+
+"login_agreement_popup" = "For your security, please take a moment to read and agree to the Privacy Policy and Terms of Use.";
+"login_yes_popup" = "Agree and Continue";
+"login_no_popup" = "Disagree";

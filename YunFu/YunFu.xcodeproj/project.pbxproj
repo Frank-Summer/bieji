@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		017370892ECF00630045407F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017370882ECF00630045407F /* Assets.xcassets */; };
 		017370C72ECF05490045407F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 017370C62ECF05490045407F /* Colors.xcassets */; };
+		01D865452EE940D000AAB028 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01D865442EE940D000AAB028 /* Assets.xcassets */; };
 		2F0BA4DC215BA12300F67004 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */; };
 		2FDE6A502971470D004C7701 /* DCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FDE6A4F2971470D004C7701 /* DCloud.swift */; };
 		FE2855092E7A7715004C0EF1 /* ESPullToRefresh in Frameworks */ = {isa = PBXBuildFile; productRef = FE2855082E7A7715004C0EF1 /* ESPullToRefresh */; };
@@ -57,8 +57,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		017370882ECF00630045407F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		017370C62ECF05490045407F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		01D865442EE940D000AAB028 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FDE6A4E2971470D004C7701 /* YunFu-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YunFu-Header.h"; sourceTree = "<group>"; };
 		2FDE6A4F2971470D004C7701 /* DCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCloud.swift; sourceTree = "<group>"; };
@@ -184,8 +184,8 @@
 		8EED62A2198A1D13000A4449 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				01D865442EE940D000AAB028 /* Assets.xcassets */,
 				017370C62ECF05490045407F /* Colors.xcassets */,
-				017370882ECF00630045407F /* Assets.xcassets */,
 				2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */,
 				8EED62A3198A1D13000A4449 /* YunFu-Info.plist */,
 				FEE81DE62C784BDC00F09998 /* TUOKOUXIUConfig.plist */,
@@ -282,10 +282,10 @@
 				017370C72ECF05490045407F /* Colors.xcassets in Resources */,
 				FEE81DE72C784BDC00F09998 /* TUOKOUXIUConfig.plist in Resources */,
 				FE4E42BD2ECEE35A004F83E2 /* READM.md in Resources */,
+				01D865452EE940D000AAB028 /* Assets.xcassets in Resources */,
 				FEA96C902C64A4D20078E6B6 /* icon_tukou_bg.png in Resources */,
 				2F0BA4DC215BA12300F67004 /* LaunchScreen.storyboard in Resources */,
 				FEA96C972C64AAC50078E6B6 /* icon_tukou_logo.png in Resources */,
-				017370892ECF00630045407F /* Assets.xcassets in Resources */,
 				FE946B382D1BAC85007E94AC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
