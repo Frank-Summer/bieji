@@ -122,8 +122,6 @@
 
 
 
-
-
 import UIKit
 import Foundation
 import IQKeyboardManagerSwift
@@ -227,9 +225,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let homeNav = TUOKOUXIUSwiftBaNavC(rootViewController: homeVC)
         homeNav.navigationBar.isHidden = true
 
-        let exploreVC = TUOKOUXIUExploreVC()
-        let exploreNav = TUOKOUXIUSwiftBaNavC(rootViewController: exploreVC)
-        exploreNav.navigationBar.isHidden = true
+        let tufuh_tarVC2 = TUOKOUXIUExploreVC2()
+        let tufuh_tsNav = TUOKOUXIUSwiftBaNavC(rootViewController: tufuh_tarVC2)
+        tufuh_tsNav.navigationBar.isHidden = true
 
         let myVC = TUOKOUXIUSwiftMy()
         let myNav = TUOKOUXIUSwiftBaNavC(rootViewController: myVC)
