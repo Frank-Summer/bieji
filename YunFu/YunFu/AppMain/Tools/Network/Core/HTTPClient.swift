@@ -13,8 +13,11 @@ final class HTTPClient {
         retry: Bool = false
     ) async -> BaseModel<[String: AnyCodable]>? {
 
-        print("🌍 [HTTP] 请求接口：\(ApiConfig.baseURL + endpoint)")
-        print("➡️ 请求方式：\(method)")
+        let upperMethod = method.uppercased()
+        let baseUrl = ApiConfig.baseURL + endpoint
+
+        print("🌍 [HTTP] 请求接口：\(baseUrl)")
+        print("➡️ 请求方式：\(upperMethod)")
 
         // 打印请求体
         if let params = params,
@@ -23,19 +26,38 @@ final class HTTPClient {
             print("📦 请求参数：\n\(jsonString)")
         }
 
-        guard let url = URL(string: ApiConfig.baseURL + endpoint) else {
+        // ✅ 构建 URL
+        var url: URL?
+        if upperMethod == "GET" || upperMethod == "DELETE" {
+            // 参数拼接到 URL
+            if let params = params,
+               var comps = URLComponents(string: baseUrl) {
+                comps.queryItems = params.map { URLQueryItem(name: $0.key, value: "\($0.value)") }
+                url = comps.url
+            } else {
+                url = URL(string: baseUrl)
+            }
+        } else {
+            // 非 GET 请求直接用原 URL
+            url = URL(string: baseUrl)
+        }
+
+        guard let finalURL = url else {
             return BaseModel(code: 998, msg: "URL 无效", bodydata: nil)
         }
 
-        var req = URLRequest(url: url)
-        req.httpMethod = method
+        // ✅ 构建请求
+        var req = URLRequest(url: finalURL)
+        req.httpMethod = upperMethod
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        if method != "GET", let params = params {
+        // ✅ 设置请求体（仅 POST / PUT / PATCH）
+        if ["POST", "PUT", "PATCH"].contains(upperMethod),
+           let params = params {
             req.httpBody = try? JSONSerialization.data(withJSONObject: params)
         }
 
-        // 注入 Token
+        // ✅ 注入 Token
         TokenInterceptor.shared.injectToken(into: &req)
 
         do {
@@ -44,7 +66,6 @@ final class HTTPClient {
                 return BaseModel(code: 997, msg: "无效响应", bodydata: nil)
             }
 
-            // 打印返回内容
             if let bodyString = String(data: data, encoding: .utf8) {
                 print("⬅️ [HTTP \(http.statusCode)] 返回内容：\n\(bodyString)")
             }
