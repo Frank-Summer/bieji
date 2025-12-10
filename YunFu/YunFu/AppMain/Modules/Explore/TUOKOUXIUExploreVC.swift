@@ -19,26 +19,6 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
 
     private let headerView = UIView()
     private var tufuh_tabV = PassThroughTableView()
-
-    private var cancellables = Set<AnyCancellable>()
-    
-//    lazy var tufuh_tabV: UITableView = {
-//        let tableView = UITableView(frame: .zero, style: .grouped)
-//        tableView.separatorStyle = .none
-//        tableView.showsVerticalScrollIndicator = false
-//        tableView.contentInsetAdjustmentBehavior = .never
-//        tableView.sectionHeaderTopPadding = 0
-//        tableView.backgroundColor = .black
-//        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01))
-//        tableView.estimatedRowHeight = 0
-//        tableView.estimatedSectionHeaderHeight = 0
-//        tableView.estimatedSectionFooterHeight = 0
-//        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: 0.01)
-//        
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        return tableView
-//    }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -117,12 +97,6 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
         
         headerView.backgroundColor = TUOKOUXIUWhiteA5
 
-//        headerView.tukou_setViewCorners(
-//            [.bottomLeft, .bottomRight],
-//            radius: 32,
-//            borderColor: TUOKOUXIUWhiteA10,
-//            borderWidth: 1
-//        )
         view.addSubview(headerView)
         // 初始位置在顶部，初始高度 headerMinHeight
         headerView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: headerMinHeight)
@@ -187,13 +161,12 @@ class TUOKOUXIUExploreVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableView
             )
         }
         
-        tufuh_botBtn = UIButton.tukou_bjBtnNoImage(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-36/2, y: staY+112-16, width: 36, height: 6), target: self, superView: headerView, action: #selector(clickOpenHeadView))
-        tufuh_botBtn!.backgroundColor = TUOKOUXIUWhiteA30
-        tufuh_botBtn!.layer.cornerRadius = 3
+//        tufuh_botBtn = UIButton.tukou_bjBtnNoImage(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-36/2, y: staY+112-16, width: 36, height: 6), target: self, superView: headerView, action: #selector(clickOpenHeadView))
+        let botV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-36/2, y: staY+112-16, width: 36, height: 6), superView: headerView, bgColor: TUOKOUXIUWhiteA30)
+        botV.layer.cornerRadius = 3
         headerView.layer.cornerRadius = 32
         headerView.layer.borderWidth = 1
         headerView.layer.borderColor = TUOKOUXIUWhiteA10.cgColor
-
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
