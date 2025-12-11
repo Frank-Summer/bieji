@@ -10,7 +10,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     var tufuh_mDict: [String: Any]?
     var tufuh_indexNum: Int = 0
     var tufuh_tabBV: UIView!
-    var tufuh_tabCenterBtn: UIButton?
+    var tufuh_tabCenterBtn: AnimatedTabButton?
     var tufuh_rightBtn: UIButton?
     var tufuh_tabButArr: [UIButton] = []
     var tufuh_contV: UIView!
@@ -115,7 +115,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                 self.tufuh_tabBV.addSubview(tufuh_btn)
                 self.tufuh_tabButArr.append(tufuh_btn)
             case 1:
-                let tufuh_btn = UIButton(type: .custom)
+                let tufuh_btn = AnimatedTabButton(type: .custom)
                 tufuh_btn.backgroundColor = TUOKOUXIUWhiteA60
                 tufuh_btn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-60/2, y: 10, width: 60, height: 60)
                 tufuh_btn.layer.cornerRadius = 30
@@ -132,7 +132,14 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                 tufuh_btn.isSelected = true
                 tufuh_indexNum = 1
                 tukou_swiToVCAtInd(1)
-                tufuh_tabCenterBtn = UIButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-207/2, y: 18, width: 207, height: 52), target: self, title: nil, superView: self.tufuh_tabBV, action: #selector(clicktabCenterBtn))
+//                tufuh_tabCenterBtn = AnimatedTabButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-207/2, y: 18, width: 207, height: 52), target: self, title: nil, superView: self.tufuh_tabBV, action: #selector(clicktabCenterBtn))
+                
+                tufuh_tabCenterBtn = AnimatedTabButton(type: .custom)
+                tufuh_tabCenterBtn!.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-207/2, y: 18, width: 207, height: 52)
+                tufuh_tabCenterBtn!.backgroundColor = TUOKOUXIUSwiftwuseC
+                tufuh_tabCenterBtn!.addTarget(self, action: #selector(clicktabCenterBtn), for: .touchUpInside)
+                self.tufuh_tabBV.addSubview(tufuh_tabCenterBtn!)
+                
                 tufuh_tabCenterBtn?.backgroundColor = TUOKOUXIUWhiteA60
                 tufuh_tabCenterBtn?.isHidden = true
                 tufuh_tabCenterBtn?.layer.borderColor = TUOKOUXIUWhiteA10.cgColor
@@ -229,6 +236,11 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             }
         } else if sender.tag == 1 {
             sender.isSelected = !sender.isSelected
+            if let button = sender as? AnimatedTabButton {
+                button.animateSelect()
+                button.animateQuickTween()
+            }
+
             if sender.isSelected {
                 print("播放")
                 NotificationCenter.default.post(
@@ -268,32 +280,44 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         let tufuh_btn = self.tufuh_tabButArr[1]
         tufuh_btn.isHidden = true
         tufuh_tabCenterBtn?.isHidden = false
-        tufuh_tabCenterBtn?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) // 缩小一点
-        tufuh_tabCenterBtn?.layoutIfNeeded() // 确保渲染
-
-        UIView.animate(withDuration: 0.35,        // 总时长略长，便于弹动更明显
-                       delay: 0,
-                       usingSpringWithDamping: 0.07, // 阻尼更小 → 弹动更大
-                       initialSpringVelocity: 2.2,  // 初速度大一点
-                       options: [.curveEaseInOut],
-                       animations: {
-            self.tufuh_tabCenterBtn?.transform = .identity // 弹回
-        })
+        tufuh_tabCenterBtn!.animateSelect()
+        tufuh_tabCenterBtn!.animateQuickTween()
+//        tufuh_tabCenterBtn?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) // 缩小一点
+//        tufuh_tabCenterBtn?.layoutIfNeeded() // 确保渲染
+//
+//        UIView.animate(withDuration: 0.35,        // 总时长略长，便于弹动更明显
+//                       delay: 0,
+//                       usingSpringWithDamping: 0.07, // 阻尼更小 → 弹动更大
+//                       initialSpringVelocity: 2.2,  // 初速度大一点
+//                       options: [.curveEaseInOut],
+//                       animations: {
+//            self.tufuh_tabCenterBtn?.transform = .identity // 弹回
+//        })
     }
     
-    func btnChangesSmall(_ tufuh_btn: UIButton) {
-        tufuh_btn.isHidden = false
-        tufuh_btn.isSelected = !tufuh_rightBtn!.isSelected
+    func btnChangesSmall(_ tufuh_btn: AnyObject) {
         self.tufuh_tabCenterBtn?.isHidden = true
-        tufuh_btn.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) // 缩小一点
-        UIView.animate(withDuration: 0.55,
-                       delay: 0,
-                       usingSpringWithDamping: 0.3,
-                       initialSpringVelocity: 1.0,
-                       options: [.curveEaseInOut],
-                       animations: {
-            tufuh_btn.transform = .identity // 弹回
-        })
+        if let button = tufuh_btn as? JellyButton {
+            button.isHidden = false
+            button.isSelected = !tufuh_rightBtn!.isSelected
+            button.animateDeselect()
+            button.animateQuickTween()
+        } else if let button = tufuh_btn as? AnimatedTabButton {
+            button.isHidden = false
+            button.isSelected = !tufuh_rightBtn!.isSelected
+            button.animateDeselect()
+            button.animateQuickTween()
+        }
+        
+//        tufuh_btn.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) // 缩小一点
+//        UIView.animate(withDuration: 0.55,
+//                       delay: 0,
+//                       usingSpringWithDamping: 0.3,
+//                       initialSpringVelocity: 1.0,
+//                       options: [.curveEaseInOut],
+//                       animations: {
+//            tufuh_btn.transform = .identity // 弹回
+//        })
     }
     
     func tukou_hidTabb() {
