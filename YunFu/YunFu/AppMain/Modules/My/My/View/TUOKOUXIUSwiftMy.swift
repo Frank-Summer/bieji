@@ -1,13 +1,13 @@
-
 import UIKit
 import Foundation
 import SwiftUI
 
-//我的页面
+/// 我的页面
 class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
     
+    // MARK: - UI 属性
+    private var settingsWindow: UIWindow?   // ✅ 强引用 Window
     
-    // 头像
     public let profilePicture: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -17,7 +17,6 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         return imageView
     }()
     
-    // 网名
     public let userName: UILabel = {
         let label = UILabel()
         label.text = "快乐不快乐..."
@@ -27,7 +26,6 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         return label
     }()
     
-    // VIP 到期时间
     public let vipDate: UILabel = {
         let label = UILabel()
         label.text = "2025.06.08"
@@ -37,7 +35,6 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         return label
     }()
     
-    // VIP 图标
     public let vipLogo: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -45,23 +42,27 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         return imageView
     }()
     
-    // 设置按钮
     public let setting: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isUserInteractionEnabled = true   // ← 必须，点击事件才有效
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
-    // 行容器
     private let headerContainer = UIView()
     
+    // MARK: - 生命周期
     public override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
         
-        // MARK: - Header 容器
+        setupHeaderUI()
+        setupSwiftUIButtons()
+    }
+    
+    // MARK: - Header 设置
+    private func setupHeaderUI() {
         headerContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(headerContainer)
         
@@ -72,51 +73,48 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
             headerContainer.heightAnchor.constraint(equalToConstant: 76)
         ])
         
-        // 添加子视图
+        // 子视图
         headerContainer.addSubview(profilePicture)
         headerContainer.addSubview(userName)
         headerContainer.addSubview(vipDate)
         headerContainer.addSubview(vipLogo)
         headerContainer.addSubview(setting)
         
-        // MARK: - 布局
         NSLayoutConstraint.activate([
-            // 头像
             profilePicture.leadingAnchor.constraint(equalTo: headerContainer.leadingAnchor),
             profilePicture.centerYAnchor.constraint(equalTo: headerContainer.centerYAnchor),
             profilePicture.widthAnchor.constraint(equalToConstant: 66),
             profilePicture.heightAnchor.constraint(equalToConstant: 66),
             
-            // 用户名（在头像右边、稍上）
             userName.leadingAnchor.constraint(equalTo: profilePicture.trailingAnchor, constant: 7),
             userName.topAnchor.constraint(equalTo: profilePicture.topAnchor, constant: 5),
             
-            // VIP 时间（在用户名下方 4pt）
             vipDate.leadingAnchor.constraint(equalTo: userName.leadingAnchor),
             vipDate.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 4),
             
-            // VIP 图标（在 VIP 时间右侧 5pt）
             vipLogo.leadingAnchor.constraint(equalTo: vipDate.trailingAnchor, constant: 5),
             vipLogo.centerYAnchor.constraint(equalTo: vipDate.centerYAnchor),
             vipLogo.widthAnchor.constraint(equalToConstant: 16),
             vipLogo.heightAnchor.constraint(equalToConstant: 16),
             
-            // Setting 按钮（最右侧）
             setting.centerYAnchor.constraint(equalTo: headerContainer.centerYAnchor),
             setting.trailingAnchor.constraint(equalTo: headerContainer.trailingAnchor),
             setting.widthAnchor.constraint(equalToConstant: 24),
             setting.heightAnchor.constraint(equalToConstant: 24)
         ])
         
-        // MARK: - 图片资源
+        // 图片
         profilePicture.image = UIImage(named: "logo")
         vipLogo.image = UIImage(named: "my_vip")
         setting.image = UIImage(named: "my_setting")
-
-        let tap = UITapGestureRecognizer(target: self, action: #selector(openSettings))
-                setting.addGestureRecognizer(tap)
         
-        // ✅ SwiftUI 按钮行组件
+        // 点击事件
+        let tap = UITapGestureRecognizer(target: self, action: #selector(openSettings))
+        setting.addGestureRecognizer(tap)
+    }
+    
+    // MARK: - SwiftUI 按钮
+    private func setupSwiftUIButtons() {
         let buttonRow = MyButtonRowView(actions: .init(
             onMyCollection: { [weak self] in
                 guard let self = self else { return }
@@ -129,29 +127,39 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         ))
-        // 给组件增加上下 padding 8pt
-        let paddedButtonRow = buttonRow
         
-        // ✅ 用 UIHostingController 包装
-        let hostingVC = UIHostingController(rootView: paddedButtonRow)
+        let hostingVC = UIHostingController(rootView: buttonRow)
         hostingVC.view.backgroundColor = .clear
-
+        
         addChild(hostingVC)
         view.addSubview(hostingVC.view)
         hostingVC.didMove(toParent: self)
         
-        // ✅ 布局在 headerContainer 下方
         hostingVC.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            hostingVC.view.topAnchor.constraint(equalTo: headerContainer.bottomAnchor), // header 下方间距 8
+            hostingVC.view.topAnchor.constraint(equalTo: headerContainer.bottomAnchor),
             hostingVC.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hostingVC.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
     
-    // MARK: - 点击设置按钮 → 跳转到设置页
+    // MARK: - 打开设置页（使用独立 window）
     @objc private func openSettings() {
-        let vc = SettingsViewController()   // UIKit 控制器
-        navigationController?.pushViewController(vc, animated: true)
+        let settingsVC = SettingsViewController()
+        settingsVC.onClose = { [weak self] in
+            self?.settingsWindow?.isHidden = true
+            self?.settingsWindow = nil
+        }
+        
+        let nav = UINavigationController(rootViewController: settingsVC)
+        nav.navigationBar.isHidden = false
+        
+        let win = UIWindow(frame: UIScreen.main.bounds)
+        win.rootViewController = nav
+        win.windowLevel = .alert + 1
+        win.makeKeyAndVisible()
+        
+        // ✅ 保留引用
+        self.settingsWindow = win
     }
 }
