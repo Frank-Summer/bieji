@@ -8,17 +8,101 @@
 "CFBundleDisplayName" = "别急";
 
 
-"login_placeholder" = "请输入手机号码";
-"login_agreement" = "我已阅读并同意《隐私协议》和《用户协议》";
-"login_code" = "获取验证码";
-"login_hint" = "未注册手机号将自动注册";
-"login_Apple" = "Apple登录";
-"login_Google" = "Google登录";
+/* App Display Name */
+"app.displayName" = "别急";
 
-"login_enter_code" = "输入验证码";
-"login_enter_hint" = "请输入 6 位数字验证码，已发送至手机";
-"login_resend" = "重新获取";
 
-"login_agreement_popup" = "为了安全放心的使用别急,请仔细阅读并同意 《隐私协议》 和 《用户协议》";
-"login_yes_popup" = "同意并继续";
-"login_no_popup" = "不同意";
+/* Login */
+"login.placeholder.phone" = "请输入手机号码";
+"login.agreement.text" = "我已阅读并同意《隐私协议》和《用户协议》";
+"login.button.sendCode" = "获取验证码";
+"login.hint.autoRegister" = "未注册手机号将自动注册";
+"login.button.apple" = "Apple 登录";
+"login.button.google" = "Google 登录";
+
+"login.placeholder.code" = "输入验证码";
+"login.hint.codeSent" = "请输入 6 位数字验证码，已发送至手机";
+"login.button.resend" = "重新获取";
+
+"login.popup.privacyNotice" = "为了安全放心地使用别急，请仔细阅读并同意《隐私协议》和《用户协议》。";
+"login.popup.agree" = "同意并继续";
+"login.popup.disagree" = "不同意";
+
+
+/* Profile / My */
+"profile.favorites" = "我的收藏";
+"profile.recentlyPlayed" = "最近播放";
+
+"profile.nickname" = "昵称";
+"profile.birthdate" = "出生日期";
+"profile.gender" = "性别";
+"profile.hint.completeInfo" = "完整信息填写可为您提供更精准的推荐内容。";
+"profile.button.save" = "保存";
+"profile.action.selectDate" = "选择日期";
+"profile.action.done" = "确定";
+"profile.action.cancel" = "取消";
+
+"profile.gender.male" = "男";
+"profile.gender.female" = "女";
+"profile.gender.preferNot" = "保密";
+
+
+/* Settings */
+"settings.title" = "设置";
+"settings.about" = "关于别急";
+"settings.accountSecurity" = "账户与安全";
+"settings.notifications" = "通知";
+"settings.rate" = "去 App Store 评分";
+"settings.feedback" = "意见反馈";
+
+
+/* About */
+"about.followUs" = "关注我们";
+"about.legal" = "隐私协议 | 用户协议 | 会员协议  © 2025 北京期音科技有限公司. 保留所有权利.";
+
+
+/* Account / Account Deletion */
+"account.title" = "账户与安全";
+"account.field.phone" = "手机";
+"account.field.apple" = "Apple";
+
+"account.action.deleteAccount" = "注销账号";
+"account.delete.noticeTitle" = "账号注销重要提示";
+
+"account.delete.noticeDescription" = "账号注销后将无法再次使用该账号。账号内的所有记录和数据（包括但不限于个人信息和使用记录）将被清空且无法恢复。账号注销即表示您自愿放弃该账号的所有权益（包括但不限于购买的声音和会员服务），已支付的费用无法退款。如有需要，请在操作前备份相关信息和数据。因账号注销对用户造成的不利影响，“别急”将不承担任何责任。账号注销不会自动取消正在订阅中的会员服务。请前往应用商城取消自动订阅，以避免注销后继续扣费。";
+
+"account.delete.read" = "已阅读并知晓重要提示";
+"account.delete.next" = "下一步";
+"account.delete.reason" = "为何选择注销账号";
+"account.delete.completedTitle" = "账号已注销";
+"account.delete.completedMessage" = "您的账号已注销，所有使用数据已被删除，期待再次与您相会。";
+"account.button.cancel" = "取消";
+"account.button.confirm" = "确定";
+
+
+/* Notifications */
+"notifications.title" = "通知";
+"notifications.push" = "推送通知";
+"notifications.system" = "系统通知";
+"notifications.description" = "通知将用于睡眠闹钟、每日提醒、专注等功能，去开启";
+"notifications.liveActivities" = "实时活动";
+"notifications.inApp" = "应用内通知";
+"notifications.sound" = "声音";
+"notifications.vibration" = "震动";
+"notifications.advanced" = "高级";
+"notifications.popup" = "弹窗通知";
+
+
+/* Feedback */
+"feedback.title" = "意见反馈";
+"feedback.type" = "反馈类型";
+"feedback.type.productBug" = "产品 Bug";
+"feedback.type.subscription" = "会员订阅";
+"feedback.type.productSuggestion" = "产品建议";
+"feedback.type.contentSuggestion" = "内容建议";
+"feedback.type.other" = "其他";
+
+"feedback.placeholder.description" = "请简单描述你的问题";
+"feedback.placeholder.contact" = "联系方式（选填）";
+"feedback.placeholder.phoneOrWeChat" = "手机号或者微信 ID（选填）";
+"feedback.button.submit" = "提交反馈";

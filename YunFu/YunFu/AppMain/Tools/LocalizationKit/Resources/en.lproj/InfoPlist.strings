@@ -7,17 +7,101 @@
 */
 "CFBundleDisplayName" = "unrush";
 
-"login_placeholder" = "phone number";
-"login_agreement" = "I have read and agree to the Privacy Policy and Terms of Use.";
-"login_code" = "Get Code";
-"login_hint" = "Unregistered phone numbers will be registered automatically.";
-"login_Apple" = "Sign in with Apple";
-"login_Google" = "Sign in with Google";
+/* App Display Name */
+"app.displayName" = "Beji";
 
-"login_enter_code" = "Enter verification code";
-"login_enter_hint" = "Please enter the 6-digit verification code sent to your phone.";
-"login_resend" = "Resend Code";
 
-"login_agreement_popup" = "For your security, please take a moment to read and agree to the Privacy Policy and Terms of Use.";
-"login_yes_popup" = "Agree and Continue";
-"login_no_popup" = "Disagree";
+/* Login */
+"login.placeholder.phone" = "Please enter your phone number";
+"login.agreement.text" = "I have read and agree to the Privacy Policy and User Agreement";
+"login.button.sendCode" = "Send Code";
+"login.hint.autoRegister" = "Unregistered phone numbers will be registered automatically";
+"login.button.apple" = "Sign in with Apple";
+"login.button.google" = "Sign in with Google";
+
+"login.placeholder.code" = "Enter verification code";
+"login.hint.codeSent" = "Please enter the 6-digit verification code sent to your phone";
+"login.button.resend" = "Resend Code";
+
+"login.popup.privacyNotice" = "For your security, please read and agree to the Privacy Policy and User Agreement.";
+"login.popup.agree" = "Agree and Continue";
+"login.popup.disagree" = "Disagree";
+
+
+/* Profile / My */
+"my.favorites" = "My Favorites";
+"my.recentlyPlayed" = "Recently Played";
+
+"profile.nickname" = "Nickname";
+"profile.birthdate" = "Date of Birth";
+"profile.gender" = "Gender";
+"profile.hint.completeInfo" = "Completing your information helps us provide more accurate recommendations.";
+"profile.button.save" = "Save";
+"profile.action.selectDate" = "Select Date";
+"profile.action.done" = "Done";
+"profile.action.cancel" = "Cancel";
+
+"profile.gender.male" = "Male";
+"profile.gender.female" = "Female";
+"profile.gender.preferNot" = "Prefer not to say";
+
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.about" = "About Beji";
+"settings.accountSecurity" = "Account & Security";
+"settings.notifications" = "Notifications";
+"settings.rate" = "Rate on the App Store";
+"settings.feedback" = "Feedback";
+
+
+/* About */
+"about.followUs" = "Follow Us";
+"about.legal" = "Privacy Policy | User Agreement | Membership Agreement © 2025 Beijing Qiyin Technology Co., Ltd. All rights reserved.";
+
+
+/* Account / Account Deletion */
+"account.title" = "Account & Security";
+"account.field.phone" = "Phone";
+"account.field.apple" = "Apple";
+
+"account.action.deleteAccount" = "Delete Account";
+"account.delete.noticeTitle" = "Important Notice for Account Deletion";
+
+"account.delete.noticeDescription" = "Once your account is deleted, you will no longer be able to use it. All records and data—including personal information and usage history—will be permanently deleted and cannot be restored. Deleting your account means voluntarily giving up all associated rights, including purchased audio content and membership services. Payments already made are non-refundable. Please back up your information before proceeding. Beji is not responsible for any adverse consequences caused by account deletion. Account deletion does not cancel active subscriptions. Please cancel auto-renewal in the app store to avoid further charges.";
+
+"account.delete.read" = "I have read and understand the important notice";
+"account.delete.next" = "Next";
+"account.delete.reason" = "Why do you want to delete your account?";
+"account.delete.completedTitle" = "Account Deleted";
+"account.delete.completedMessage" = "Your account has been deleted and all usage data has been removed. We hope to see you again.";
+"account.button.cancel" = "Cancel";
+"account.button.confirm" = "Confirm";
+
+
+/* Notifications */
+"notifications.title" = "Notifications";
+"notifications.push" = "Push Notifications";
+"notifications.system" = "System Notifications";
+"notifications.description" = "Notifications are used for sleep alarms, daily reminders, focus mode, and more. Enable now.";
+"notifications.liveActivities" = "Live Activities";
+"notifications.inApp" = "In-App Notifications";
+"notifications.sound" = "Sound";
+"notifications.vibration" = "Vibration";
+"notifications.advanced" = "Advanced";
+"notifications.popup" = "Popup Notifications";
+
+
+/* Feedback */
+"feedback.title" = "Feedback";
+"feedback.type" = "Feedback Type";
+"feedback.type.productBug" = "Product Bug";
+"feedback.type.subscription" = "Membership Subscription";
+"feedback.type.productSuggestion" = "Product Suggestion";
+"feedback.type.contentSuggestion" = "Content Suggestion";
+"feedback.type.other" = "Other";
+
+"feedback.placeholder.description" = "Please briefly describe your issue";
+"feedback.placeholder.contact" = "Contact Information (optional)";
+"feedback.placeholder.phoneOrWeChat" = "Phone number or WeChat ID (optional)";
+"feedback.button.submit" = "Submit Feedback";

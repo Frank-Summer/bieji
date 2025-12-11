@@ -233,7 +233,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let myNav = TUOKOUXIUSwiftBaNavC(rootViewController: myVC)
         myNav.navigationBar.isHidden = true
 
-        tufuh_tabBaVC.tufuh_tabbVCArr = [exploreNav, homeNav, myNav]
+        tufuh_tabBaVC.tufuh_tabbVCArr = [tufuh_tarVC2, homeNav, myNav]
         window?.rootViewController = tufuh_tabBaVC
         window?.makeKeyAndVisible()
     }
