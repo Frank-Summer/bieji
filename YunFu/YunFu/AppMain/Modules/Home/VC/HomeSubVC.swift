@@ -107,10 +107,27 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                                                name: Notification.Name("TUOKOUXIUAudioPause"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(audioPlay),
                                                name: Notification.Name("TUOKOUXIUAudioPlay"), object: nil)
+        //刷新页面
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshSubView),
+                                               name: Notification.Name("TUOKOUXIURefreshSubView"), object: nil)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
             if let audioURL = self.audioURL {
                 playAudio(with: audioURL)
             }
+        }
+    }
+    
+    @objc private func refreshSubView() {
+//        tufuh_tabV.reloadData()
+        let firstIndexPath = IndexPath(row: 0, section: 1)
+        let secondIndexPath = IndexPath(row: 1, section: 1)
+        let indexPathsToReload = [firstIndexPath, secondIndexPath]
+
+        // 3. 在主线程中执行UI刷新
+        DispatchQueue.main.async {
+            // 使用 .automatic 动画可以让系统选择最合适的过渡效果
+            self.tufuh_tabV.reloadRows(at: indexPathsToReload, with: .automatic)
         }
     }
     
@@ -186,8 +203,14 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             return TUOKOUXIUSwiftSCRE_H
         } else {
             if indexPath.row == 0 {
+                if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
+                    return 388
+                }
                 return 418  //content 224
             } else if indexPath.row == 1 {
+                if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
+                    return 0.01
+                }
                 return 185 * TUOKOUXIUDeviceInfo.scaleX + 28 + 32 + 16
             } else if indexPath.row == 2 {
                 return 320 * TUOKOUXIUDeviceInfo.scaleX + 32
@@ -237,9 +260,11 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell1Id", for: indexPath) as! HomeSubContentCell1
                 cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                cell.tukou_refresh()
                 return cell
             } else if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell2Id", for: indexPath) as! HomeSubContentCell2
+                cell.tukou_refresh()
                 cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 return cell
             } else if indexPath.row == 2 {

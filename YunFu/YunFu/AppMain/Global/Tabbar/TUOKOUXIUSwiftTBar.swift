@@ -8,16 +8,144 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     
     var tufuh_tabbVCArr: [UIViewController] = []
     var tufuh_mDict: [String: Any]?
-    var tufuh_indexNum: Int = 0
     var tufuh_tabBV: UIView!
-    var tufuh_tabCenterBtn: AnimatedTabButton?
-    var tufuh_rightBtn: UIButton?
     var tufuh_tabButArr: [UIButton] = []
     var tufuh_contV: UIView!
     var tufuh_selInd: Int = -1
     var tufuh_catheDict: [Int: UIViewController] = [:]
     
     private var cancellables = Set<AnyCancellable>()
+    
+    private lazy var animatedButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 26
+        button.tag = 1
+        button.layer.borderColor = TUOKOUXIUWhiteA30.cgColor
+        button.layer.borderWidth = 1
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickCenterBtn)))
+        return button
+    }()
+    
+    private lazy var centerLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.alpha = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    func updateCenterText(title: String, subtitle: String) {
+        let attributedString = NSMutableAttributedString(
+            string: "\(title)\n\(subtitle)",
+            attributes: [
+                .font: TUOKOUXIUSwiftFont.medium(14),
+                .foregroundColor: UIColor.white
+            ]
+        )
+        
+        // 可以设置不同行的不同样式
+        attributedString.addAttribute(
+            .font,
+            value: TUOKOUXIUSwiftFont.regular(12),
+            range: NSRange(location: title.count, length: subtitle.count + 1)
+        )
+        
+        centerLabel.attributedText = attributedString
+    }
+    
+    private lazy var leftIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "sleep") // 左边图标
+        imageView.alpha = 0
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private lazy var rightIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "tab_home_play") // 暂停图标
+        imageView.contentMode = .center
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(clickPlayBtn)))
+        return imageView
+    }()
+    
+    // 左边按钮
+    private lazy var leftSideButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.backgroundColor = TUOKOUXIUSwiftwuseC
+        let off = UIImage(named: "tab_explore_default")
+        let on = UIImage(named: "tab_explore_select")
+        button.setImage((off), for: .normal)
+        button.setImage((on), for: .selected)
+        button.tag = 0
+        button.layer.cornerRadius = 20 // 40/2 = 20
+        button.layer.borderColor = TUOKOUXIUWhiteA30.cgColor
+        button.layer.borderWidth = 1
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        button.tukou_setEnlargeEdge(10)
+        return button
+    }()
+    
+    // 右边按钮
+    private lazy var rightSideButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.backgroundColor = TUOKOUXIUSwiftwuseC
+        let off = UIImage(named: "tab_my_default")
+        let on = UIImage(named: "tab_my_select")
+        button.setImage((off), for: .normal)
+        button.setImage((on), for: .selected)
+        button.tag = 2
+        button.layer.cornerRadius = 20
+        button.layer.borderColor = TUOKOUXIUWhiteA30.cgColor
+        button.layer.borderWidth = 1
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
+        button.tukou_setEnlargeEdge(10)
+        return button
+    }()
+    
+    private var buttonWidthConstraint: NSLayoutConstraint!
+    private var rightIconCenterXConstraint: NSLayoutConstraint!
+    
+    // 左边按钮约束
+    private var leftButtonWidthConstraint: NSLayoutConstraint!
+    private var leftButtonHeightConstraint: NSLayoutConstraint!
+    private var leftButtonLeadingConstraint: NSLayoutConstraint!
+    
+    // 右边按钮约束
+    private var rightButtonWidthConstraint: NSLayoutConstraint!
+    private var rightButtonHeightConstraint: NSLayoutConstraint!
+    private var rightButtonTrailingConstraint: NSLayoutConstraint!
+    
+    private var isExpanded = false
+    private var isLeftButtonExpanded = false
+    private var isRightButtonExpanded = false
+    
+    private enum LayoutConstants {
+        // 初始状态
+        static let sideButtonInitialSize: CGFloat = 40
+        static let sideButtonExpandedSize: CGFloat = 52
+        
+        // 初始边距
+        static let sideButtonInitialMargin: CGFloat = 34
+        static let sideButtonExpandedMargin: CGFloat = 28
+        
+        // 中间按钮
+        static let centerButtonCollapsedSize: CGFloat = 52
+        static let centerButtonExpandedSize: CGFloat = 210
+        
+        // 圆角
+        static let sideButtonInitialCornerRadius: CGFloat = 20 // 40/2
+        static let sideButtonExpandedCornerRadius: CGFloat = 26 // 52/2
+    }
+    
+    private var isPlay = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,17 +156,17 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUShoTabb"))
             .sink { [weak self] _ in self?.tukou_shoTabb() }
             .store(in: &cancellables)
+        //显示首页类型
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUShowLeiXing"))
+            .sink { [weak self] _ in self?.clickCenterBtn() }
+            .store(in: &cancellables)
 
         tufuh_selInd = -1
         tukou_setTabBar()
         tukou_setContainerV()
-
-        self.tukou_setTabBTitArr(
-                    ["Home", "Explore", "My"],
-                    texClr: UIColor.TUOKOUXIUSSRGB(r: 144, g: 147, b: 153),
-                    selTexClr: TUOKOUXIUSwiftbaiseC,
-                    barBgClr: TUOKOUXIUSwiftwuseC
-                )
+        
+        self.tukou_setTabBTitArr()
+        updateCenterText(title: "东方禅境", subtitle: "瑜伽0")
     }
     
     override func viewDidLayoutSubviews() {
@@ -97,227 +225,397 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         return vc
     }
     
-    func tukou_setTabBTitArr(_ titArr: [String], texClr: UIColor, selTexClr: UIColor, barBgClr: UIColor) {
-        let tufuh_count = titArr.count
+    func tukou_setTabBTitArr() {
+        self.tufuh_tabBV.addSubview(leftSideButton)
+        self.tufuh_tabButArr.append(leftSideButton)
 
-        for i in 0..<tufuh_count {
-            switch i {
-            case 0:
-                let tufuh_btn = JellyButton(frame: CGRect(x: 30, y: 18, width: 52, height: 52))
-                let off = UIImage(named: "tab_explore_default")
-                let on = UIImage(named: "tab_explore_select")
-                tufuh_btn.setImage((off), for: .normal)
-                tufuh_btn.setImage((on), for: .selected)
-                tufuh_btn.setImage((on), for: .highlighted)
-                tufuh_btn.addTarget(self, action: #selector(tukou_tabButTap(_:)), for: .touchUpInside)
-                tufuh_btn.tag = i
-                tufuh_btn.tukou_setEnlargeEdge(10)
-                self.tufuh_tabBV.addSubview(tufuh_btn)
-                self.tufuh_tabButArr.append(tufuh_btn)
-            case 1:
-                let tufuh_btn = AnimatedTabButton(type: .custom)
-                tufuh_btn.backgroundColor = TUOKOUXIUWhiteA60
-                tufuh_btn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-60/2, y: 10, width: 60, height: 60)
-                tufuh_btn.layer.cornerRadius = 30
-                let off = UIImage(named: "tab_home_stop")
-                let on = UIImage(named: "tab_home_play")
-                tufuh_btn.setImage((off), for: .normal)
-                tufuh_btn.setImage((on), for: .selected)
-                tufuh_btn.addTarget(self, action: #selector(tukou_tabButTap(_:)), for: .touchUpInside)
-                tufuh_btn.tag = i
-                tufuh_btn.tukou_setEnlargeEdge(10)
-                self.tufuh_tabBV.addSubview(tufuh_btn)
-                self.tufuh_tabButArr.append(tufuh_btn)
-                //默认选中第二个btn
-                tufuh_btn.isSelected = true
-                tufuh_indexNum = 1
-                tukou_swiToVCAtInd(1)
-//                tufuh_tabCenterBtn = AnimatedTabButton.tukou_bjBtn(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-207/2, y: 18, width: 207, height: 52), target: self, title: nil, superView: self.tufuh_tabBV, action: #selector(clicktabCenterBtn))
-                
-                tufuh_tabCenterBtn = AnimatedTabButton(type: .custom)
-                tufuh_tabCenterBtn!.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-207/2, y: 18, width: 207, height: 52)
-                tufuh_tabCenterBtn!.backgroundColor = TUOKOUXIUSwiftwuseC
-                tufuh_tabCenterBtn!.addTarget(self, action: #selector(clicktabCenterBtn), for: .touchUpInside)
-                self.tufuh_tabBV.addSubview(tufuh_tabCenterBtn!)
-                
-                tufuh_tabCenterBtn?.backgroundColor = TUOKOUXIUWhiteA60
-                tufuh_tabCenterBtn?.isHidden = true
-                tufuh_tabCenterBtn?.layer.borderColor = TUOKOUXIUWhiteA10.cgColor
-                tufuh_tabCenterBtn?.layer.borderWidth = 1
-                tufuh_tabCenterBtn?.layer.cornerRadius = 26
-                
-                let leftIV = UIImageView.tukou_bjImageV(CGRect(x: 6, y: 6, width: 40, height: 40), superView: tufuh_tabCenterBtn!, image: UIImage(named: "sleep"))
-                
-                tufuh_rightBtn = UIButton.tukou_bjBtn(CGRect(x: 207-6-40, y: 6, width: 40, height: 40), target: self, image: UIImage(named: "tab_home_play"), superView: tufuh_tabCenterBtn!, action: #selector(clickPlayAndPause))
-                tufuh_rightBtn!.setImage((off), for: .selected)
-                
-                let topTitleL = UILabel.tukou_bjLabel(CGRect(x: leftIV.frame.maxX + 12, y: leftIV.frame.minY + 3, width: 42, height: 17), text: "瑜伽0", superView: tufuh_tabCenterBtn!, textAlignment: .center, font: TUOKOUXIUSwiftFont.medium(14), textColor: .white)
-                
-                let botTitleL = UILabel.tukou_bjLabel(CGRect(x: leftIV.frame.maxX + 12, y: topTitleL.frame.maxY, width: 48, height: 17), text: "东方禅境", superView: tufuh_tabCenterBtn!, textAlignment: .center, font: TUOKOUXIUSwiftFont.regular(12), textColor: .white)
-                _ = UIImageView.tukou_bjImageV(CGRect(x: botTitleL.frame.maxX + 3, y: topTitleL.frame.maxY + 0.5, width: 16, height: 16), superView: tufuh_tabCenterBtn!, image: UIImage(named: "sleep"))
-            case 2:
-                let tufuh_btn = JellyButton(frame: CGRect(x: TUOKOUXIUSwiftSCRE_W-30-52, y: 18, width: 52, height: 52))
-                let off = UIImage(named: "tab_my_default")
-                let on = UIImage(named: "tab_my_select")
-                tufuh_btn.setImage((off), for: .normal)
-                tufuh_btn.setImage((on), for: .selected)
-                tufuh_btn.setImage((on), for: .highlighted)
-                tufuh_btn.addTarget(self, action: #selector(tukou_tabButTap(_:)), for: .touchUpInside)
-                tufuh_btn.tag = i
-                tufuh_btn.tukou_setEnlargeEdge(10)
-                self.tufuh_tabBV.addSubview(tufuh_btn)
-                self.tufuh_tabButArr.append(tufuh_btn)
-            default:
-                break
-            }
-        }
+        self.tufuh_tabBV.addSubview(animatedButton)
+        self.tufuh_tabButArr.append(animatedButton)
+        //默认选中第二个btn
+        animatedButton.isSelected = true
+
+        tukou_swiToVCAtInd(1)
+        self.tufuh_tabBV.addSubview(rightSideButton)
+        self.tufuh_tabButArr.append(rightSideButton)
+        
+        buttonWidthConstraint = animatedButton.widthAnchor.constraint(equalToConstant: 52)
+        
+        NSLayoutConstraint.activate([
+            animatedButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            animatedButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            buttonWidthConstraint,
+            animatedButton.heightAnchor.constraint(equalToConstant: 52)
+        ])
+        
+        // 左边按钮约束 - 固定在屏幕左侧
+        leftButtonWidthConstraint = leftSideButton.widthAnchor.constraint(equalToConstant: LayoutConstants.sideButtonInitialSize)
+        leftButtonHeightConstraint = leftSideButton.heightAnchor.constraint(equalToConstant: LayoutConstants.sideButtonInitialSize)
+        leftButtonLeadingConstraint = leftSideButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: LayoutConstants.sideButtonInitialMargin)
+        
+        NSLayoutConstraint.activate([
+            leftButtonLeadingConstraint,
+            leftSideButton.centerYAnchor.constraint(equalTo: animatedButton.centerYAnchor),
+            leftButtonWidthConstraint,
+            leftButtonHeightConstraint
+        ])
+        
+        // 右边按钮约束 - 固定在屏幕右侧
+        rightButtonWidthConstraint = rightSideButton.widthAnchor.constraint(equalToConstant: LayoutConstants.sideButtonInitialSize)
+        rightButtonHeightConstraint = rightSideButton.heightAnchor.constraint(equalToConstant: LayoutConstants.sideButtonInitialSize)
+        rightButtonTrailingConstraint = rightSideButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -LayoutConstants.sideButtonInitialMargin)
+        
+        NSLayoutConstraint.activate([
+            rightButtonTrailingConstraint,
+            rightSideButton.centerYAnchor.constraint(equalTo: animatedButton.centerYAnchor),
+            rightButtonWidthConstraint,
+            rightButtonHeightConstraint
+        ])
+        
+        // 添加内部元素
+        animatedButton.addSubview(centerLabel)
+        animatedButton.addSubview(leftIcon)
+        animatedButton.addSubview(rightIcon)
+        
+        // 设置暂停图标约束（初始居中）
+        rightIconCenterXConstraint = rightIcon.centerXAnchor.constraint(equalTo: animatedButton.centerXAnchor)
+        
+        NSLayoutConstraint.activate([
+            // 暂停图标居中（初始状态）
+            rightIconCenterXConstraint,
+            rightIcon.centerYAnchor.constraint(equalTo: animatedButton.centerYAnchor),
+            rightIcon.widthAnchor.constraint(equalToConstant: 40),
+            rightIcon.heightAnchor.constraint(equalToConstant: 40),
+            
+            // 中间文本（初始隐藏）
+            centerLabel.centerXAnchor.constraint(equalTo: animatedButton.centerXAnchor),
+            centerLabel.centerYAnchor.constraint(equalTo: animatedButton.centerYAnchor),
+            
+            // 左边图标（初始隐藏）
+            leftIcon.centerYAnchor.constraint(equalTo: animatedButton.centerYAnchor),
+            leftIcon.trailingAnchor.constraint(equalTo: centerLabel.leadingAnchor, constant: -20),
+            leftIcon.widthAnchor.constraint(equalToConstant: 40),
+            leftIcon.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        // 初始状态：只显示暂停图标
+        rightIcon.alpha = 1.0
         self.tufuh_tabBV.backgroundColor = TUOKOUXIUSwiftwuseC
     }
     
-    @objc func clickPlayAndPause() {
-        tufuh_rightBtn?.isSelected = !tufuh_rightBtn!.isSelected
-        if tufuh_rightBtn?.isSelected == true {
-            print("暂停")
-            NotificationCenter.default.post(
-                name: Notification.Name("TUOKOUXIUAudioPause"),
-                object: nil
-            )
-        } else {
-            print("播放")
-            NotificationCenter.default.post(
-                name: Notification.Name("TUOKOUXIUAudioPlay"),
-                object: nil
-            )
+    @objc private func leftButtonTapped() {
+        if isRightButtonExpanded {
+            isRightButtonExpanded = false
+            rightSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
+            rightButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
+            rightButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
+            rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonInitialMargin
+            UIView.animate(withDuration: 0.3,
+                          delay: 0,
+                          usingSpringWithDamping: 0.7,
+                          initialSpringVelocity: 0.5,
+                          options: .curveEaseInOut,
+                           animations: { [self] in
+                // 更新布局
+                self.view.layoutIfNeeded()
+                
+                // 更新圆角
+                rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
+                
+                // 轻微缩放效果
+                rightSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }, completion: { _ in
+                // 恢复缩放
+                UIView.animate(withDuration: 0.1) { [self] in
+                    rightSideButton.transform = .identity
+                }
+            })
         }
+        if isLeftButtonExpanded { return }
+        tukou_swiToVCAtInd(0)
+        leftSideButton.isSelected = true
+        leftSideButton.backgroundColor = TUOKOUXIUSwiftbaiseC
+        isLeftButtonExpanded = true
+        leftButtonWidthConstraint.constant = LayoutConstants.sideButtonExpandedSize
+        leftButtonHeightConstraint.constant = LayoutConstants.sideButtonExpandedSize
+        leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonExpandedMargin
+        // 执行动画
+        UIView.animate(withDuration: 0.3,
+                      delay: 0,
+                      usingSpringWithDamping: 0.7,
+                      initialSpringVelocity: 0.5,
+                      options: .curveEaseInOut,
+                       animations: { [self] in
+            // 更新布局
+            self.view.layoutIfNeeded()
+            
+            // 更新圆角
+            leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonExpandedCornerRadius
+            
+            // 轻微缩放效果
+            leftSideButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+        }, completion: { _ in
+            // 恢复缩放
+            UIView.animate(withDuration: 0.1) { [self] in
+                leftSideButton.transform = .identity
+            }
+        })
+        print("左边按钮被点击")
+        if isExpanded { return }
+        handleButtonTap()
     }
     
-    @objc func clicktabCenterBtn() {
-        tukou_swiToVCAtInd(1)
+    @objc private func handleButtonTap() {
+        // 添加点击反馈
+        UIView.animate(withDuration: 0.1, animations: {
+            self.animatedButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        }) { _ in
+            UIView.animate(withDuration: 0.1) {
+                self.animatedButton.transform = .identity
+            }
+        }
         
-        for (i, tufuh_btn) in self.tufuh_tabButArr.enumerated() {
-            switch i {
-            case 0:
-                tufuh_btn.isSelected = false
-            case 1:
-                //果冻效果缩小
-                btnChangesSmall(tufuh_btn)
-            case 2:
-                tufuh_btn.isSelected = false
-            default:
-                break
-            }
+        if isExpanded {
+            collapseButton()
+            rightIcon.isUserInteractionEnabled = false
+        } else {
+            expandButton()
+            rightIcon.isUserInteractionEnabled = true
         }
-
-        tufuh_indexNum = 1
     }
     
-    func addScaAnimToBut(_ button: UIButton) {
-        let ani = CAKeyframeAnimation(keyPath: "transform.scale")
-        ani.values = [1.0, 1.3, 0.9, 1.15, 0.95, 1.02, 1.0]
-        ani.duration = 0.65
-        ani.repeatCount = 0
-        ani.calculationMode = .cubic
-        button.layer.add(ani, forKey: nil)
+    private func collapseButton() {
+        // 停止旋转动画
+        stopRotationAnimation()
+        // 恢复宽度约束
+        buttonWidthConstraint.constant = 52
+        
+        // 移除右侧约束，恢复居中约束
+        rightIconCenterXConstraint.isActive = false
+        
+        rightIconCenterXConstraint = rightIcon.centerXAnchor.constraint(
+            equalTo: animatedButton.centerXAnchor
+        )
+        rightIconCenterXConstraint.isActive = true
+        self.isExpanded = false
+        // 重置图标方向
+        self.resetIconOrientation()
+        UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut) {
+
+            self.view.layoutIfNeeded()
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0) {
+                self.animatedButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                self.animatedButton.backgroundColor = .white
+            }
+            
+            // 淡出文本和左图标
+            UIView.animate(withDuration: 0.2) {
+                self.centerLabel.alpha = 0
+                self.leftIcon.alpha = 0
+            }
+        } completion: { _ in
+            
+        }
     }
     
-    @objc func tukou_tabButTap(_ sender: UIButton) {
-        if sender.tag != tufuh_indexNum {
-            addScaAnimToBut(sender)
+    private func expandButton() {
+        // 更新宽度约束（展开宽度）
+        buttonWidthConstraint.constant = LayoutConstants.centerButtonExpandedSize
+        
+        // 移除旧的居中约束，添加新的右侧约束
+        rightIconCenterXConstraint.isActive = false
+        
+        rightIconCenterXConstraint = rightIcon.centerXAnchor.constraint(
+            equalTo: animatedButton.trailingAnchor,
+            constant: -30
+        )
+        rightIconCenterXConstraint.isActive = true
+        self.isExpanded = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.startRotationAnimation()
         }
+        UIView.animate(withDuration: 0.9, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.5, options: .curveEaseInOut) {
 
-        if sender.tag == 0 {
-            if tufuh_indexNum == sender.tag { return }
-            sender.isSelected = !sender.isSelected
-            let tufuh_btn2 = self.tufuh_tabButArr[2]
-            tufuh_btn2.isSelected = !tufuh_btn2.isSelected
-            if tufuh_indexNum != 2 {
-                //果冻效果放大
-                btnChangesBig()
+            self.view.layoutIfNeeded()
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0) {
+                self.animatedButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                self.animatedButton.backgroundColor = .clear
             }
-        } else if sender.tag == 1 {
-            sender.isSelected = !sender.isSelected
-            if let button = sender as? AnimatedTabButton {
-                button.animateSelect()
-                button.animateQuickTween()
+            // 淡入文本和图标
+            UIView.animate(withDuration: 0.3, delay: 0.1) {
+                self.centerLabel.alpha = 1
+                self.leftIcon.alpha = 1
             }
+        } completion: { _ in
 
-            if sender.isSelected {
-                print("播放")
-                NotificationCenter.default.post(
-                    name: Notification.Name("TUOKOUXIUAudioPlay"),
-                    object: nil
-                )
-            } else {
-                print("暂停")
+        }
+    }
+    
+    @objc private func rightButtonTapped() {
+        if isLeftButtonExpanded {
+            isLeftButtonExpanded = false
+            leftSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
+            leftButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
+            leftButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
+            leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonInitialMargin
+            UIView.animate(withDuration: 0.3,
+                          delay: 0,
+                          usingSpringWithDamping: 0.7,
+                          initialSpringVelocity: 0.5,
+                          options: .curveEaseInOut,
+                           animations: { [self] in
+                // 更新布局
+                self.view.layoutIfNeeded()
+                
+                // 更新圆角
+                leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
+                
+                // 轻微缩放效果
+                leftSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+            }, completion: { _ in
+                // 恢复缩放
+                UIView.animate(withDuration: 0.1) { [self] in
+                    leftSideButton.transform = .identity
+                }
+            })
+        }
+            
+        if isRightButtonExpanded { return }
+        tukou_swiToVCAtInd(2)
+        isRightButtonExpanded = true
+        rightSideButton.backgroundColor = TUOKOUXIUSwiftbaiseC
+        rightButtonWidthConstraint.constant = LayoutConstants.sideButtonExpandedSize
+        rightButtonHeightConstraint.constant = LayoutConstants.sideButtonExpandedSize
+        rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonExpandedMargin
+        // 执行动画
+        UIView.animate(withDuration: 0.3,
+                      delay: 0,
+                      usingSpringWithDamping: 0.7,
+                      initialSpringVelocity: 0.5,
+                      options: .curveEaseInOut,
+                       animations: { [self] in
+            // 更新布局
+            self.view.layoutIfNeeded()
+            
+            // 更新圆角
+            rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonExpandedCornerRadius
+            
+            // 轻微缩放效果
+            rightSideButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+        }, completion: { _ in
+            // 恢复缩放
+            UIView.animate(withDuration: 0.1) { [self] in
+                rightSideButton.transform = .identity
+            }
+        })
+        print("右边按钮被点击")
+        if isExpanded { return }
+        handleButtonTap()
+    }
+    
+    @objc private func clickCenterBtn() {
+        if isExpanded {
+            tukou_swiToVCAtInd(1)
+            handleButtonTap()
+            if isLeftButtonExpanded {
+                isLeftButtonExpanded = false
+                leftSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
+                leftButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
+                leftButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
+                leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonInitialMargin
+                UIView.animate(withDuration: 0.3,
+                              delay: 0,
+                              usingSpringWithDamping: 0.7,
+                              initialSpringVelocity: 0.5,
+                              options: .curveEaseInOut,
+                               animations: { [self] in
+                    // 更新布局
+                    self.view.layoutIfNeeded()
+                    
+                    // 更新圆角
+                    leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
+                    
+                    // 轻微缩放效果
+                    leftSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                }, completion: { _ in
+                    // 恢复缩放
+                    UIView.animate(withDuration: 0.1) { [self] in
+                        leftSideButton.transform = .identity
+                    }
+                })
+            }
+            if isRightButtonExpanded {
+                isRightButtonExpanded = false
+                rightSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
+                rightButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
+                rightButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
+                rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonInitialMargin
+                UIView.animate(withDuration: 0.3,
+                              delay: 0,
+                              usingSpringWithDamping: 0.7,
+                              initialSpringVelocity: 0.5,
+                              options: .curveEaseInOut,
+                               animations: { [self] in
+                    // 更新布局
+                    self.view.layoutIfNeeded()
+                    
+                    // 更新圆角
+                    rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
+                    
+                    // 轻微缩放效果
+                    rightSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+                }, completion: { _ in
+                    // 恢复缩放
+                    UIView.animate(withDuration: 0.1) { [self] in
+                        rightSideButton.transform = .identity
+                    }
+                })
+            }
+        } else {
+            addScaAnimToBut(animatedButton)
+            if self.isPlay {
+                self.isPlay = false
+                rightIcon.image = UIImage(named: "tab_home_stop") // 播放图标
                 NotificationCenter.default.post(
                     name: Notification.Name("TUOKOUXIUAudioPause"),
                     object: nil
                 )
-            }
-            let tufuh_btn0 = self.tufuh_tabButArr[0]
-            if tufuh_btn0.isSelected {
-                tufuh_btn0.isSelected = !tufuh_btn0.isSelected
-            }
-            let tufuh_btn2 = self.tufuh_tabButArr[2]
-            if tufuh_btn2.isSelected {
-                tufuh_btn2.isSelected = !tufuh_btn2.isSelected
-            }
-        } else if sender.tag == 2 {
-            if tufuh_indexNum == sender.tag { return }
-            sender.isSelected = !sender.isSelected
-            let tufuh_btn0 = self.tufuh_tabButArr[0]
-            tufuh_btn0.isSelected = !tufuh_btn0.isSelected
-            if tufuh_indexNum != 0 {
-                //果冻效果放大
-                btnChangesBig()
+            } else {
+                self.isPlay = true
+                rightIcon.image = UIImage(named: "tab_home_play") // 暂停图标
+                NotificationCenter.default.post(
+                    name: Notification.Name("TUOKOUXIUAudioPlay"),
+                    object: nil
+                )
             }
         }
-        tukou_swiToVCAtInd(sender.tag)
-        tufuh_indexNum = sender.tag
     }
     
-    func btnChangesBig() {
-        let tufuh_btn = self.tufuh_tabButArr[1]
-        tufuh_btn.isHidden = true
-        tufuh_tabCenterBtn?.isHidden = false
-        tufuh_tabCenterBtn!.animateSelect()
-        tufuh_tabCenterBtn!.animateQuickTween()
-//        tufuh_tabCenterBtn?.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) // 缩小一点
-//        tufuh_tabCenterBtn?.layoutIfNeeded() // 确保渲染
-//
-//        UIView.animate(withDuration: 0.35,        // 总时长略长，便于弹动更明显
-//                       delay: 0,
-//                       usingSpringWithDamping: 0.07, // 阻尼更小 → 弹动更大
-//                       initialSpringVelocity: 2.2,  // 初速度大一点
-//                       options: [.curveEaseInOut],
-//                       animations: {
-//            self.tufuh_tabCenterBtn?.transform = .identity // 弹回
-//        })
-    }
-    
-    func btnChangesSmall(_ tufuh_btn: AnyObject) {
-        self.tufuh_tabCenterBtn?.isHidden = true
-        if let button = tufuh_btn as? JellyButton {
-            button.isHidden = false
-            button.isSelected = !tufuh_rightBtn!.isSelected
-            button.animateDeselect()
-            button.animateQuickTween()
-        } else if let button = tufuh_btn as? AnimatedTabButton {
-            button.isHidden = false
-            button.isSelected = !tufuh_rightBtn!.isSelected
-            button.animateDeselect()
-            button.animateQuickTween()
+    @objc private func clickPlayBtn() {
+        self.isPlay = !self.isPlay
+        if self.isPlay {
+            rightIcon.image = UIImage(named: "tab_home_play") // 暂停图标
+            NotificationCenter.default.post(
+                name: Notification.Name("TUOKOUXIUAudioPlay"),
+                object: nil
+            )
+            startRotationAnimation()
+        } else {
+            rightIcon.image = UIImage(named: "tab_home_stop") // 播放图标
+            NotificationCenter.default.post(
+                name: Notification.Name("TUOKOUXIUAudioPause"),
+                object: nil
+            )
+            stopRotationAnimation()
         }
-        
-//        tufuh_btn.transform = CGAffineTransform(scaleX: 0.8, y: 0.8) // 缩小一点
-//        UIView.animate(withDuration: 0.55,
-//                       delay: 0,
-//                       usingSpringWithDamping: 0.3,
-//                       initialSpringVelocity: 1.0,
-//                       options: [.curveEaseInOut],
-//                       animations: {
-//            tufuh_btn.transform = .identity // 弹回
-//        })
+    }
+    
+    func addScaAnimToBut(_ button: UIView) {
+        let ani = CAKeyframeAnimation(keyPath: "transform.scale")
+        ani.values = [1.0, 1.2, 0.9, 1.15, 1.0]
+        ani.duration = 0.35
+        ani.repeatCount = 1
+        ani.calculationMode = .cubic
+        button.layer.add(ani, forKey: nil)
     }
     
     func tukou_hidTabb() {
@@ -333,5 +631,49 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    // MARK: - 视图显示后更新布局
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // 确保初始状态正确
+        rightIcon.alpha = 1.0
+    }
+    
+    // MARK: - Rotation Animation
+    private var rotationAnimation: CABasicAnimation?
+    private var isRotating = false
+
+    // 开始旋转动画
+    private func startRotationAnimation() {
+        // 确保没有重复添加动画
+        stopRotationAnimation()
+        
+        // 创建旋转动画
+        let rotation = CABasicAnimation(keyPath: "transform.rotation")
+        rotation.fromValue = 0
+        rotation.toValue = CGFloat.pi * 2
+        rotation.duration = 5.0  // 每2秒旋转一圈
+        rotation.repeatCount = .infinity  // 无限重复
+        rotation.isRemovedOnCompletion = false
+        
+        leftIcon.layer.add(rotation, forKey: "rotationAnimation")
+        isRotating = true
+        
+        print("旋转动画开始")
+    }
+
+    // 停止旋转动画
+    private func stopRotationAnimation() {
+        leftIcon.layer.removeAnimation(forKey: "rotationAnimation")
+        isRotating = false
+        print("旋转动画停止")
+    }
+
+    // 重置图标方向（可选）
+    private func resetIconOrientation() {
+        UIView.animate(withDuration: 0.3) {
+            self.leftIcon.transform = .identity
+        }
     }
 }

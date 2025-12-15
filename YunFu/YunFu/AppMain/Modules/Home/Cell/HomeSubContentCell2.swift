@@ -36,6 +36,18 @@ class HomeSubContentCell2: UITableViewCell, UICollectionViewDelegate, UICollecti
         tukou_initV()
     }
     
+    func tukou_refresh() {
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
+            tufuh_titleL.isHidden = true
+            tufuh_collcV.isHidden = true
+            tufuh_lineV.isHidden = true
+        } else {
+            tufuh_titleL.isHidden = false
+            tufuh_collcV.isHidden = false
+            tufuh_lineV.isHidden = false
+        }
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

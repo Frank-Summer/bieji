@@ -12,6 +12,9 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     
     private override init() {}
     
+    
+    var tufuh_isOpenHomeMusicExpand: Bool = false
+    
 //    var tufuh_dataDict: [String: Any]?
 //    var tufuh_dsJiDict: [String: Any]?
     

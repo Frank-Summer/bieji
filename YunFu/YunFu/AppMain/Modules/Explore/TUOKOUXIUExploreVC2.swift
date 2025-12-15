@@ -134,8 +134,9 @@ extension TUOKOUXIUExploreVC2: UITableViewDataSource, UITableViewDelegate {
             cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = false
             cell.tukou_nameString("活跃")
-            cell.TUOKOUXIUclkItemBlk = { [weak self] model in
-                self!.showDetail()
+            cell.TUOKOUXIUclkItemBlk = { model in
+//                self!.showDetail()
+                NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: nil)
             }
             return cell
         } else if indexPath.row == 2 {
@@ -163,12 +164,12 @@ extension TUOKOUXIUExploreVC2: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    func showDetail() {
-        print("点击显示详情")
-        
-        let picker = ExploreDetailView()
-        picker.show(in: self.view)
-    }
+//    func showDetail() {
+//        print("点击显示详情")
+//        
+//        let picker = ExploreDetailView()
+//        picker.show(in: self.view)
+//    }
     func tukou_noNetwV() {
         guard self.tufuh_noNetV == nil else { return }
 //        if !self.tufuh_dataTreArr.isEmpty {

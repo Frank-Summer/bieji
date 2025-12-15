@@ -181,6 +181,8 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     //点击音乐
     @objc func clickMusic() {
         print("点击音乐")
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand = true
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshSubView"), object: nil)
         self.tufuh_musicW!.tukou_updateUI()
         tufuh_isMusicOpen = true
         self.tufuh_musicW!.tuks_spx = TUOKOUXIUSwiftSCRE_W/2-256/2
@@ -222,6 +224,8 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     //点击返回之前类型页面
     @objc func clickBackType() {
         print("点击返回之前类型页面")
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand = false
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshSubView"), object: nil)
         tufuh_isMusicOpen = false
         self.tufuh_topTypeV?.isHidden = true
         self.tufuh_topTypeV?.removeFromSuperview()
@@ -256,7 +260,6 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     //点击展开类型
     @objc func clickTypeVOpen() {
         print("点击展开类型")
-
         tufuh_selectTypeV = TUOKOUXIUselectTypeW(frame: self.view.bounds)
         self.view.addSubview(self.tufuh_selectTypeV!)
         let botV = UIView.tukou_bjView(CGRect(x: 20, y: TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 10, width: 152, height: 196), superView: tufuh_selectTypeV!, bgColor: .black)

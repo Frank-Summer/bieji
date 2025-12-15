@@ -57,7 +57,9 @@ class HomeSubContentCell1: UITableViewCell {
     private func tukou_initV() {
         contentView.addSubview(tufuh_titleL)
         contentView.addSubview(tufuh_subTitleL)
+
         contentView.addSubview(tufuh_enterBtn)
+        
         contentView.addSubview(tufuh_contL)
         contentView.addSubview(tufuh_lineV)
         
@@ -82,17 +84,34 @@ class HomeSubContentCell1: UITableViewCell {
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W)
             make.height.equalTo(24)
         }
-        tufuh_enterBtn.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(28)
-            make.left.equalToSuperview().offset(24)
-            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
-            make.height.equalTo(48)
-        }
-        tufuh_contL.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
-            make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(32)
-            make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
-        }
+//        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
+//            tufuh_enterBtn.backgroundColor = TUOKOUXIUSwiftwuseC
+//            
+//            tufuh_enterBtn.snp.makeConstraints { make in
+//                make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(28)
+//                make.left.equalToSuperview().offset(24)
+//                make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+//                make.height.equalTo(0.01)
+//            }
+//            tufuh_contL.snp.makeConstraints { make in
+//                make.left.equalToSuperview().offset(24)
+//                make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(32)
+//                make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+//            }
+//        } else {
+            tufuh_enterBtn.backgroundColor = TUOKOUXIUWhiteA10
+            tufuh_enterBtn.snp.makeConstraints { make in
+                make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(28)
+                make.left.equalToSuperview().offset(24)
+                make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+                make.height.equalTo(48)
+            }
+            tufuh_contL.snp.makeConstraints { make in
+                make.left.equalToSuperview().offset(24)
+                make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(32)
+                make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+            }
+//        }
         
         tufuh_lineV.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
@@ -100,6 +119,38 @@ class HomeSubContentCell1: UITableViewCell {
             make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
             make.height.equalTo(1)
         }
+    }
+    
+   func tukou_refresh() {
+       if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
+           tufuh_enterBtn.backgroundColor = TUOKOUXIUSwiftwuseC
+           tufuh_enterBtn.setTitleColor(TUOKOUXIUSwiftwuseC, for: .normal)
+           tufuh_enterBtn.snp.updateConstraints { make in
+               make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(28)
+               make.left.equalToSuperview().offset(24)
+               make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+               make.height.equalTo(0.01)
+           }
+           tufuh_contL.snp.updateConstraints { make in
+               make.left.equalToSuperview().offset(24)
+               make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(10)
+               make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+           }
+       } else {
+           tufuh_enterBtn.backgroundColor = TUOKOUXIUWhiteA10
+           tufuh_enterBtn.setTitleColor(TUOKOUXIUSwiftbaiseC, for: .normal)
+           tufuh_enterBtn.snp.updateConstraints { make in
+               make.top.equalTo(tufuh_subTitleL.snp.bottom).offset(28)
+               make.left.equalToSuperview().offset(24)
+               make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+               make.height.equalTo(48)
+           }
+           tufuh_contL.snp.updateConstraints { make in
+               make.left.equalToSuperview().offset(24)
+               make.top.equalTo(tufuh_enterBtn.snp.bottom).offset(32)
+               make.width.equalTo(TUOKOUXIUSwiftSCRE_W-48)
+           }
+       }
     }
     
     @objc func tukou_goToMore() {
