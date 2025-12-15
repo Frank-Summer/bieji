@@ -5,10 +5,10 @@
   Created by FrankS on 9/23/25.
   
 */
-"CFBundleDisplayName" = "unrush";
+"CFBundleDisplayName" = "Unrush";
 
 /* App Display Name */
-"app.displayName" = "Beji";
+"app.displayName" = "Unrush";
 
 
 /* Login */
@@ -48,7 +48,7 @@
 
 /* Settings */
 "settings.title" = "Settings";
-"settings.about" = "About Beji";
+"settings.about" = "About Unrush";
 "settings.accountSecurity" = "Account & Security";
 "settings.notifications" = "Notifications";
 "settings.rate" = "Rate on the App Store";
@@ -57,18 +57,24 @@
 
 /* About */
 "about.followUs" = "Follow Us";
-"about.legal" = "Privacy Policy | User Agreement | Membership Agreement © 2025 Beijing Qiyin Technology Co., Ltd. All rights reserved.";
+"about.legal" = "Privacy Policy | User Agreement | Membership Agreement © 2025 Unrush Qiyin Technology Co., Ltd. All rights reserved.";
 
 
 /* Account / Account Deletion */
 "account.title" = "Account & Security";
 "account.field.phone" = "Phone";
 "account.field.apple" = "Apple";
-
+"account.action.logout" = "Log Out";
 "account.action.deleteAccount" = "Delete Account";
 "account.delete.noticeTitle" = "Important Notice for Account Deletion";
 
-"account.delete.noticeDescription" = "Once your account is deleted, you will no longer be able to use it. All records and data—including personal information and usage history—will be permanently deleted and cannot be restored. Deleting your account means voluntarily giving up all associated rights, including purchased audio content and membership services. Payments already made are non-refundable. Please back up your information before proceeding. Beji is not responsible for any adverse consequences caused by account deletion. Account deletion does not cancel active subscriptions. Please cancel auto-renewal in the app store to avoid further charges.";
+"account.delete.noticeDescription01" = "Once your account is deleted, you will no longer be able to use it. All records and data in the account—including but not limited to personal information and usage history—will be permanently deleted and cannot be restored.";
+
+"account.delete.noticeDescription02" = "Deleting your account means voluntarily giving up all rights and benefits associated with it, including purchased audio content and membership services. Payments already made are non-refundable.";
+
+"account.delete.noticeDescription03" = "If necessary, please back up any important information or data before proceeding. Beji is not responsible for any adverse consequences resulting from account deletion.";
+
+"account.delete.noticeDescription04" = "Account deletion does not automatically cancel any active subscriptions. Please cancel auto-renewal in the app store to avoid continued charges after deletion.";
 
 "account.delete.read" = "I have read and understand the important notice";
 "account.delete.next" = "Next";

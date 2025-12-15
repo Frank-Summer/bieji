@@ -4,6 +4,7 @@ final class ConfirmCheckView: UIView {
 
     private let circleButton = UIButton(type: .custom)
     private let label = UILabel()
+    private let hStack = UIStackView()
 
     private var isChecked = false
 
@@ -19,7 +20,22 @@ final class ConfirmCheckView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
 
-        // 圆圈按钮
+        // MARK: - HStack（圆圈 + 文本放一起）
+        hStack.axis = .horizontal
+        hStack.alignment = .center
+        hStack.spacing = 8
+        hStack.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(hStack)
+
+        NSLayoutConstraint.activate([
+            hStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            hStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            hStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            hStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+        ])
+
+        // MARK: - 圆圈
         circleButton.translatesAutoresizingMaskIntoConstraints = false
         circleButton.layer.cornerRadius = 8
         circleButton.layer.borderWidth = 1
@@ -27,31 +43,25 @@ final class ConfirmCheckView: UIView {
         circleButton.backgroundColor = .clear
         circleButton.addTarget(self, action: #selector(toggleCheck), for: .touchUpInside)
 
-        addSubview(circleButton)
-
         NSLayoutConstraint.activate([
-            circleButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            circleButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             circleButton.widthAnchor.constraint(equalToConstant: 16),
             circleButton.heightAnchor.constraint(equalToConstant: 16)
         ])
 
-        // 文字
+        hStack.addArrangedSubview(circleButton)
+
+        // MARK: - 文本
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "已阅读并知晓重要提示"
+        label.text = "\(LocalizedText.text("account.delete.read"))"
         label.textColor = UIColor.white.withAlphaComponent(0.9)
         label.font = .systemFont(ofSize: 15)
+        label.numberOfLines = 0  // ← 多行支持
+        label.textAlignment = .center  // ← 多行居中
 
-        addSubview(label)
+        hStack.addArrangedSubview(label)
 
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: circleButton.trailingAnchor, constant: 8),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            label.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-
-        // 自动撑高
-        heightAnchor.constraint(greaterThanOrEqualToConstant: 40).isActive = true
+        // 为了让 label 在换行时不会挤压圆圈
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
     }
 
     // MARK: - 切换选中状态
@@ -65,7 +75,6 @@ final class ConfirmCheckView: UIView {
             circleButton.backgroundColor = .white
             circleButton.layer.borderColor = UIColor.white.cgColor
 
-            // 加一个黑色对号
             let checkmark = UIImage(systemName: "checkmark",
                                     withConfiguration: UIImage.SymbolConfiguration(pointSize: 12, weight: .bold))
             circleButton.setImage(checkmark, for: .normal)
