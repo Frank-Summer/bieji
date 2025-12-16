@@ -30,8 +30,8 @@
 
 
 /* Profile / My */
-"profile.favorites" = "我的收藏";
-"profile.recentlyPlayed" = "最近播放";
+"my.favorites" = "我的收藏";
+"my.recentlyPlayed" = "最近播放";
 
 "profile.nickname" = "昵称";
 "profile.birthdate" = "出生日期";
@@ -65,11 +65,14 @@
 "account.title" = "账户与安全";
 "account.field.phone" = "手机";
 "account.field.apple" = "Apple";
-
 "account.action.deleteAccount" = "注销账号";
+"account.action.logout" = "退出登录";
 "account.delete.noticeTitle" = "账号注销重要提示";
 
-"account.delete.noticeDescription" = "账号注销后将无法再次使用该账号。账号内的所有记录和数据（包括但不限于个人信息和使用记录）将被清空且无法恢复。账号注销即表示您自愿放弃该账号的所有权益（包括但不限于购买的声音和会员服务），已支付的费用无法退款。如有需要，请在操作前备份相关信息和数据。因账号注销对用户造成的不利影响，“别急”将不承担任何责任。账号注销不会自动取消正在订阅中的会员服务。请前往应用商城取消自动订阅，以避免注销后继续扣费。";
+"account.delete.noticeDescription01" = "账号注销后将无法再次使用该账号。账号内的所有记录和数据（包括但不限于个人信息和使用记录）将被清空且无法恢复。";
+"account.delete.noticeDescription02" = "账号注销即表示您自愿放弃该账号的所有权益（包括但不限于购买的声音和会员服务），已支付的费用无法退款。";
+"account.delete.noticeDescription03" = "如有需要，请在操作前备份相关信息和数据。因账号注销对用户造成的不利影响，“别急”将不承担任何责任。";
+"account.delete.noticeDescription04" = "账号注销不会自动取消正在订阅中的会员服务。请前往应用商城取消自动订阅，以避免注销后继续扣费。";
 
 "account.delete.read" = "已阅读并知晓重要提示";
 "account.delete.next" = "下一步";

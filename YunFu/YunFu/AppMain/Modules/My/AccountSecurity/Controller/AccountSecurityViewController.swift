@@ -27,7 +27,7 @@ final class AccountSecurityViewController: UIViewController {
     private func setupTopBar() {
         
         let topBar = TopBarView()
-        topBar.title = "账号与安全"
+        topBar.title = "\(LocalizedText.text("account.title"))"
         
         topBar.onLeftTap = { [weak self] in
             self?.navigationController?.popViewController(animated: true)

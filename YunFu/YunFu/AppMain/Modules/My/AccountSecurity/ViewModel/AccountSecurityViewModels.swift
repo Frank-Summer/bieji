@@ -20,34 +20,34 @@ final class AccountSecurityViewModels {
     func load() {
         sections = [
             AccountSecuritySection(
-                header: "手机",
+                header: "\(LocalizedText.text("account.field.phone"))",
                 items: [
-                    AccountSecurityItem(title: "手机",value:"18611922766",state: "", icon: "chevron_right", action: {
+                    AccountSecurityItem(title: "\(LocalizedText.text("account.field.phone"))",value:"18611922766",state: "", icon: "chevron_right", action: {
                         print("打开账号信息")
                     })
                 ]
             ),
             AccountSecuritySection(
-                header: "Apple",
+                header: "\(LocalizedText.text("account.field.apple"))",
                 items: [
-                    AccountSecurityItem(title: "Apple",value:"huoshangfenghou@gmadsdasdasdasasdas",state: "已绑定", icon: "chevron_right", action: {
+                    AccountSecurityItem(title: "\(LocalizedText.text("account.field.apple"))",value:"huoshangfenghou@gmadsdasdasdasasdas",state: "已绑定", icon: "chevron_right", action: {
                         print("打开账号信息")
                     })
                 ]
             ),
             AccountSecuritySection(
-                header: "注销账号",
+                header: "\(LocalizedText.text("account.action.deleteAccount"))",
                 items: [
-                    AccountSecurityItem(title: "注销账号", value:"",state: "",icon: "chevron_right", action: { [weak self] in
+                    AccountSecurityItem(title: "\(LocalizedText.text("account.action.deleteAccount"))", value:"",state: "",icon: "chevron_right", action: { [weak self] in
                         self?.router.openDeleteAccount()
                         })
                 ]
             ),
             
             AccountSecuritySection(
-                header: "退出登录",
+                header: "\(LocalizedText.text("account.action.logout"))",
                 items: [
-                    AccountSecurityItem(title: "退出登录", value:"",state: "",icon: "chevron_right", action: {
+                    AccountSecurityItem(title: "\(LocalizedText.text("account.action.logout"))", value:"",state: "",icon: "chevron_right", action: {
                         print("打开账号信息")
                     })
                 ]

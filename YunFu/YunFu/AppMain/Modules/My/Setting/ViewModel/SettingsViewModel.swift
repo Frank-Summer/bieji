@@ -18,7 +18,7 @@ final class SettingsViewModel {
             items: [
                 SettingItem(
                     icon: "setting_about",
-                    title: "关于别急",
+                    title: "\(LocalizedText.text("settings.about"))",
                     rightIcon: "chevron_right",
                     action: { [weak self] in
                     self?.router.openAbout()
@@ -33,7 +33,7 @@ final class SettingsViewModel {
             items: [
                 SettingItem(
                     icon: "setting_account_security",
-                    title: "账号与安全",
+                    title: "\(LocalizedText.text("settings.accountSecurity"))",
                     rightIcon: "chevron_right",
                     action: { [weak self] in
                         self?.router.openAccount()
@@ -58,42 +58,28 @@ final class SettingsViewModel {
 //        ),
 
         // MARK: - 第 4 组：通知
-        SettingSection(
-            header: "通知",
-            items: [
-                SettingItem(
-                    icon: "setting_notification",
-                    title: "通知",
-                    rightIcon: "chevron_right",
-                    action: { [weak self] in
-                        self?.router.openSystemNotifications()
-                    }
-                )
-            ]
-        ),
+//        SettingSection(
+//            header: "通知",
+//            items: [
+//                SettingItem(
+//                    icon: "setting_notification",
+//                    title: "\(LocalizedText.text("settings.notifications"))",
+//                    rightIcon: "chevron_right",
+//                    action: { [weak self] in
+//                        self?.router.openSystemNotifications()
+//                    }
+//                )
+//            ]
+//        ),
 
-        // MARK: - 第 5 组：语言
-        SettingSection(
-            header: "语言",
-            items: [
-                SettingItem(
-                    icon: "setting_language",
-                    title: "语言",
-                    rightIcon: "chevron_right",
-                    action: { [weak self] in
-                        self?.router.openLanguage()
-                    }
-                )
-            ]
-        ),
-
-        // MARK: - 第 6 组：App Store 评分
+    
+        // MARK: - 第 5 组：App Store 评分
         SettingSection(
             header: "去 App Store 评分",
             items: [
                 SettingItem(
                     icon: "setting_appstore",
-                    title: "去 App Store 评分",
+                    title: "\(LocalizedText.text("settings.rate"))",
                     rightIcon: "chevron_right",
                     action: {
                         let appID = "6752887942"   // ← 替换成你真实的 App ID，例如：1234567890
@@ -107,13 +93,13 @@ final class SettingsViewModel {
             ]
         ),
 
-        // MARK: - 第 7 组：意见反馈
+        // MARK: - 第 6 组：意见反馈
         SettingSection(
             header: "意见反馈",
             items: [
                 SettingItem(
                     icon: "setting_feedback",
-                    title: "意见反馈",
+                    title: "\(LocalizedText.text("settings.feedback"))",
                     rightIcon: "chevron_right",
                     action: { [weak self] in
                         self?.router.openFeedbackController()

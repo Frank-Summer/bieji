@@ -27,7 +27,7 @@ final class SettingsViewController: UIViewController, UIGestureRecognizerDelegat
     // MARK: - 顶部栏
     private func setupTopBar() {
         let topBar = TopBarView()
-        topBar.title = "设置"
+        topBar.title = "\(LocalizedText.text("settings.title"))"
         topBar.onLeftTap = { [weak self] in
             self?.closeWindow()
         }

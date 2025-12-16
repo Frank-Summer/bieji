@@ -1,176 +1,222 @@
 import UIKit
 
 final class DeleteAccountViewController: UIViewController {
-    
+
+    // MARK: - UI 组件
+    private let topBar = TopBarView()
+
+    private let scrollView = UIScrollView()
+    private let stackView = UIStackView()
+
     private let tipLabel = UILabel()
-    
     private let tableView = UITableView()
-    private var viewModel: DeleteAccountViewModels!
-    
+
     private let bottomLine = UIView()
-    
     private let confirmView = ConfirmCheckView()
-    
+
     private let countdownVM = CountdownButtonViewModel()
     private var nextButton: CountdownButton!
 
+    private var viewModel: DeleteAccountViewModels!
 
-    
+    private var tableHeightConstraint: NSLayoutConstraint!
+
     // MARK: - 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .black
-        
-        setupTopBar()
-        
-        setTipLabel()
-        
+
+        // 🔥 必须提前初始化（否则 tableView 没高度）
+        viewModel = DeleteAccountViewModels(router: DeleteAccountRouter(viewController: self))
+
+        setupTopBar()          // 不滚动
+        setupScrollView()      // 可滚动容器
+        setupTipLabel()
         setupTable()
-        
         setupBottomLine()
-        
-        setConfirmView()
-        
+        setupConfirmView()
         setupCountdownButton()
 
         countdownVM.start(seconds: 5)
-        
-        viewModel = DeleteAccountViewModels(router: DeleteAccountRouter(viewController: self))
-        
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
-    
-    // MARK: - 顶部栏
-    private func setupTopBar() {
-        
-        let topBar = TopBarView()
-        topBar.title = ""
-        
-        topBar.onLeftTap = { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-        }
-        
-        view.addSubview(topBar)
+
+    // 自动根据内容更新 tableView 高度
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        tableView.layoutIfNeeded()
+        tableHeightConstraint.constant = tableView.contentSize.height
+    }
+}
+
+
+// MARK: - TopBar（固定顶部）
+private extension DeleteAccountViewController {
+    func setupTopBar() {
+
         topBar.translatesAutoresizingMaskIntoConstraints = false
-        
+        topBar.title = ""
+
+        view.addSubview(topBar)
+
         NSLayoutConstraint.activate([
             topBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             topBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             topBar.heightAnchor.constraint(equalToConstant: 44)
         ])
-        
+
         topBar.onLeftTap = { [weak self] in
             self?.navigationController?.popViewController(animated: true)
         }
     }
-    
-    private func setTipLabel() {
+}
 
-        let text = "账号注销重要提示"
 
-        // 富文本（自定义行高）
+
+// MARK: - ScrollView + StackView（整体滚动）
+private extension DeleteAccountViewController {
+    func setupScrollView() {
+
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(scrollView)
+
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: topBar.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
+        // StackView（自动布局垂直容器）
+        stackView.axis = .vertical
+        stackView.spacing = 24
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        scrollView.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 16),
+            stackView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -30)
+        ])
+    }
+}
+
+
+
+// MARK: - TipLabel
+private extension DeleteAccountViewController {
+    func setupTipLabel() {
+
+        let text = LocalizedText.text("account.title")
+
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
 
-        let attr = NSAttributedString(
+        tipLabel.attributedText = NSAttributedString(
             string: text,
             attributes: [
-                .font: UIFont.systemFont(ofSize: 20, weight: .medium), // 字号
+                .font: UIFont.systemFont(ofSize: 20, weight: .medium),
                 .foregroundColor: UIColor.white,
                 .paragraphStyle: paragraph
             ]
         )
 
-        tipLabel.attributedText = attr
         tipLabel.numberOfLines = 0
-        tipLabel.textAlignment = .center
         tipLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        view.addSubview(tipLabel)
-
-        NSLayoutConstraint.activate([
-            tipLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 44), // 上内边距
-            tipLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),   // 左内边距
-            tipLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20) // 右内边距
-        ])
+        stackView.addArrangedSubview(tipLabel)
     }
-    
-    private func setupTable() {
-
-            tableView.translatesAutoresizingMaskIntoConstraints = false
-            tableView.backgroundColor = .clear
-            tableView.separatorStyle = .none
-
-            view.addSubview(tableView)
-
-            NSLayoutConstraint.activate([
-                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
-
-            tableView.register(AccountDeleteTipCell.self, forCellReuseIdentifier: "AccountDeleteTipCell")
-
-            tableView.dataSource = self
-            tableView.delegate = self
-        }
-    
-    private func setupBottomLine() {
-
-        bottomLine.translatesAutoresizingMaskIntoConstraints = false
-        bottomLine.backgroundColor = UIColor.white.withAlphaComponent(0.2) // 淡色横线
-
-        view.addSubview(bottomLine)
-
-        NSLayoutConstraint.activate([
-            bottomLine.heightAnchor.constraint(equalToConstant: 1),
-            bottomLine.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            bottomLine.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            bottomLine.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 460)
-        ])
-    }
-    
-    private func setConfirmView() {
-        view.addSubview(confirmView)
-
-        NSLayoutConstraint.activate([
-            confirmView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            confirmView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            confirmView.topAnchor.constraint(equalTo: bottomLine.safeAreaLayoutGuide.topAnchor, constant: 20)
-        ])
-    }
-    
-    private func setupCountdownButton() {
-
-            nextButton = CountdownButton(viewModel: countdownVM)
-            nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
-
-            view.addSubview(nextButton)
-
-            NSLayoutConstraint.activate([
-                nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-                nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-                nextButton.topAnchor.constraint(equalTo: confirmView.safeAreaLayoutGuide.topAnchor, constant: 80)
-            ])
-        }
-
-        @objc private func nextTapped() {
-            print("用户点击下一步，进入下一页面")
-        }
 }
 
 
+
+// MARK: - TableView（不滚动 + 自动高度）
+private extension DeleteAccountViewController {
+    func setupTable() {
+
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+
+        tableView.register(AccountDeleteTipCell.self, forCellReuseIdentifier: "AccountDeleteTipCell")
+        tableView.dataSource = self
+        tableView.delegate = self
+
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 80
+
+        stackView.addArrangedSubview(tableView)
+
+        // 高度自动更新的约束
+        tableHeightConstraint = tableView.heightAnchor.constraint(equalToConstant: 1)
+        tableHeightConstraint.isActive = true
+    }
+}
+
+
+
+// MARK: - Bottom Line
+private extension DeleteAccountViewController {
+    func setupBottomLine() {
+
+        bottomLine.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+        bottomLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
+
+        stackView.addArrangedSubview(bottomLine)
+    }
+}
+
+
+
+// MARK: - ConfirmView
+private extension DeleteAccountViewController {
+    func setupConfirmView() {
+        stackView.addArrangedSubview(confirmView)
+    }
+}
+
+
+
+// MARK: - Next Button
+private extension DeleteAccountViewController {
+    func setupCountdownButton() {
+
+        nextButton = CountdownButton(viewModel: countdownVM)
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.addTarget(self, action: #selector(nextTapped), for: .touchUpInside)
+
+        stackView.addArrangedSubview(nextButton)
+
+        NSLayoutConstraint.activate([
+            nextButton.heightAnchor.constraint(equalToConstant: 50),
+            nextButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 20),
+            nextButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -20)
+        ])
+    }
+
+    @objc func nextTapped() {
+        print("点击下一步")
+    }
+}
+
+
+
+// MARK: - TableView DataSource
 extension DeleteAccountViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.tips.count
+        return viewModel.tips.count
     }
 
     func tableView(
@@ -178,10 +224,8 @@ extension DeleteAccountViewController: UITableViewDataSource, UITableViewDelegat
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
 
-        let item = viewModel.tips[indexPath.row]
-
         let cell = tableView.dequeueReusableCell(withIdentifier: "AccountDeleteTipCell", for: indexPath) as! AccountDeleteTipCell
-        cell.configure(item: item)
+        cell.configure(item: viewModel.tips[indexPath.row])
         return cell
     }
 }

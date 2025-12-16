@@ -31,14 +31,14 @@ final class CountdownButton: UIButton {
                 // 倒计时结束 → 白色可点击
                 self.isEnabled = true
                 self.backgroundColor = .white
-                self.setTitle("下一步", for: .normal)
+                self.setTitle("\(LocalizedText.text("account.delete.next"))", for: .normal)
                 self.setTitleColor(.black, for: .normal)
 
             } else {
                 // 倒计时中 → 灰色不可点击
                 self.isEnabled = false
                 self.backgroundColor = UIColor.white.withAlphaComponent(0.3)
-                self.setTitle("下一步（\(seconds)）", for: .disabled)
+                self.setTitle("\(LocalizedText.text("account.delete.next"))（\(seconds)）", for: .disabled)
                 self.setTitleColor(.white, for: .disabled)
             }
         }

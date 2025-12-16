@@ -29,7 +29,7 @@ public struct MyButtonRowView: View {
             
             /// 左：我的收藏（本地图片）
             FeatureButton(
-                title: "我的收藏",
+                title: "\(LocalizedText.text("my.favorites"))",
                 iconName: "my_collect"   // ← 改成本地图片
             ) {
                 performNav(actions.onMyCollection)
@@ -37,7 +37,7 @@ public struct MyButtonRowView: View {
             
             /// 右：最近播放（本地图片）
             FeatureButton(
-                title: "最近播放",
+                title: "\(LocalizedText.text("my.recentlyPlayed"))",
                 iconName: "my_history"     // ← 改成本地图片
             ) {
                 performNav(actions.onMyRecent)
