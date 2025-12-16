@@ -191,11 +191,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 self.launchWindow = nil
 
                 // ✅ 动画结束后跳转逻辑
-//                if enterMain {
+                if enterMain {
                     self.tukou_enter()
-//                } else {
-//                    self.showLoginPage()
-//                }
+                } else {
+                    self.showLoginPage()
+                }
             })
         }
     }
