@@ -124,7 +124,8 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUUpdaWScroll"))
             .sink { [weak self] notification in self?.tufuh_updaWScroll(notification) }
             .store(in: &cancellables)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(enterMainView),
+                                               name: Notification.Name("TUOKOUXIUEnterMainView"), object: nil)
         if TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() == 0 {
             tukou_noNetwV()
             return
@@ -175,7 +176,16 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             shareBtn.layer.cornerRadius = 20
             self.view.addSubview(self.tufuh_musicW!)
             self.view.addSubview(self.tufuh_toolsW!)
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp {
+            self.tufuh_musicW?.isHidden = true
+            self.tufuh_toolsW?.isHidden = true
+        }
 //        }
+    }
+    
+    @objc private func enterMainView() {
+        self.tufuh_musicW?.isHidden = false
+        self.tufuh_toolsW?.isHidden = false
     }
     
     //点击音乐

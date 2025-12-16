@@ -126,6 +126,9 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     private var isLeftButtonExpanded = false
     private var isRightButtonExpanded = false
     
+    
+    private var enterBtn = UIButton()
+    
     private enum LayoutConstants {
         // 初始状态
         static let sideButtonInitialSize: CGFloat = 40
@@ -167,6 +170,24 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         
         self.tukou_setTabBTitArr()
         updateCenterText(title: "东方禅境", subtitle: "瑜伽0")
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp {
+            enterBtn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-140/2, y: 7, width: 140, height: 52)
+            enterBtn.backgroundColor = TUOKOUXIUSwiftbaiseC
+            enterBtn.setTitle("进入", for: .normal)
+            enterBtn.setTitleColor(.black, for: .normal)
+            enterBtn.titleLabel?.font = TUOKOUXIUSwiftFont.semibold(16)
+            enterBtn.layer.cornerRadius = 26
+            enterBtn.addTarget(self, action: #selector(clickEnter), for: .touchUpInside)
+            enterBtn.tukou_setEnlargeEdge(10)
+            tufuh_tabBV.addSubview(enterBtn)
+        }
+    }
+    
+    @objc private func clickEnter() {
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp = false
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUEnterMainView"), object: nil)
+        enterBtn.isHidden = true
+        enterBtn.removeFromSuperview()
     }
     
     override func viewDidLayoutSubviews() {
@@ -361,6 +382,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         })
         print("左边按钮被点击")
         if isExpanded { return }
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp { return }
         handleButtonTap()
     }
     
@@ -509,6 +531,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         })
         print("右边按钮被点击")
         if isExpanded { return }
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp { return }
         handleButtonTap()
     }
     

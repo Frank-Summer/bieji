@@ -14,7 +14,7 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     
     
     var tufuh_isOpenHomeMusicExpand: Bool = false
-    
+    var tufuh_isEnterApp: Bool = true
 //    var tufuh_dataDict: [String: Any]?
 //    var tufuh_dsJiDict: [String: Any]?
     

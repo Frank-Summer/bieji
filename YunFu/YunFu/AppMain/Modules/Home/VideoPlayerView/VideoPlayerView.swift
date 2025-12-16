@@ -30,10 +30,12 @@ class VideoPlayerView: UIView {
 
     func play() {
         guard let p = player, p.currentItem?.status == .readyToPlay else { return }
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp { return }
         p.play()
     }
 
     func pause() {
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp { return }
         player?.pause()
     }
 

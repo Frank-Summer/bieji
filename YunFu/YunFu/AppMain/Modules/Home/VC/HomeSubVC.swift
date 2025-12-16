@@ -56,7 +56,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     let audioURL: URL?
     var player: AVPlayer?          // AVPlayer 类属性（可复用或替换 item）
     private var observedItem: AVPlayerItem? // 当前正在监听的 item（用于安全移除 KVO）
-
+    var tufuh_gaiV: UIView?
     // 标志，表示是否已经在 cell 上初始化了播放器（避免重复）
     private var didSetupPlayerInCell = false
 
@@ -111,9 +111,36 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         NotificationCenter.default.addObserver(self, selector: #selector(refreshSubView),
                                                name: Notification.Name("TUOKOUXIURefreshSubView"), object: nil)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [self] in
+        NotificationCenter.default.addObserver(self, selector: #selector(enterMainView),
+                                               name: Notification.Name("TUOKOUXIUEnterMainView"), object: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             if let audioURL = self.audioURL {
                 playAudio(with: audioURL)
+            }
+        }
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp {
+            let gaiV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H), superView: view, bgColor: .black)
+            tufuh_gaiV = gaiV
+            let gaiIV = UIImageView.tukou_bjImageV(CGRect(x: 24, y: 140, width: TUOKOUXIUSwiftSCRE_W-48, height: TUOKOUXIUSwiftSCRE_H-270), superView: gaiV, image: nil)
+            gaiIV.backgroundColor = .orange
+            gaiIV.layer.cornerRadius = 35
+            gaiIV.layer.masksToBounds = true
+            
+            let gaiLeftIV = UIImageView.tukou_bjImageV(CGRect(x: 24, y: TUOKOUXIUSwiftSCRE_H-270-150, width: 40, height: 40), superView: gaiIV, image: UIImage(named: "sleep"))
+            let gaiTitleL = UILabel.tukou_bjLabel(CGRect(x: gaiLeftIV.frame.maxX + 20, y: TUOKOUXIUSwiftSCRE_H-270-150, width: TUOKOUXIUSwiftSCRE_W-48-24-24-40-20, height: 40), text: "夜已深, 晚安。", superView: gaiIV, textAlignment: .left, font: TUOKOUXIUSwiftFont.semibold(24), textColor: .white)
+            let gaiContentL = UILabel.tukou_bjLabel(CGRect(x: 24, y: gaiLeftIV.frame.maxY+10, width: TUOKOUXIUSwiftSCRE_W-48-24-24, height: 70), text: "睡眠最珍贵时刻，身体高效修复组织、巩固记忆、恢复精力。保持姿势，享受深沉的休憩。", superView: gaiIV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(17), textColor: .white)
+            gaiContentL.numberOfLines = 0
+        }
+    }
+    
+    @objc private func enterMainView() {
+        tufuh_gaiV?.isHidden = true
+        tufuh_gaiV?.removeFromSuperview()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if self.player?.currentItem?.status == .readyToPlay {
+                self.playerView.play()
             }
         }
     }
