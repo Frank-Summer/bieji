@@ -63,4 +63,44 @@ final class AuthService {
     }
     
     
+    static func login_apple(
+        identityToken: String,
+    ) async -> BaseModel<[String: AnyCodable]>? {
+
+        let body: [String: Any] = [
+            "loginType": "APPLE",
+            "credentials": [
+                "identityToken": identityToken,
+            
+            ]
+        ]
+
+        let response = await HTTPClient.shared.request(
+            ApiEndpoint.login,
+            method: "POST",
+            params: body
+        )
+
+        guard let data = response?.bodydata else {
+            print("⚠️ 登录返回数据为空")
+            return response
+        }
+
+        // ✅ 自动提取 token 并保存
+        if let accessToken = data["accessToken"]?.value(String.self),
+           let refreshToken = data["refreshToken"]?.value(String.self) {
+
+            print("✅ 登录成功，AccessToken: \(accessToken)")
+            print("♻️ RefreshToken: \(refreshToken)")
+
+            // ✅ 全局持久化存储（UserDefaults）
+            TokenStorage.shared.saveTokens(access: accessToken, refresh: refreshToken)
+        } else {
+            print("⚠️ 登录返回未包含 token 字段")
+        }
+
+        return response
+    }
+    
+    
 }

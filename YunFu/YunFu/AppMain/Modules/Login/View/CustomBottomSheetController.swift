@@ -88,7 +88,7 @@ final class CustomBottomSheetController: UIViewController {
     }
 
     private func applyLocalizedText() {
-        let fullText = LocalizedText.text("login_agreement_popup")
+        let fullText = LocalizedText.text("login.agreement.text")
 
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
@@ -110,7 +110,7 @@ final class CustomBottomSheetController: UIViewController {
             ("《隐私协议》", "internal://privacy"),
             ("《用户协议》", "internal://terms"),
             ("Privacy Policy", "internal://privacy"),
-            ("Terms of Use", "internal://terms")
+            ("User Agreement", "internal://terms")
         ]
 
         // ✅ 下划线和颜色样式
@@ -143,7 +143,7 @@ final class CustomBottomSheetController: UIViewController {
     // MARK: - 按钮部分
     private func setupButtons() {
         // 白底黑字按钮（同意）
-        primaryButton.setTitle(LocalizedText.text("login_yes_popup"), for: .normal)
+        primaryButton.setTitle(LocalizedText.text("login.popup.agree"), for: .normal)
         primaryButton.backgroundColor = .white
         primaryButton.setTitleColor(.black, for: .normal)
         primaryButton.titleLabel?.font = .boldSystemFont(ofSize: 16)
@@ -153,7 +153,7 @@ final class CustomBottomSheetController: UIViewController {
         containerView.contentView.addSubview(primaryButton)
 
         // 透明白字按钮（不同意）
-        secondaryButton.setTitle(LocalizedText.text("login_no_popup"), for: .normal)
+        secondaryButton.setTitle(LocalizedText.text("login.popup.disagree"), for: .normal)
         secondaryButton.backgroundColor = .clear
         secondaryButton.setTitleColor(.white, for: .normal)
         secondaryButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)

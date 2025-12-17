@@ -60,6 +60,7 @@
 /* Begin PBXFileReference section */
 		017370C62ECF05490045407F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		01D865442EE940D000AAB028 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		01D972BC2EF133C20010F90A /* YunFu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YunFu.entitlements; sourceTree = "<group>"; };
 		2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FDE6A4E2971470D004C7701 /* YunFu-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YunFu-Header.h"; sourceTree = "<group>"; };
 		2FDE6A4F2971470D004C7701 /* DCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DCloud.swift; sourceTree = "<group>"; };
@@ -171,6 +172,7 @@
 		8EED62A1198A1D13000A4449 /* YunFu */ = {
 			isa = PBXGroup;
 			children = (
+				01D972BC2EF133C20010F90A /* YunFu.entitlements */,
 				017370A52ECF00A30045407F /* AppMain */,
 				FE72D73E2E30A49000EF2C5A /* ZZZZZ */,
 				FE9AFA642E2E352E00CD6AD1 /* SSSSS */,
@@ -409,7 +411,7 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = YunFu/YunFu.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -504,7 +506,7 @@
 					"-weak_framework",
 					"\"DeviceCheck\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.caesar.caesargroupusa;
+				PRODUCT_BUNDLE_IDENTIFIER = art.qiyin.bieji;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -546,7 +548,7 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = YunFu/YunFu.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -640,7 +642,7 @@
 					"-weak_framework",
 					"\"DeviceCheck\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.caesar.caesargroupusa;
+				PRODUCT_BUNDLE_IDENTIFIER = art.qiyin.bieji;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";

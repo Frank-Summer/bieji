@@ -1,6 +1,7 @@
 import Foundation
 import AuthenticationServices
 import GoogleSignIn
+import UIKit
 
 final class LoginViewModel: NSObject {
 
@@ -30,7 +31,9 @@ final class LoginViewModel: NSObject {
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
 
-        GIDSignIn.sharedInstance.signIn(withPresenting: rootVC) { result, error in
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootVC) { [weak self] result, error in
+            guard let self = self else { return }
+
             if let error = error {
                 self.onLoginError?("Google 登录失败：\(error.localizedDescription)")
                 return
@@ -42,8 +45,8 @@ final class LoginViewModel: NSObject {
             }
 
             let loginUser = LoginUser(
-                id: user.userID ?? "未知ID",
-                name: user.profile?.name ?? "未知用户",
+                id: user.userID ?? "",
+                name: user.profile?.name ?? "",
                 email: user.profile?.email ?? "",
                 avatar: user.profile?.imageURL(withDimension: 120)?.absoluteString,
                 idToken: user.idToken?.tokenString,
@@ -57,29 +60,61 @@ final class LoginViewModel: NSObject {
 }
 
 // MARK: - Apple 登录代理
-extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewModel: ASAuthorizationControllerDelegate,
+                          ASAuthorizationControllerPresentationContextProviding {
 
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            let user = LoginUser(
-                id: credential.user,
-                name: credential.fullName?.givenName ?? "",
-                email: credential.email ?? "",
-                avatar: nil,
-                idToken: nil,
-                accessToken: nil
-            )
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            return
+        }
 
-            print("✅ Apple 登录成功：\(user.email)")
-            onLoginSuccess?(user)
+        // identityToken: Data -> String
+        guard
+            let tokenData = credential.identityToken,
+            let identityToken = String(data: tokenData, encoding: .utf8)
+        else {
+            onLoginError?("无法获取 Apple identityToken")
+            return
+        }
+
+        let loginUser = LoginUser(
+            id: credential.user,
+            name: credential.fullName?.givenName ?? "",
+            email: credential.email ?? "",
+            avatar: nil,
+            idToken: identityToken,
+            accessToken: nil
+        )
+
+        // ⚠️ 系统回调是同步的，必须用 Task
+        Task { [weak self] in
+            guard let self = self else { return }
+
+            let result = await AuthService.login_apple(identityToken: identityToken)
+
+            if result?.code == 0 {
+                self.onLoginSuccess?(loginUser)
+            } else {
+                self.onLoginError?(result?.msg ?? "Apple 登录失败")
+            }
         }
     }
 
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithError error: Error
+    ) {
         onLoginError?("Apple 登录失败：\(error.localizedDescription)")
     }
 
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return UIApplication.shared.windows.first!
+        return UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .first?
+            .windows
+            .first { $0.isKeyWindow } ?? UIWindow()
     }
 }

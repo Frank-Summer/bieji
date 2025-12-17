@@ -44,7 +44,7 @@ final class PhoneInputView: UIView {
         tf.tintColor = .white
         tf.keyboardType = .numberPad
         tf.attributedPlaceholder = NSAttributedString(
-            string: LocalizedText.text("login_placeholder"),
+            string: LocalizedText.text("login.placeholder.phone"),
             attributes: [.foregroundColor: UIColor.white.withAlphaComponent(0.4)]
         )
         return tf

@@ -118,7 +118,7 @@ final class CheckBoxLabelView: UIControl {
             ("《隐私协议》", "internal://privacy"),
             ("《用户协议》", "internal://terms"),
             ("Privacy Policy", "internal://privacy"),
-            ("Terms of Use", "internal://terms")
+            ("User Agreement", "internal://terms")
         ]
 
         let linkAttrs: [NSAttributedString.Key: Any] = [

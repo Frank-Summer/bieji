@@ -54,19 +54,19 @@ final class AboutsViewModel {
             ]
         ),
 
-            AboutSection(
-            header: "公众号",
-            items: [
-                AboutItem(
-                    icon: "about_wx",
-                    title: "公众号",
-                    rightIcon: "chevron_right",
-                    action: {
-                        print("打开通知")
-                    }
-                )
-            ]
-        ),
+//            AboutSection(
+//            header: "公众号",
+//            items: [
+//                AboutItem(
+//                    icon: "about_wx",
+//                    title: "公众号",
+//                    rightIcon: "chevron_right",
+//                    action: {
+//                        print("打开通知")
+//                    }
+//                )
+//            ]
+//        ),
 
             AboutSection(
             header: "微博",
