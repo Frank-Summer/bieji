@@ -7,7 +7,6 @@ class TUOKOUXIUExploreVC2: UIViewController {
     private let tableView = UITableView()
     private let headerView = HeaderView()
     var tufuh_noNetV: UIView?
-//    private let bottomBarHeight: CGFloat = 56
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -33,7 +32,6 @@ class TUOKOUXIUExploreVC2: UIViewController {
         }
         
         setupTableView()
-//        setupBottomBar()
         setupHeader()
     }
     
@@ -46,19 +44,6 @@ class TUOKOUXIUExploreVC2: UIViewController {
         UIImageView.tukou_bjImageV(CGRect(x: 0, y: 0, width: Int(TUOKOUXIUSwiftSCRE_W), height: Int(TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight) + 76), superView: self.view, image: UIImage(named: "home_top_shadow"))
     }
 
-//    private func setupBottomBar() {
-//        let bottomBar = UIView()
-//        bottomBar.backgroundColor = TUOKOUXIUSwiftheiseC
-//        view.addSubview(bottomBar)
-//        bottomBar.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            bottomBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            bottomBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            bottomBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//            bottomBar.heightAnchor.constraint(equalToConstant: bottomBarHeight)
-//        ])
-//    }
-
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -69,7 +54,6 @@ class TUOKOUXIUExploreVC2: UIViewController {
         tableView.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell4Id")
         tableView.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell5Id")
         tableView.backgroundColor = .clear
-//        tableView.tableFooterView = UIView()
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         view.addSubview(tableView)
@@ -95,12 +79,6 @@ class TUOKOUXIUExploreVC2: UIViewController {
             self.headerView.frame = frame
             self.tableView.tableHeaderView = self.headerView
         }
-//        headerView.layer.cornerRadius = 32
-//        headerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-//        headerView.layer.masksToBounds = true
-//
-//        headerView.layer.borderColor = TUOKOUXIUWhiteA10.cgColor
-//        headerView.layer.borderWidth = 0.5
     }
 }
 
@@ -135,7 +113,6 @@ extension TUOKOUXIUExploreVC2: UITableViewDataSource, UITableViewDelegate {
             cell.tufuh_isLock = false
             cell.tukou_nameString("活跃")
             cell.TUOKOUXIUclkItemBlk = { model in
-//                self!.showDetail()
                 NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: nil)
             }
             return cell
@@ -164,17 +141,9 @@ extension TUOKOUXIUExploreVC2: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-//    func showDetail() {
-//        print("点击显示详情")
-//        
-//        let picker = ExploreDetailView()
-//        picker.show(in: self.view)
-//    }
     func tukou_noNetwV() {
         guard self.tufuh_noNetV == nil else { return }
-//        if !self.tufuh_dataTreArr.isEmpty {
-//            self.tufuh_dataTreArr.removeAll()
-//        }
+
         self.tufuh_noNetV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: TUOKOUXIUSwiftSCRE_W, height: TUOKOUXIUSwiftSCRE_H), superView: self.view, bgColor: TUOKOUXIUSwiftheiseC)
 
         UIImageView.tukou_bjImageV(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-30, y: TUOKOUXIUSwiftSCRE_H/2-12-16-60, width: 60, height: 60), superView: self.tufuh_noNetV!, image: UIImage(named: "net"))

@@ -163,7 +163,7 @@ class HeaderView: UIView {
 
     /// 新版：固定网格布局 + 自动边距计算
     private func updateIcons(for height: CGFloat) {
-
+        let isCollapsed = height <= minHeight + 1
         let progress = (height - minHeight) / (maxHeight - minHeight)
         let screenW = bounds.width
 
@@ -183,8 +183,18 @@ class HeaderView: UIView {
 
             let cell = makeIconCell(index: i)
 
-            let row = i / itemsPerRow
-            let col = i % itemsPerRow
+            let row: Int
+            let col: Int
+
+            if isCollapsed {
+                // —— 收起态：所有 item 横向排成一行 ——
+                row = 0
+                col = i
+            } else {
+                // —— 展开态：正常 4 列网格 ——
+                row = i / itemsPerRow
+                col = i % itemsPerRow
+            }
 
             let x = horizontalPadding + CGFloat(col) * (itemWidth + columnSpacing)
             let y = 12 + CGFloat(row) * (itemHeight + rowSpacing)
@@ -195,16 +205,26 @@ class HeaderView: UIView {
         }
 
         // —— contentView 高度 ——
-        let totalHeight =
-            12 +
-            CGFloat(rows) * itemHeight +
-            CGFloat(rows - 1) * rowSpacing +
-            12
+        let totalHeight: CGFloat
+
+        if isCollapsed {
+            totalHeight = minHeight
+        } else {
+            totalHeight =
+                12 +
+                CGFloat(rows) * itemHeight +
+                CGFloat(rows - 1) * rowSpacing +
+                12
+        }
 
         contentView.frame.size.height = totalHeight
 
-        // —— 横向滚动：收起时允许，展开时禁止 ——
-        scrollView.isScrollEnabled = false
+        // —— 横向滚动控制 ——
+        // 接近最小高度，认为是「收起态」
+
+        scrollView.isScrollEnabled = isCollapsed
+        scrollView.alwaysBounceHorizontal = isCollapsed
+        scrollView.showsHorizontalScrollIndicator = isCollapsed
 
         // content 宽度：收起时横向一行全部图标，展开时=屏宽
         let collapsedWidth = horizontalPadding * 2 +

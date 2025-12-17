@@ -82,7 +82,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         button.setImage((off), for: .normal)
         button.setImage((on), for: .selected)
         button.tag = 0
-        button.layer.cornerRadius = 20 // 40/2 = 20
+        button.layer.cornerRadius = 26
         button.layer.borderColor = TUOKOUXIUWhiteA30.cgColor
         button.layer.borderWidth = 1
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -100,7 +100,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         button.setImage((off), for: .normal)
         button.setImage((on), for: .selected)
         button.tag = 2
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 26
         button.layer.borderColor = TUOKOUXIUWhiteA30.cgColor
         button.layer.borderWidth = 1
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -131,20 +131,20 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     
     private enum LayoutConstants {
         // 初始状态
-        static let sideButtonInitialSize: CGFloat = 40
-        static let sideButtonExpandedSize: CGFloat = 52
+        static let sideButtonInitialSize: CGFloat = 52
+//        static let sideButtonExpandedSize: CGFloat = 52
         
         // 初始边距
-        static let sideButtonInitialMargin: CGFloat = 34
-        static let sideButtonExpandedMargin: CGFloat = 28
+        static let sideButtonInitialMargin: CGFloat = 24
+//        static let sideButtonExpandedMargin: CGFloat = 24
         
         // 中间按钮
         static let centerButtonCollapsedSize: CGFloat = 52
         static let centerButtonExpandedSize: CGFloat = 210
         
         // 圆角
-        static let sideButtonInitialCornerRadius: CGFloat = 20 // 40/2
-        static let sideButtonExpandedCornerRadius: CGFloat = 26 // 52/2
+//        static let sideButtonInitialCornerRadius: CGFloat = 26
+//        static let sideButtonExpandedCornerRadius: CGFloat = 26 // 52/2
     }
     
     private var isPlay = true
@@ -188,6 +188,47 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUEnterMainView"), object: nil)
         enterBtn.isHidden = true
         enterBtn.removeFromSuperview()
+        if isLeftButtonExpanded || isRightButtonExpanded {
+            tukou_swiToVCAtInd(1)
+            if isLeftButtonExpanded {
+                isLeftButtonExpanded = false
+                leftSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
+                UIView.animate(withDuration: 0.3,
+                              delay: 0,
+                              usingSpringWithDamping: 0.7,
+                              initialSpringVelocity: 0.5,
+                              options: .curveEaseInOut,
+                               animations: { [self] in
+                    // 更新布局
+                    self.view.layoutIfNeeded()
+                    
+                }, completion: { _ in
+                    // 恢复缩放
+                    UIView.animate(withDuration: 0.1) { [self] in
+                        leftSideButton.transform = .identity
+                    }
+                })
+            }
+            if isRightButtonExpanded {
+                isRightButtonExpanded = false
+                rightSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
+                UIView.animate(withDuration: 0.3,
+                              delay: 0,
+                              usingSpringWithDamping: 0.7,
+                              initialSpringVelocity: 0.5,
+                              options: .curveEaseInOut,
+                               animations: { [self] in
+                    // 更新布局
+                    self.view.layoutIfNeeded()
+        
+                }, completion: { _ in
+                    // 恢复缩放
+                    UIView.animate(withDuration: 0.1) { [self] in
+                        rightSideButton.transform = .identity
+                    }
+                })
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -327,9 +368,9 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         if isRightButtonExpanded {
             isRightButtonExpanded = false
             rightSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
-            rightButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
-            rightButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
-            rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonInitialMargin
+//            rightButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
+//            rightButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
+//            rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonInitialMargin
             UIView.animate(withDuration: 0.3,
                           delay: 0,
                           usingSpringWithDamping: 0.7,
@@ -340,10 +381,10 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                 self.view.layoutIfNeeded()
                 
                 // 更新圆角
-                rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
+//                rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
                 
                 // 轻微缩放效果
-                rightSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+//                rightSideButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }, completion: { _ in
                 // 恢复缩放
                 UIView.animate(withDuration: 0.1) { [self] in
@@ -356,21 +397,21 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         leftSideButton.isSelected = true
         leftSideButton.backgroundColor = TUOKOUXIUSwiftbaiseC
         isLeftButtonExpanded = true
-        leftButtonWidthConstraint.constant = LayoutConstants.sideButtonExpandedSize
-        leftButtonHeightConstraint.constant = LayoutConstants.sideButtonExpandedSize
-        leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonExpandedMargin
+//        leftButtonWidthConstraint.constant = LayoutConstants.sideButtonExpandedSize
+//        leftButtonHeightConstraint.constant = LayoutConstants.sideButtonExpandedSize
+//        leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonExpandedMargin
         // 执行动画
-        UIView.animate(withDuration: 0.3,
+        UIView.animate(withDuration: 0.2,
                       delay: 0,
                       usingSpringWithDamping: 0.7,
-                      initialSpringVelocity: 0.5,
+                      initialSpringVelocity: 0.7,
                       options: .curveEaseInOut,
                        animations: { [self] in
             // 更新布局
             self.view.layoutIfNeeded()
             
             // 更新圆角
-            leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonExpandedCornerRadius
+//            leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonExpandedCornerRadius
             
             // 轻微缩放效果
             leftSideButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
@@ -476,9 +517,9 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         if isLeftButtonExpanded {
             isLeftButtonExpanded = false
             leftSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
-            leftButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
-            leftButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
-            leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonInitialMargin
+//            leftButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
+//            leftButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
+//            leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonInitialMargin
             UIView.animate(withDuration: 0.3,
                           delay: 0,
                           usingSpringWithDamping: 0.7,
@@ -489,10 +530,10 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                 self.view.layoutIfNeeded()
                 
                 // 更新圆角
-                leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
+//                leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
                 
                 // 轻微缩放效果
-                leftSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+//                leftSideButton.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }, completion: { _ in
                 // 恢复缩放
                 UIView.animate(withDuration: 0.1) { [self] in
@@ -505,21 +546,21 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         tukou_swiToVCAtInd(2)
         isRightButtonExpanded = true
         rightSideButton.backgroundColor = TUOKOUXIUSwiftbaiseC
-        rightButtonWidthConstraint.constant = LayoutConstants.sideButtonExpandedSize
-        rightButtonHeightConstraint.constant = LayoutConstants.sideButtonExpandedSize
-        rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonExpandedMargin
+//        rightButtonWidthConstraint.constant = LayoutConstants.sideButtonExpandedSize
+//        rightButtonHeightConstraint.constant = LayoutConstants.sideButtonExpandedSize
+//        rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonExpandedMargin
         // 执行动画
-        UIView.animate(withDuration: 0.3,
+        UIView.animate(withDuration: 0.2,
                       delay: 0,
                       usingSpringWithDamping: 0.7,
-                      initialSpringVelocity: 0.5,
+                      initialSpringVelocity: 0.7,
                       options: .curveEaseInOut,
                        animations: { [self] in
             // 更新布局
             self.view.layoutIfNeeded()
             
             // 更新圆角
-            rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonExpandedCornerRadius
+//            rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonExpandedCornerRadius
             
             // 轻微缩放效果
             rightSideButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
@@ -542,9 +583,9 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             if isLeftButtonExpanded {
                 isLeftButtonExpanded = false
                 leftSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
-                leftButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
-                leftButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
-                leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonInitialMargin
+//                leftButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
+//                leftButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
+//                leftButtonLeadingConstraint.constant = LayoutConstants.sideButtonInitialMargin
                 UIView.animate(withDuration: 0.3,
                               delay: 0,
                               usingSpringWithDamping: 0.7,
@@ -555,10 +596,10 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                     self.view.layoutIfNeeded()
                     
                     // 更新圆角
-                    leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
+//                    leftSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
                     
                     // 轻微缩放效果
-                    leftSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+//                    leftSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
                 }, completion: { _ in
                     // 恢复缩放
                     UIView.animate(withDuration: 0.1) { [self] in
@@ -569,9 +610,9 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             if isRightButtonExpanded {
                 isRightButtonExpanded = false
                 rightSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
-                rightButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
-                rightButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
-                rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonInitialMargin
+//                rightButtonWidthConstraint.constant = LayoutConstants.sideButtonInitialSize
+//                rightButtonHeightConstraint.constant = LayoutConstants.sideButtonInitialSize
+//                rightButtonTrailingConstraint.constant = -LayoutConstants.sideButtonInitialMargin
                 UIView.animate(withDuration: 0.3,
                               delay: 0,
                               usingSpringWithDamping: 0.7,
@@ -582,10 +623,10 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                     self.view.layoutIfNeeded()
                     
                     // 更新圆角
-                    rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
+//                    rightSideButton.layer.cornerRadius = LayoutConstants.sideButtonInitialCornerRadius
                     
                     // 轻微缩放效果
-                    rightSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+//                    rightSideButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
                 }, completion: { _ in
                     // 恢复缩放
                     UIView.animate(withDuration: 0.1) { [self] in
