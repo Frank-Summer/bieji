@@ -103,4 +103,48 @@ final class AuthService {
     }
     
     
+    
+    
+    static func getlist() async -> BaseModel<[String: AnyCodable]>? {
+
+        // 1️⃣ 当前时间（时:分）
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        let timeHM = formatter.string(from: Date())
+
+
+        // 4️⃣ 组装请求参数
+        let params: [String: Any] = [
+            "time": timeHM,
+        ]
+
+        // 5️⃣ 发起请求
+        let result = await HTTPClient.shared.request(
+            ApiEndpoint.getlist,
+            method: "POST",
+            params: params
+        )
+
+        // 6️⃣ 打印接口返回
+        if let result = result {
+            print("✅ getlist 接口返回：")
+            print("code:", result.code ?? -1)
+            print("msg:", result.msg ?? "")
+
+            if let body = result.bodydata {
+                print("data:")
+                for (key, value) in body {
+                    print("  \(key): \(value)")
+                }
+            } else {
+                print("data: nil")
+            }
+        } else {
+            print("❌ getlist 接口无返回（result == nil）")
+        }
+
+        return result
+    }
+    
+    
 }

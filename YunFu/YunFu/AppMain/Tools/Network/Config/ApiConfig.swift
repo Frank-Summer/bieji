@@ -1,13 +1,13 @@
 enum ApiConfig {
-    static let baseURL = "http://39.97.34.197:8080"
+    static let baseURL = "https://backend.bieji.qiyin.art"
 
     enum Environment {
         case dev, prod
 
         var host: String {
             switch self {
-            case .dev: return "http://39.97.34.197:8080"
-            case .prod: return "http://39.97.34.197:8080"
+            case .dev: return "https://backend.bieji.qiyin.art"
+            case .prod: return "https://backend.bieji.qiyin.art"
             }
         }
     }
