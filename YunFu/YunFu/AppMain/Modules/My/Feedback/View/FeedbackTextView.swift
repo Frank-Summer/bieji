@@ -23,7 +23,7 @@ final class FeedbackTextView: UITextView {
         textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
 
         // placeholder
-        placeholderLabel.text = "请简单描述你的问题..."
+        placeholderLabel.text = LocalizedText.text("feedback.placeholder.description")
         placeholderLabel.textColor = UIColor.white.withAlphaComponent(0.2)
         placeholderLabel.font = .systemFont(ofSize: 14)
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false

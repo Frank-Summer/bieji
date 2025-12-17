@@ -93,7 +93,7 @@ final class AboutViewController: UIViewController {
     
     private func setsubtitle() {
 
-        subtitle.text = "关注我们"
+        subtitle.text = "\(LocalizedText.text("about.followUs"))"
         subtitle.textColor = UIColor.white.withAlphaComponent(0.6)
         subtitle.font = .systemFont(ofSize: 16)
         subtitle.textAlignment = .center
@@ -132,9 +132,7 @@ final class AboutViewController: UIViewController {
     
     private func setagreementText() {
 
-        let text =
-            "隐私协议 | 用户协议 | 会员协议\n" +
-            "copyright©️ 2025 北京期音科技有限\n公司. 保留所有权利."
+        let text = "\(LocalizedText.text("about.legal"))"
 
         let attr = NSMutableAttributedString(string: text)
 
@@ -142,9 +140,9 @@ final class AboutViewController: UIViewController {
         attr.addAttribute(.foregroundColor, value: UIColor.white.withAlphaComponent(0.4), range: fullRange)
         attr.addAttribute(.font, value: UIFont.systemFont(ofSize: 12), range: fullRange)
 
-        addLinkStyle(to: attr, text: "隐私协议", link: "app://privacy")
-        addLinkStyle(to: attr, text: "用户协议", link: "app://user")
-        addLinkStyle(to: attr, text: "会员协议", link: "app://vip")
+        addLinkStyle(to: attr, text: "\(LocalizedText.text("about.privacy"))", link: "app://privacy")
+        addLinkStyle(to: attr, text: "\(LocalizedText.text("about.user"))", link: "app://user")
+        addLinkStyle(to: attr, text: "\(LocalizedText.text("about.membership"))", link: "app://vip")
 
         agreementView.attributedText = attr
         agreementView.backgroundColor = .clear
@@ -158,6 +156,8 @@ final class AboutViewController: UIViewController {
             .foregroundColor: UIColor.white.withAlphaComponent(0.8),
             .underlineStyle: 0
         ]
+        agreementView.textContainerInset = .zero
+        agreementView.textContainer.lineFragmentPadding = 0
         agreementView.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(agreementView)

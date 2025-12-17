@@ -57,7 +57,10 @@
 
 /* About */
 "about.followUs" = "Follow Us";
-"about.legal" = "Privacy Policy | User Agreement | Membership Agreement © 2025 Unrush Qiyin Technology Co., Ltd. All rights reserved.";
+"about.legal" = "Privacy Policy | User Agreement | Membership Agreement\n© 2025 Unrush Technology Co.\nLtd. All rights reserved.";
+"about.privacy" = "Privacy Policy";
+"about.user" = "User Agreement";
+"about.membership" = "Membership Agreement";
 
 
 /* Account / Account Deletion */

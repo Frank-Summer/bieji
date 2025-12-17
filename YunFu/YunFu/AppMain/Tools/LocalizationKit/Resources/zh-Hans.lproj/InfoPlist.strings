@@ -58,8 +58,10 @@
 
 /* About */
 "about.followUs" = "关注我们";
-"about.legal" = "隐私协议 | 用户协议 | 会员协议  © 2025 北京期音科技有限公司. 保留所有权利.";
-
+"about.legal" = "隐私协议 | 用户协议 | 会员协议\ncopyright©️ 2025 北京期音科技有限\n公司. 保留所有权利.";
+"about.privacy" = "隐私协议";
+"about.user" = "用户协议";
+"about.membership" = "会员协议2";
 
 /* Account / Account Deletion */
 "account.title" = "账户与安全";
