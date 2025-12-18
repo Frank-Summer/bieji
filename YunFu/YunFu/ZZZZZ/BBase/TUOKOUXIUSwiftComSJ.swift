@@ -21,6 +21,7 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
 //    var tufuh_zmArr: NSMutableArray = NSMutableArray()
 
     var tufuh_homeArray: [SceneModel] = []
+    var tufuh_selectNum: Int = 0
 //    var tufuh_dsJiArr: [Any] = []
     
 //    var tufuh_zmSet: NSMutableSet = NSMutableSet()
@@ -34,7 +35,7 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
 //    var tufuh_ic_hh_titPl: String?
 //    var tufuh_ic_adPl: String?
     
-//    var tufuh_seasNum: Int = 0
+    
 //    var tufuh_jiCode: Int = 0
 //    var tufuh_jiNum: Int = 0
     

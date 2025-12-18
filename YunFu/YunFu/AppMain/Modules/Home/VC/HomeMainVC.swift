@@ -19,7 +19,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     var tufuh_replayBtn: UIButton?
     var tufuh_blockingBtn: UIButton?
     var tufuh_noNetV: UIView?
-    var tufuh_tabN: Int = 0
+    
     var tufuh_musicW: TUOKOUXIUMusicW?
     var tufuh_ttitleV: UIView?
     var tufuh_topTypeV: TUOKOUXIUTopTypeViewW?
@@ -123,11 +123,15 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray = await AuthService.getlist()
             if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count>0 {
                 await MainActor.run {
-                    NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshData"), object: nil)
+                    tukou_clickRefresh2()
+                    tukou_clickRefresh3()
+//                    TUOKOUXIUSwiftDelaBlk(0.25) {
+//                        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshData"), object: nil)
+//                    }
                 }
             }
         }
-        self.tufuh_tabN = 0
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = 0
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jzGFV(TUOKOUXIUSwiftKeyWinRoV)
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUUpdaWScroll"))
             .sink { [weak self] notification in self?.tufuh_updaWScroll(notification) }
@@ -138,57 +142,59 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             tukou_noNetwV()
             return
         }
-        
-        tukou_clickRefresh2()
 //        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
-            self.tufuh_musicW = TUOKOUXIUMusicW(frame: self.view.bounds)
-            self.tufuh_toolsW = TUOKOUXIUToolsW(frame: self.view.bounds)
-            let titleV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-314/2, y: 0, width: 314, height: 40), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUWhiteA10)
-            titleV.layer.cornerRadius = 20
-            titleV.tukou_addTapGesture(target: self, action: #selector(clickMusic))
-            tufuh_ttitleV = titleV
-            let musicIV = UIImageView.tukou_bjImageV(CGRect(x: 8, y: 8, width: 24, height: 24), superView: titleV, image: UIImage(named: "home_music"))
-            musicIV.backgroundColor = TUOKOUXIUWhiteA10
-            musicIV.layer.cornerRadius = 12
-            musicIV.layer.masksToBounds = true
-            
-            let musicL = UILabel.tukou_bjLabel(CGRect(x: musicIV.frame.maxX + 8, y: 8, width: 120, height: 24), text: "东方禅境的艺术", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
-            
-            let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUWhiteA60)
-            
-            let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
-            
-            let contentV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-335/2, y: 0, width: 335, height: 80), superView: self.tufuh_toolsW!, bgColor: TUOKOUXIUSwiftwuseC)
-            let intervalWidth = (335-20-40*4-48)/4
-            let collectionBtn = UIButton.tukou_bjBtn(CGRect(x: 10, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_collection_default"), superView: contentV, action: #selector(clickCollect(_:)))
-            collectionBtn.setImage(UIImage(named: "home_collection_selected"), for: .selected)
-            collectionBtn.backgroundColor = TUOKOUXIUWhiteA10
-            collectionBtn.layer.cornerRadius = 20
-            
-            tufuh_replayBtn = UIButton.tukou_bjBtn(CGRect(x: Int(collectionBtn.frame.maxX) + intervalWidth, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_replay"), superView: contentV, action: #selector(clickReplay))
-            tufuh_replayBtn!.backgroundColor = TUOKOUXIUWhiteA10
-            tufuh_replayBtn!.layer.cornerRadius = 20
-            
-            tufuh_timerBtn = UIButton.tukou_bjBtn(CGRect(x: 335/2-48/2, y: 16, width: 48, height: 48), target: self, image: UIImage(named: "home_timer_default"), superView: contentV, action: #selector(clickTime))
-            tufuh_timerBtn!.backgroundColor = TUOKOUXIUWhiteA10
-            tufuh_timerBtn!.layer.cornerRadius = 24
-            tufuh_timerBtn!.titleLabel?.font = TUOKOUXIUSwiftFont.regular(14)
-            
-            tufuh_blockingBtn = UIButton.tukou_bjBtn(CGRect(x: 335/2-48/2+48 + intervalWidth, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_blocking"), superView: contentV, action: #selector(clickTiming))
-            tufuh_blockingBtn!.backgroundColor = TUOKOUXIUWhiteA10
-            tufuh_blockingBtn!.layer.cornerRadius = 20
-            
-            let shareBtn = UIButton.tukou_bjBtn(CGRect(x: 335-10-40, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_share"), superView: contentV, action: #selector(clickShare))
-            shareBtn.backgroundColor = TUOKOUXIUWhiteA10
-            shareBtn.layer.cornerRadius = 20
-            self.view.addSubview(self.tufuh_musicW!)
-            self.view.addSubview(self.tufuh_toolsW!)
+
+        
+//        }
+    }
+    
+    func tukou_clickRefresh3() {
+        self.tufuh_musicW = TUOKOUXIUMusicW(frame: self.view.bounds)
+        self.tufuh_toolsW = TUOKOUXIUToolsW(frame: self.view.bounds)
+        let titleV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-314/2, y: 0, width: 314, height: 40), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUWhiteA10)
+        titleV.layer.cornerRadius = 20
+        titleV.tukou_addTapGesture(target: self, action: #selector(clickMusic))
+        tufuh_ttitleV = titleV
+        let musicIV = UIImageView.tukou_bjImageV(CGRect(x: 8, y: 8, width: 24, height: 24), superView: titleV, image: UIImage(named: "home_music"))
+        musicIV.backgroundColor = TUOKOUXIUWhiteA10
+        musicIV.layer.cornerRadius = 12
+        musicIV.layer.masksToBounds = true
+        
+        let musicL = UILabel.tukou_bjLabel(CGRect(x: musicIV.frame.maxX + 8, y: 8, width: 120, height: 24), text: "东方禅境的艺术", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
+        
+        let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUWhiteA60)
+        
+        let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
+        
+        let contentV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-335/2, y: 0, width: 335, height: 80), superView: self.tufuh_toolsW!, bgColor: TUOKOUXIUSwiftwuseC)
+        let intervalWidth = (335-20-40*4-48)/4
+        let collectionBtn = UIButton.tukou_bjBtn(CGRect(x: 10, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_collection_default"), superView: contentV, action: #selector(clickCollect(_:)))
+        collectionBtn.setImage(UIImage(named: "home_collection_selected"), for: .selected)
+        collectionBtn.backgroundColor = TUOKOUXIUWhiteA10
+        collectionBtn.layer.cornerRadius = 20
+        
+        tufuh_replayBtn = UIButton.tukou_bjBtn(CGRect(x: Int(collectionBtn.frame.maxX) + intervalWidth, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_replay"), superView: contentV, action: #selector(clickReplay))
+        tufuh_replayBtn!.backgroundColor = TUOKOUXIUWhiteA10
+        tufuh_replayBtn!.layer.cornerRadius = 20
+        
+        tufuh_timerBtn = UIButton.tukou_bjBtn(CGRect(x: 335/2-48/2, y: 16, width: 48, height: 48), target: self, image: UIImage(named: "home_timer_default"), superView: contentV, action: #selector(clickTime))
+        tufuh_timerBtn!.backgroundColor = TUOKOUXIUWhiteA10
+        tufuh_timerBtn!.layer.cornerRadius = 24
+        tufuh_timerBtn!.titleLabel?.font = TUOKOUXIUSwiftFont.regular(14)
+        
+        tufuh_blockingBtn = UIButton.tukou_bjBtn(CGRect(x: 335/2-48/2+48 + intervalWidth, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_blocking"), superView: contentV, action: #selector(clickTiming))
+        tufuh_blockingBtn!.backgroundColor = TUOKOUXIUWhiteA10
+        tufuh_blockingBtn!.layer.cornerRadius = 20
+        
+        let shareBtn = UIButton.tukou_bjBtn(CGRect(x: 335-10-40, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_share"), superView: contentV, action: #selector(clickShare))
+        shareBtn.backgroundColor = TUOKOUXIUWhiteA10
+        shareBtn.layer.cornerRadius = 20
+        self.view.addSubview(self.tufuh_musicW!)
+        self.view.addSubview(self.tufuh_toolsW!)
         if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp {
             self.tufuh_musicW?.isHidden = true
             self.tufuh_toolsW?.isHidden = true
         }
-//        }
     }
     
     @objc private func enterMainView() {
@@ -227,8 +233,9 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         titleV.tukou_addTapGesture(target: self, action: #selector(clickBackType))
         
         let titleIV = UIImageView.tukou_bjImageV(CGRect(x: 8, y: 4, width: 24, height: 24), superView: titleV, image: UIImage(named: "sleep"))
-        
-        let musicL = UILabel.tukou_bjLabel(CGRect(x: titleIV.frame.maxX + 6, y: 4, width: 42, height: 24), text: "瑜伽0", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: .white)
+        let model:SceneModel = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum]
+        let name = model.sceneName
+        let musicL = UILabel.tukou_bjLabel(CGRect(x: titleIV.frame.maxX + 6, y: 4, width: 42, height: 24), text: name, superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: .white)
         
         let moreBtn = UIButton.tukou_bjBtn(CGRect(x: titleV.frame.maxX + 8, y: 0, width: 32, height: 32), target: self, image: UIImage(named: "home_scene_x"), superView: self.tufuh_topTypeV!, action: #selector(clickTypeVOpen))
 //        moreBtn.backgroundColor = TUOKOUXIUWhiteA10
@@ -294,11 +301,10 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             bgColor: TUOKOUXIUSwiftwuseC
         )
         self.tufuh_scrV.showsVerticalScrollIndicator = false
-        
-        let tufuh_arr: [String] = ["瑜伽0","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5","瑜伽6","瑜伽7","瑜伽8"]
             
-        for i in 0...tufuh_arr.count - 1 {
-            let tufuh_string = tufuh_arr[i]
+        for i in 0...TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count - 1 {
+            let model:SceneModel = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray[i]
+            let tufuh_string = model.sceneName
             let btnY = i * (32 + 12)
             let typeBtn = UIButton.tukou_bjBtn(CGRect(x: 16, y: btnY, width: 120, height: 32), target: self, image: UIImage(named: "sleep"), superView: self.tufuh_scrV, action: #selector(clickTypeUpdate(_:)))
             typeBtn.layer.cornerRadius = 16
@@ -307,10 +313,10 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             typeBtn.setTitle(tufuh_string, for: .normal)
             typeBtn.titleLabel?.font = TUOKOUXIUSwiftFont.regular(14)
             typeBtn.tag = i
-            if tufuh_string == "瑜伽0" {
+            if i == TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum {
                 typeBtn.backgroundColor = TUOKOUXIUWhiteA20
             }
-            if i == tufuh_arr.count - 1 {
+            if i == TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count - 1 {
                 self.tufuh_scrV.contentSize = CGSize(width: 152, height: btnY + 32)
             }
         }
@@ -484,13 +490,13 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     }
 
     lazy var tufuh_pageTitV: TUOKOUXIUSwiftPagTitV = {
-//        let tufuh_titArr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_hhTabsArr
-        var tufuh_arr: [String] = ["瑜伽0","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5","瑜伽6","瑜伽7","瑜伽8"]
-//        for item in tufuh_titArr {
-//            if let dict = item as? [String: Any], let name = dict["name"] as? String {
-//                tufuh_arr.append(name)
-//            }
-//        }
+
+        var tufuh_arr = [String]()
+        for model in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray {
+            let name = model.sceneName
+            tufuh_arr.append(name)
+
+        }
         
         let tufuh_conf = TUOKOUXIUSwiftPagTitVConf.tukou_pageTitVCon()
 //        tufuh_conf.tufuh_titGradiEffe = true
@@ -523,30 +529,20 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     
     lazy var tufuh_pageContScrV: TUOKOUXIUSwiftPagContScrV = {
         var childVCs: [UIViewController] = []
-        let tabsArr = [["name": "瑜伽0", "key":"0"],["name": "瑜伽1", "key":"1"],["name": "瑜伽2", "key":"2"],["name": "瑜伽3", "key":"3"],["name": "瑜伽4", "key":"4"],["name": "瑜伽5", "key":"5"],["name": "瑜伽6", "key":"6"],["name": "瑜伽7", "key":"7"],["name": "瑜伽8", "key":"8"]]
+        
         let urls = [
             URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!,
             URL(string: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")!,
             URL(string: "https://test-streams.mux.dev/pts_shift/master.m3u8")!,
-            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!,
-            URL(string: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")!,
-            URL(string: "https://test-streams.mux.dev/pts_shift/master.m3u8")!,
-            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!,
-            URL(string: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")!,
-            URL(string: "https://test-streams.mux.dev/pts_shift/master.m3u8")!
+            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!
         ]
         let urls2 = [
             URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!,
             URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
             URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")!,
-            URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Owl/Epic_Nature_Sounds/Owl_-_Ocean_Waves.mp3")!,
-            URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/WFMU/Micaela_Tobis/Spring_Forest/Micaela_Tobis_-_Birds_In_The_Forest.mp3")!,
-            URL(string: "https://cdn.pixabay.com/audio/2021/09/27/audio_f3556c07df.mp3")!,
-            URL(string: "https://cdn.pixabay.com/audio/2021/11/16/audio_50a7fe36cb.mp3")!,
-            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
-            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!
+            URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Owl/Epic_Nature_Sounds/Owl_-_Ocean_Waves.mp3")!
         ]
-        for (i, item) in tabsArr.enumerated() {
+        for (i, item) in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.enumerated() {
             let v1 = HomeSubVC(videoURL: urls[i], audioURL: urls2[i])
             v1.tufuh_num = i
             childVCs.append(v1)
@@ -562,12 +558,12 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     }()
 
     func tukou_pageTitV(_ pageTitleView: TUOKOUXIUSwiftPagTitV, selectedIndex: Int) {
-        self.tufuh_tabN = selectedIndex
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = selectedIndex
         self.tufuh_pageContScrV.tukou_pageContScrVCurrInd(selectedIndex)
     }
 
     func tukou_pageContScrV(_ pageContentScrollView: TUOKOUXIUSwiftPagContScrV, progress: CGFloat, originalIndex: Int, targetIndex: Int) {
-        self.tufuh_tabN = targetIndex
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = targetIndex
         self.tufuh_pageTitV.tukou_pageTitVWithPro(progress: progress, originalIndex: originalIndex, targetIndex: targetIndex)
     }
 
@@ -609,11 +605,10 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
 
         let dianV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-18, y: 12, width: 36, height: 6), superView: tufuh_container!, bgColor: TUOKOUXIUWhiteA60)
         dianV.layer.cornerRadius = 3
-        
-        let tufuh_arr: [String] = ["瑜伽0","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5","瑜伽6","瑜伽7","瑜伽8","瑜伽9","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5"]
             
-        for i in 0...tufuh_arr.count - 1 {
-            let tufuh_string = tufuh_arr[i]
+        for i in 0...TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count - 1 {
+            let model:SceneModel = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray[i]
+            let tufuh_string = model.sceneName
             let btnY = 30 + i * (48 + 20)
             let typeV = UIView.tukou_bjView(CGRect(x: 0, y: btnY, width: Int(TUOKOUXIUSwiftSCRE_W), height: 48), superView: tufuh_scrTypeV, bgColor: TUOKOUXIUSwiftwuseC)
             typeV.tukou_addTapGesture(target: self, action: #selector(clickTypeUpdate(_:)))
@@ -624,12 +619,12 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             typeIconIV.layer.borderWidth = 1
             typeIconIV.layer.borderColor = TUOKOUXIUWhiteA10.cgColor
             let typeL = UILabel.tukou_bjLabel(CGRect(x: typeIconIV.frame.maxX + 10, y: 0, width: TUOKOUXIUSwiftSCRE_W-(typeIconIV.frame.maxX + 10)-20, height: 48), text: tufuh_string, superView: typeV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(16), textColor: TUOKOUXIUWhiteA60)
-            if i == 0 {
+            if i == TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum {
                 typeIconIV.backgroundColor = TUOKOUXIUWhiteA10
                 typeIconIV.layer.borderWidth = 0
                 typeL.textColor = .white
             }
-            if i == tufuh_arr.count - 1 {
+            if i == TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count - 1 {
                 tufuh_scrTypeV.contentSize = CGSize(width: CGFloat(TUOKOUXIUSwiftSCRE_W - 70), height: CGFloat(btnY) + 48)
             }
         }

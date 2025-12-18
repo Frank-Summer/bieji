@@ -117,8 +117,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         
         NotificationCenter.default.addObserver(self, selector: #selector(enterMainView),
                                                name: Notification.Name("TUOKOUXIUEnterMainView"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshData),
-                                               name: Notification.Name("TUOKOUXIURefreshData"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(refreshData),
+//                                               name: Notification.Name("TUOKOUXIURefreshData"), object: nil)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
             if let audioURL = self.audioURL {
@@ -140,6 +140,9 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             let gaiContentL = UILabel.tukou_bjLabel(CGRect(x: 24, y: gaiLeftIV.frame.maxY+10, width: TUOKOUXIUSwiftSCRE_W-48-24-24, height: 70), text: "", superView: gaiIV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(17), textColor: .white)
             tufuh_gaiVcontentL = gaiContentL
             gaiContentL.numberOfLines = 0
+            if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count > 0 {
+                refreshData()
+            }
         }
     }
     

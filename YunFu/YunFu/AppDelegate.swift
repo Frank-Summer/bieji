@@ -94,30 +94,6 @@
 //    func applicationWillTerminate(_ application: UIApplication) {
 //        TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_guanBShuJ()
 //    }
-//    func tukou_enter() {
-//
-//        _ = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL
-//        window = UIWindow(frame: UIScreen.main.bounds)
-//
-//        let tufuh_tabBaVC = TUOKOUXIUSwiftTBar()
-//
-//        let tufuh_tarVC1 = HomeMainVC()
-//        let tufuh_homeNav = TUOKOUXIUSwiftBaNavC(rootViewController: tufuh_tarVC1)
-//        tufuh_homeNav.navigationBar.isHidden = true
-//
-//        let tufuh_tarVC2 = TUOKOUXIUExploreVC()
-//        let tufuh_tsNav = TUOKOUXIUSwiftBaNavC(rootViewController: tufuh_tarVC2)
-//        tufuh_tsNav.navigationBar.isHidden = true
-//
-//        let tufuh_tarVC4 = TUOKOUXIUSwiftMy()
-//        let tufuh_myNav = TUOKOUXIUSwiftBaNavC(rootViewController: tufuh_tarVC4)
-//        tufuh_myNav.navigationBar.isHidden = true
-//
-//        tufuh_tabBaVC.tufuh_tabbVCArr = [tufuh_tsNav, tufuh_homeNav, tufuh_myNav]
-//
-//        window?.rootViewController = tufuh_tabBaVC
-//        window?.makeKeyAndVisible()
-//    }
 //}
 
 
@@ -225,7 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let homeNav = TUOKOUXIUSwiftBaNavC(rootViewController: homeVC)
         homeNav.navigationBar.isHidden = true
 
-        let tufuh_tarVC2 = TUOKOUXIUExploreVC2()
+        let tufuh_tarVC2 = TUOKOUXIUExploreVC()
         let tufuh_tsNav = TUOKOUXIUSwiftBaNavC(rootViewController: tufuh_tarVC2)
         tufuh_tsNav.navigationBar.isHidden = true
 
