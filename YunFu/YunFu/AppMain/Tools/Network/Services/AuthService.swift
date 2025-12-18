@@ -64,7 +64,7 @@ final class AuthService {
     
     
     static func login_apple(
-        identityToken: String,
+        identityToken: String
     ) async -> BaseModel<[String: AnyCodable]>? {
 
         let body: [String: Any] = [
@@ -105,7 +105,7 @@ final class AuthService {
     
     
     
-    static func getlist() async -> BaseModel<[String: AnyCodable]>? {
+    static func getlist() async -> [SceneModel] {
 
         // 1️⃣ 当前时间（时:分）
         let formatter = DateFormatter()
@@ -125,25 +125,15 @@ final class AuthService {
             params: params
         )
 
-        // 6️⃣ 打印接口返回
-        if let result = result {
-            print("✅ getlist 接口返回：")
-            print("code:", result.code ?? -1)
-            print("msg:", result.msg ?? "")
-
-            if let body = result.bodydata {
-                print("data:")
-                for (key, value) in body {
-                    print("  \(key): \(value)")
-                }
-            } else {
-                print("data: nil")
-            }
-        } else {
-            print("❌ getlist 接口无返回（result == nil）")
+        guard
+            let result = result,
+            result.code == 0,
+            let body = result.bodydata
+        else {
+            return []
         }
 
-        return result
+        return SceneModel.parseScenes(body: body)
     }
     
     

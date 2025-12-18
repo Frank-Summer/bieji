@@ -119,6 +119,14 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        Task {
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray = await AuthService.getlist()
+            if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count>0 {
+                await MainActor.run {
+                    NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshData"), object: nil)
+                }
+            }
+        }
         self.tufuh_tabN = 0
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jzGFV(TUOKOUXIUSwiftKeyWinRoV)
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUUpdaWScroll"))
@@ -602,7 +610,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         let dianV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-18, y: 12, width: 36, height: 6), superView: tufuh_container!, bgColor: TUOKOUXIUWhiteA60)
         dianV.layer.cornerRadius = 3
         
-        let tufuh_arr: [String] = ["瑜伽0","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5","瑜伽6","瑜伽7","瑜伽8","瑜伽9","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5","瑜伽6","瑜伽7","瑜伽8"]
+        let tufuh_arr: [String] = ["瑜伽0","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5","瑜伽6","瑜伽7","瑜伽8","瑜伽9","瑜伽1","瑜伽2","瑜伽3","瑜伽4","瑜伽5"]
             
         for i in 0...tufuh_arr.count - 1 {
             let tufuh_string = tufuh_arr[i]
@@ -616,7 +624,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             typeIconIV.layer.borderWidth = 1
             typeIconIV.layer.borderColor = TUOKOUXIUWhiteA10.cgColor
             let typeL = UILabel.tukou_bjLabel(CGRect(x: typeIconIV.frame.maxX + 10, y: 0, width: TUOKOUXIUSwiftSCRE_W-(typeIconIV.frame.maxX + 10)-20, height: 48), text: tufuh_string, superView: typeV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(16), textColor: TUOKOUXIUWhiteA60)
-            if tufuh_string == "瑜伽0" {
+            if i == 0 {
                 typeIconIV.backgroundColor = TUOKOUXIUWhiteA10
                 typeIconIV.layer.borderWidth = 0
                 typeL.textColor = .white

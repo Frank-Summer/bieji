@@ -683,14 +683,18 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     }
     
     func tukou_hidTabb() {
-        tufuh_tabBV.frame.origin.y = view.bounds.height
-        tufuh_contV.frame = view.bounds  // 保持全屏
+//        tufuh_tabBV.frame.origin.y = view.bounds.height
+//        tufuh_contV.frame = view.bounds  // 保持全屏
+//        tufuh_contV.isHidden = true
+        tufuh_tabBV.isHidden = true
     }
 
     func tukou_shoTabb() {
-        let tabH = tufuh_tabBV.bounds.height
-        tufuh_tabBV.frame.origin.y = view.bounds.height - tabH
-        tufuh_contV.frame = view.bounds
+//        let tabH = tufuh_tabBV.bounds.height
+//        tufuh_tabBV.frame.origin.y = view.bounds.height - tabH
+//        tufuh_contV.frame = view.bounds
+//        tufuh_contV.isHidden = false
+        tufuh_tabBV.isHidden = false
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

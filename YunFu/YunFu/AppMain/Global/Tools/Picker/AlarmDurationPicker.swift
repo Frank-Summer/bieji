@@ -17,7 +17,7 @@ class AlarmDurationPicker: UIView {
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
         self.backgroundColor = .black
-        self.alpha = 0.7
+//        self.alpha = 0.7
         setupDurations()
         setupUI()
         setupGesture()
