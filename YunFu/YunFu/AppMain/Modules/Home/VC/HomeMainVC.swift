@@ -442,11 +442,9 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
-    //点击拦截
     @objc func clickTiming() {
-        print("点击拦截")
+        FocusShield.toggle(from: self)
     }
-    
     //点击分享
     @objc func clickShare() {
         print("点击分享")
