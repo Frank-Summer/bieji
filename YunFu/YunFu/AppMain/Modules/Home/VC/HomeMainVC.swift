@@ -452,7 +452,6 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     
 //    func tukou_clickRefresh() {
 //        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jzGFV(TUOKOUXIUSwiftKeyWinRoV)
-//        tukou_reqTK()
 //        
 //        self.tufuh_block = { [weak self] isSuccess in
 //            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
