@@ -443,7 +443,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     }
     
     @objc func clickTiming() {
-        FocusShield.toggle(from: self)
+        FocusShieldUIFlow.start()
     }
     //点击分享
     @objc func clickShare() {

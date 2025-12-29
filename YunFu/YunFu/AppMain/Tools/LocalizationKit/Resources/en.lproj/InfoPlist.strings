@@ -114,3 +114,38 @@
 "feedback.placeholder.contact" = "Contact Information (optional)";
 "feedback.placeholder.phoneOrWeChat" = "Phone number or WeChat ID (optional)";
 "feedback.button.submit" = "Submit Feedback";
+
+
+/* Focus Shield */
+
+"focus.title" = "App Blocking";
+
+"focus.status.blocking" = "The following potentially distracting apps are blocked";
+"focus.status.noneSelected" = "No apps or categories selected";
+
+"focus.count.prefix" = "Total";
+"focus.count.suffix" = "";
+
+"focus.action.edit" = "Edit";
+"focus.action.stop" = "Stop Blocking";
+"focus.action.start" = "Start Blocking";
+
+
+/* Focus Intro */
+
+"focus.intro.title" = "Your Digital Shield Is Ready";
+
+"focus.intro.description" = "Welcome to App Blocking.\nThis is a focus safeguard designed by Beiji for different moments in life,\nhelping you reduce distractions and return to the present.";
+
+"focus.scene.meditation" = "Meditation · Automatically silence notifications";
+"focus.scene.sleep" = "Sleep · Block short videos and games";
+"focus.scene.exercise" = "Workout · Reduce social app notification anxiety";
+
+"focus.intro.actionHint" = "Go to settings to choose apps to block";
+
+
+/* Focus Actions */
+
+"focus.action.selectActivity" = "Select Activity";
+"focus.action.cancel" = "Cancel";
+"focus.action.done" = "Done";
