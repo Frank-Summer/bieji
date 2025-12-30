@@ -416,7 +416,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = BYRP6L2B45;
+				DEVELOPMENT_TEAM = 65C565KHM4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -506,7 +506,7 @@
 					"-weak_framework",
 					"\"DeviceCheck\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = art.qiyin.bieji;
+				PRODUCT_BUNDLE_IDENTIFIER = com.caesar.caesargroupusa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -552,7 +552,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BYRP6L2B45;
+				DEVELOPMENT_TEAM = 65C565KHM4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -642,7 +642,7 @@
 					"-weak_framework",
 					"\"DeviceCheck\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = art.qiyin.bieji;
+				PRODUCT_BUNDLE_IDENTIFIER = com.caesar.caesargroupusa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
