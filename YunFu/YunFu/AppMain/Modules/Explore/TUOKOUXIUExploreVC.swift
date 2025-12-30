@@ -4,7 +4,6 @@ import SnapKit
 
 class TUOKOUXIUExploreVC: UIViewController {
     
-    // MARK: - 数据源
     private let tufuh_arr: [String] = [
         "通勤","深睡眠","婴儿安睡","睡午觉","图书馆","健身","瑜伽","跑步",
         "深夜专注","专注","工作","阅读","减压","胎教","宠物陪伴","放松",
@@ -17,10 +16,8 @@ class TUOKOUXIUExploreVC: UIViewController {
         "pet","relax","period","meditation","game","emo"
     ]
     private var indexItemNum: Int = 0
-    // MARK: - 固定布局参数
     private let itemWidth: CGFloat = 76
     private let itemHeight: CGFloat = 87
-
     private let columnSpacing: CGFloat = 8
     private let rowSpacing: CGFloat = 12
     
@@ -39,7 +36,6 @@ class TUOKOUXIUExploreVC: UIViewController {
     private let topHeightExpanded: CGFloat = 545 + TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 40
 
     private let tableView = UITableView(frame: .zero, style: .plain)
-
     private var topHeightConstraint: Constraint?
 
     private lazy var collectionView: UICollectionView = {
@@ -123,8 +119,8 @@ class TUOKOUXIUExploreVC: UIViewController {
 
         guard isExpanded else { return }
 
-        if scrollView.contentOffset.y > 10 {
-            collapse()
+        if scrollView.contentOffset.y > 20 {
+            finishExpand()
         }
     }
     
@@ -215,14 +211,71 @@ class TUOKOUXIUExploreVC: UIViewController {
         UIImageView.tukou_bjImageV(CGRect(x: 0, y: 0, width: Int(TUOKOUXIUSwiftSCRE_W), height: Int(TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight) + 76), superView: self.view, image: UIImage(named: "home_top_shadow"))
     }
     
+    private var panStartHeight: CGFloat = 0
+    private var panProgress: CGFloat = 0
+    private var isPanning = false
+    
     @objc private func handlePan(_ g: UIPanGestureRecognizer) {
-        if g.state == .ended {
-            let dy = g.translation(in: view).y
-            dy > 20 ? expand() : dy < -20 ? collapse() : ()
+
+        let translationY = g.translation(in: view).y
+        let range = topHeightExpanded - topHeightCollapsed
+
+        switch g.state {
+
+        case .began:
+            isPanning = true
+            panStartHeight = topHeightConstraint?.layoutConstraints.first?.constant
+                ?? (isExpanded ? topHeightExpanded : topHeightCollapsed)
+            tableView.isScrollEnabled = false
+
+        case .changed:
+            // 上拉是展开（dy < 0）
+            let delta = -translationY
+            var height = panStartHeight + delta
+
+            height = max(topHeightCollapsed, min(topHeightExpanded, height))
+
+            panProgress = (height - topHeightCollapsed) / range
+
+            topHeightConstraint?.update(offset: height)
+            view.layoutIfNeeded()
+
+        case .ended, .cancelled:
+            isPanning = false
+            tableView.isScrollEnabled = true
+
+            if panProgress > 0.5 {
+                finishExpand()
+            } else {
+                finishCollapse()
+            }
+
+        default:
+            break
         }
     }
     
-    private func expand() {
+    private func finishExpand() {
+        guard isExpanded else { return }
+        isExpanded = false
+
+        let layout = makeCollapsedLayout()
+        applyLayoutConfig(layout)
+
+        collectionView.setCollectionViewLayout(layout, animated: false)
+        topHeightConstraint?.update(offset: topHeightCollapsed)
+
+        UIView.animate(
+            withDuration: 0.25,
+            delay: 0,
+            usingSpringWithDamping: 0.9,
+            initialSpringVelocity: 0.6
+        ) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func finishCollapse() {
         guard !isExpanded else { return }
         isExpanded = true
 
@@ -232,29 +285,49 @@ class TUOKOUXIUExploreVC: UIViewController {
         applyLayoutConfig(layout)
 
         collectionView.setCollectionViewLayout(layout, animated: false)
-
         topHeightConstraint?.update(offset: topHeightExpanded)
 
-        UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 0.82, initialSpringVelocity: 0.6) {
+        UIView.animate(
+            withDuration: 0.25,
+            delay: 0,
+            usingSpringWithDamping: 0.85,
+            initialSpringVelocity: 0.6
+        ) {
             self.view.layoutIfNeeded()
         }
     }
-
-    private func collapse() {
-        guard isExpanded else { return }
-        isExpanded = false
-
-        let layout = makeCollapsedLayout()
-        applyLayoutConfig(layout)
-
-        collectionView.setCollectionViewLayout(layout, animated: false)
-
-        topHeightConstraint?.update(offset: topHeightCollapsed)
-
-        UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.6) {
-            self.view.layoutIfNeeded()
-        }
-    }
+    
+//    private func expand() {
+//        guard !isExpanded else { return }
+//        isExpanded = true
+//
+//        tableView.setContentOffset(.zero, animated: false)
+//
+//        let layout = makeExpandedLayout()
+//        applyLayoutConfig(layout)
+//
+//        collectionView.setCollectionViewLayout(layout, animated: false)
+//        topHeightConstraint?.update(offset: topHeightExpanded)
+//
+//        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.82, initialSpringVelocity: 0.6) {
+//            self.view.layoutIfNeeded()
+//        }
+//    }
+//
+//    private func collapse() {
+//        guard isExpanded else { return }
+//        isExpanded = false
+//
+//        let layout = makeCollapsedLayout()
+//        applyLayoutConfig(layout)
+//
+//        collectionView.setCollectionViewLayout(layout, animated: false)
+//        topHeightConstraint?.update(offset: topHeightCollapsed)
+//
+//        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.6) {
+//            self.view.layoutIfNeeded()
+//        }
+//    }
 }
 
 extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
@@ -354,14 +427,12 @@ final class TufuhIconCell: UICollectionViewCell {
         contentView.backgroundColor = .clear
 
         iconView.contentMode = .scaleAspectFit
-
         titleLabel.font = TUOKOUXIUSwiftFont.regular(12)
         titleLabel.textColor = TUOKOUXIUSwiftbaiseC
         titleLabel.textAlignment = .center
 
         contentView.addSubview(iconView)
         contentView.addSubview(titleLabel)
-
         iconView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.centerX.equalToSuperview()
@@ -386,12 +457,10 @@ final class TufuhIconCell: UICollectionViewCell {
         contentView.layer.borderWidth = 0
     }
     
-
     func config(title: String, imageName: String) {
         titleLabel.text = title
         iconView.image = UIImage(named: imageName)
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
