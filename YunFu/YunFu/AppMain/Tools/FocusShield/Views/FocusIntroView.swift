@@ -1,24 +1,15 @@
 import SwiftUI
 
-/// FocusShield 提示视图（SwiftUI 版本）
-///
-/// 用途：
-/// - 提示「应用拦截 / 专注模式已开启」
-/// - 可用于 BottomSheet / Sheet / UIHostingController
-///
-/// 作者：Frank
-/// 创建时间：2025-12
-struct FocusShieldHintView: View {
+struct FocusIntroView: View {
 
-    /// 点击按钮回调
-    var onAction: (() -> Void)?
+    let onStart: () -> Void
 
     var body: some View {
 
         VStack(spacing: 0) {
 
             // MARK: - 标题（真正左右居中，紧贴顶部）
-            Text("应用程序拦截")
+            Text("\(LocalizedText.text("focus.title"))")
                 .font(.system(size: 20, weight: .semibold))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
@@ -36,33 +27,30 @@ struct FocusShieldHintView: View {
                     .padding(.top, 24)
 
                 // Headline
-                Text("您的数字结界已就位")
+                Text("\(LocalizedText.text("focus.intro.title"))")
                     .font(.system(size: 20, weight: .medium))
                     .foregroundColor(.white)
                     .padding(.top, 24)
 
                 // 描述
-                Text("""
-欢迎开启「应用拦截」！
-这是【别急】为不同生活场景设计的防护罩：
-""")
+                Text("\(LocalizedText.text("focus.intro.description"))")
                     .font(.system(size: 14))
                     .foregroundColor(.white.opacity(0.7))
                     .padding(.top, 12)
 
                 // Feature List（间距绝对一致）
                 VStack(alignment: .leading, spacing: 8) {
-                    FeatureRow(icon: "yoga", text: "冥想时 - 自动屏蔽消息通知")
-                    FeatureRow(icon: "sleep", text: "睡眠时 - 拦截短视频和游戏")
-                    FeatureRow(icon: "run", text: "运动时 - 关闭社交软件红点焦虑")
+                    FeatureRow(icon: "yoga", text: "\(LocalizedText.text("focus.scene.meditation"))")
+                    FeatureRow(icon: "sleep", text: "\(LocalizedText.text("focus.scene.sleep"))")
+                    FeatureRow(icon: "run", text: "\(LocalizedText.text("focus.scene.exercise"))")
                 }
                 .padding(.top, 12)
 
                 // Button（居中）
                 Button(action: {
-                    onAction?()
+                    onStart()
                 }) {
-                    Text("去设置拦截应用")
+                    Text("\(LocalizedText.text("focus.intro.actionHint"))")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundColor(.white)
                         .frame(width: 327, height: 48)
@@ -75,7 +63,7 @@ struct FocusShieldHintView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        // MARK: - 外边距
+        .background(Color.clear)
         .padding(.horizontal, 24)
         .frame(maxWidth: .infinity)
         .frame(maxHeight: .infinity, alignment: .top)

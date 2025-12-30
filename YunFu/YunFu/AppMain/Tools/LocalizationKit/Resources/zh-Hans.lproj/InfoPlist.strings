@@ -111,3 +111,23 @@
 "feedback.placeholder.contact" = "联系方式（选填）";
 "feedback.placeholder.phoneOrWeChat" = "手机号或者微信 ID（选填）";
 "feedback.button.submit" = "提交反馈";
+
+
+
+"focus.title" = "应用程序拦截";
+"focus.status.blocking" = "已拦截以下可能产生干扰的应用";
+"focus.status.noneSelected" = "尚未选择任何应用或类型";
+"focus.count.prefix" = "共";
+"focus.count.suffix" = "个";
+"focus.action.edit" = "编辑";
+"focus.action.stop" = "取消拦截";
+"focus.action.start" = "开始拦截";
+"focus.intro.title" = "您的数字结界已就位";
+"focus.intro.description" = "欢迎开启「应用拦截」！\n这是【别急】为不同生活场景设计的专注防护，\n在需要的时候，帮你隔离干扰，回到当下。";
+"focus.scene.meditation" = "冥想时 - 自动屏蔽消息通知";
+"focus.scene.sleep" = "睡眠时 - 拦截短视频和游戏";
+"focus.scene.exercise" = "运动时 - 关闭社交软件的红点焦虑";
+"focus.intro.actionHint" = "去设置拦截应用";
+"focus.action.selectActivity" = "选择活动";
+"focus.action.cancel" = "取消";
+"focus.action.done" = "完成";
