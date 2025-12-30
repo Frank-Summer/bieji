@@ -403,15 +403,6 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     }
     
     @objc private func handleButtonTap() {
-        // 添加点击反馈
-//        UIView.animate(withDuration: 0.1, animations: {
-//            self.animatedButton.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-//        }) { _ in
-//            UIView.animate(withDuration: 0.1) {
-//                self.animatedButton.transform = .identity
-//            }
-//        }
-        
         if isExpanded {
             collapseButton()
             rightIcon.isUserInteractionEnabled = false
@@ -439,50 +430,20 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             self.isExpanded = false
             self.resetIconOrientation()
             
-            // 确保圆角
-//            self.animatedButton.layer.cornerRadius = 26
-            
-            UIView.animate(withDuration: 1.0, delay: 0,
+            UIView.animate(withDuration: 0.5, delay: 0,
                            usingSpringWithDamping: 1.0,
                            initialSpringVelocity: 1.0,
                            options: .curveEaseInOut) {
                 self.view.layoutIfNeeded()
                 self.animatedButton.backgroundColor = .white
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
+                self.playCollapseJellyEffect()
+            }
         }
     }
     
     private func expandButton() {
-//        // 更新宽度约束（展开宽度）
-//        buttonWidthConstraint.constant = LayoutConstants.centerButtonExpandedSize
-//        
-//        // 移除旧的居中约束，添加新的右侧约束
-//        rightIconCenterXConstraint.isActive = false
-//        
-//        rightIconCenterXConstraint = rightIcon.centerXAnchor.constraint(
-//            equalTo: animatedButton.trailingAnchor,
-//            constant: -30
-//        )
-//        rightIconCenterXConstraint.isActive = true
-//        self.isExpanded = true
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            self.startRotationAnimation()
-//        }
-//        UIView.animate(withDuration: 0.9, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.5, options: .curveEaseInOut) {
-//
-//            self.view.layoutIfNeeded()
-//            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1.0) {
-//                self.animatedButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-//                self.animatedButton.backgroundColor = .clear
-//            }
-//            // 淡入文本和图标
-//            UIView.animate(withDuration: 0.3, delay: 0.1) {
-//                self.centerLabel.alpha = 1
-//                self.leftIcon.alpha = 1
-//            }
-//        } completion: { _ in
-//
-//        }
         // 先执行淡出动画
         UIView.animate(withDuration: 0.2) {
             self.centerLabel.alpha = 1
@@ -500,17 +461,64 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             rightIconCenterXConstraint.isActive = true
             self.isExpanded = true
             
-            UIView.animate(withDuration: 1.0, delay: 0,
+            UIView.animate(withDuration: 0.5, delay: 0,
                            usingSpringWithDamping: 1.0,
                            initialSpringVelocity: 1.0,
                            options: .curveEaseInOut) {
                 self.view.layoutIfNeeded()
                 self.animatedButton.backgroundColor = .clear
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
+                self.playExpandJellyEffect()
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.startRotationAnimation()
             }
         }
+    }
+    
+    private func playExpandJellyEffect() {
+        animatedButton.transform = CGAffineTransform(scaleX: 1.12, y: 0.96)
+
+        UIView.animate(
+            withDuration: 0.16,
+            animations: {
+                self.animatedButton.transform = CGAffineTransform(scaleX: 0.92, y: 1.02)
+            },
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.32,
+                    delay: 0,
+                    usingSpringWithDamping: 0.42,
+                    initialSpringVelocity: 1.3,
+                    options: [.allowUserInteraction, .beginFromCurrentState]
+                ) {
+                    self.animatedButton.transform = .identity
+                }
+            }
+        )
+    }
+    
+    private func playCollapseJellyEffect() {
+        animatedButton.transform = CGAffineTransform(scaleX: 0.86, y: 1.06)
+
+        UIView.animate(
+            withDuration: 0.16,
+            animations: {
+                self.animatedButton.transform = CGAffineTransform(scaleX: 1.12, y: 0.96)
+            },
+            completion: { _ in
+                UIView.animate(
+                    withDuration: 0.32,
+                    delay: 0,
+                    usingSpringWithDamping: 0.48,
+                    initialSpringVelocity: 1.2,
+                    options: [.allowUserInteraction, .beginFromCurrentState]
+                ) {
+                    self.animatedButton.transform = .identity
+                }
+            }
+        )
     }
     
     @objc private func rightButtonTapped() {

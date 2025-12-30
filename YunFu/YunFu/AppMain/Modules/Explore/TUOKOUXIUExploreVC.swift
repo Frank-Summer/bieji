@@ -235,7 +235,7 @@ class TUOKOUXIUExploreVC: UIViewController {
 
         topHeightConstraint?.update(offset: topHeightExpanded)
 
-        UIView.animate(withDuration: 0.45, delay: 0, usingSpringWithDamping: 0.82, initialSpringVelocity: 0.6) {
+        UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 0.82, initialSpringVelocity: 0.6) {
             self.view.layoutIfNeeded()
         }
     }
@@ -251,7 +251,7 @@ class TUOKOUXIUExploreVC: UIViewController {
 
         topHeightConstraint?.update(offset: topHeightCollapsed)
 
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.6) {
+        UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.6) {
             self.view.layoutIfNeeded()
         }
     }
