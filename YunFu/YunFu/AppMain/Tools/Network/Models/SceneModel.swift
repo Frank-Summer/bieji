@@ -8,65 +8,52 @@
 
 import Foundation
 
+struct ScenesResponse {
+    let sort: [String]
+    let scenes: [SceneModel]
+    
+    static func parseScenesResponse(body: [String: AnyCodable]) -> ScenesResponse? {
+
+        // sort
+        guard let sortAny = body["sort"]?.value as? [AnyCodable] else {
+            print("❌ sort 解析失败")
+            return nil
+        }
+
+        let sort = sortAny.compactMap { $0.value as? String }
+
+        // detail
+        guard let detailAny = body["detail"]?.value as? [String: AnyCodable] else {
+            print("❌ detail 解析失败")
+            return nil
+        }
+
+        var scenes: [SceneModel] = []
+
+        for key in sort {
+            guard
+                let sceneAny = detailAny[key]?.value as? [String: AnyCodable],
+                let model = SceneModel(anyDict: sceneAny)
+            else { continue }
+
+            scenes.append(model)
+        }
+
+        return ScenesResponse(sort: sort, scenes: scenes)
+    }
+}
+
 struct SceneModel {
     let id: Int
     let sceneName: String
     let sceneCode: String
+    let accessType: String
     let iconName: String
     let backgroundUrl: String
     let displayCopyTitle: String
     let displayCopy: String
-    let category: String
     let isActive: Bool
-    
-    static func parseScenes(body: [String: AnyCodable]) -> [SceneModel] {
-
-        // 1️⃣ 解析 sort
-        guard
-            let sortAny = body["sort"]?.value as? [AnyCodable]
-        else {
-            print("❌ sort 解析失败")
-            return []
-        }
-
-        let sortList: [String] = sortAny.compactMap {
-            $0.value as? String
-        }
-
-        if sortList.isEmpty {
-            print("❌ sortList 为空")
-            return []
-        }
-
-        // 2️⃣ 解析 detail
-        guard
-            let detailAny = body["detail"]?.value as? [String: AnyCodable]
-        else {
-            print("❌ detail 解析失败")
-            return []
-        }
-
-        // 3️⃣ 按 sort 顺序组装
-        var scenes: [SceneModel] = []
-
-        for key in sortList {
-            guard
-                let sceneAny = detailAny[key]?.value as? [String: AnyCodable]
-            else {
-                print("⚠️ 找不到 detail[\(key)]")
-                continue
-            }
-
-            if let model = SceneModel(anyDict: sceneAny) {
-                scenes.append(model)
-            } else {
-                print("⚠️ SceneModel 转换失败：\(key)")
-            }
-        }
-
-        print("✅ 成功解析 scenes 数量：\(scenes.count)")
-        return scenes
-    }
+    let songUuids: [String]
 }
 
 extension SceneModel {
@@ -76,25 +63,36 @@ extension SceneModel {
         guard
             let id = anyDict["id"]?.value as? Int,
             let sceneName = anyDict["sceneName"]?.value as? String,
+            let accessType = anyDict["accessType"]?.value as? String,
             let sceneCode = anyDict["sceneCode"]?.value as? String,
             let iconName = anyDict["iconName"]?.value as? String,
             let backgroundUrl = anyDict["backgroundUrl"]?.value as? String,
             let displayCopyTitle = anyDict["displayCopyTitle"]?.value as? String,
             let displayCopy = anyDict["displayCopy"]?.value as? String,
-            let category = anyDict["category"]?.value as? String,
             let isActive = anyDict["isActive"]?.value as? Bool
         else {
             return nil
         }
 
+        let songUuids: [String]
+
+        if let array = anyDict["songUuids"]?.value as? [AnyCodable] {
+            songUuids = array.compactMap { $0.value as? String }
+        } else if let array = anyDict["songUuids"]?.value as? [Any] {
+            songUuids = array.compactMap { $0 as? String }
+        } else {
+            songUuids = []
+        }
+
         self.id = id
         self.sceneName = sceneName
         self.sceneCode = sceneCode
+        self.accessType = accessType
         self.iconName = iconName
         self.backgroundUrl = backgroundUrl
         self.displayCopyTitle = displayCopyTitle
         self.displayCopy = displayCopy
-        self.category = category
         self.isActive = isActive
+        self.songUuids = songUuids
     }
 }

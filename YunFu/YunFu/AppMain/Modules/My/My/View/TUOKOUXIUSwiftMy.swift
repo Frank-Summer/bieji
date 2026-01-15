@@ -170,7 +170,7 @@ class TUOKOUXIUSwiftMy: TUOKOUXIUSwiftBaseVC {
         print("🟢 点击调试按钮，调用 getlist")
 
         Task {
-            let _ = await AuthService.getlist()
+            let _ = await AuthService.getScenesList()
         }
     }
 

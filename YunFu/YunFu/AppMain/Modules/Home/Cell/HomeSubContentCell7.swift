@@ -16,7 +16,7 @@ class HomeSubContentCell7: UITableViewCell, UITableViewDelegate, UITableViewData
         v.backgroundColor = TUOKOUXIUWhiteA10
         return v
     }()
-    
+    private var tufuh_instrumentsArray: [AcousticSection] = []
     private lazy var tufuh_tabV: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.separatorStyle = .none
@@ -63,7 +63,7 @@ class HomeSubContentCell7: UITableViewCell, UITableViewDelegate, UITableViewData
         
         contentView.addSubview(tufuh_lineV)
         
-        tufuh_titleL.text = "声音与乐器"
+//        tufuh_titleL.text = ""
         
         tufuh_titleL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
@@ -79,22 +79,55 @@ class HomeSubContentCell7: UITableViewCell, UITableViewDelegate, UITableViewData
             make.height.equalTo(1)
         }
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
+    
+    func tukou_resModel(tufuh_instrumentsArray: [AcousticSection]) {
+        self.tufuh_instrumentsArray = tufuh_instrumentsArray
+        let model: AcousticSection = self.tufuh_instrumentsArray[0]
+        tufuh_titleL.text = model.tag
+        tufuh_tabV.reloadData()
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 34
+        let aco: AcousticSection = self.tufuh_instrumentsArray[0]
+        if aco.items.count > 0 {
+            let itemsArray:[AcousticItem] = aco.items
+            let item:AcousticItem = itemsArray[indexPath.row]
+            let nameStr = item.name ?? ""
+            let width = TUOKOUXIUSSStringUtils.tukou_sizWithT(
+                nameStr,
+                font: TUOKOUXIUSwiftFont.semibold(14),
+                maxSize: CGSize(width: TUOKOUXIUSwiftSCRE_W, height: 24)
+            ).width
+            let itemStr = item.description
+            
+            let height = TUOKOUXIUSSStringUtils.tukou_textSize(text:
+                itemStr,
+                font: TUOKOUXIUSwiftFont.regular(14),
+                maxSize: CGSize(width: TUOKOUXIUSwiftSCRE_W - width - 48 - 34, height: .greatestFiniteMagnitude), lineSpacing: 6
+            ).height
+            return height + 10
+        } else {
+            return 0.01
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        if self.tufuh_instrumentsArray.count == 0 {
+            return 0
+        }
+        let acousticSection: AcousticSection = self.tufuh_instrumentsArray[0]
+        return acousticSection.items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell9Id", for: indexPath) as! HomeSubContentCell9
-//            cell.pdduo_contStr((pddds_dataArr[indexPath.row] as! String))
+
         cell.backgroundColor = TUOKOUXIUSwiftwuseC
+        let acousticSection: AcousticSection = self.tufuh_instrumentsArray[0]
+        let items: [AcousticItem] = acousticSection.items
+        if items.count > 0 {
+            cell.tukou_resModel(acousticItem: items[indexPath.row])
+        }
         return cell
     }
     

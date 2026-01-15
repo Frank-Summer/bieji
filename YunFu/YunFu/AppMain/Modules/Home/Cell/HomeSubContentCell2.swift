@@ -14,6 +14,8 @@ class HomeSubContentCell2: UITableViewCell, UICollectionViewDelegate, UICollecti
     
     private var tufuh_dataArr: [TufuhItemNew] = []
     
+    private var tufuh_explpreArray: [ExploreItem] = []
+    
     private let tufuh_titleL: UILabel = {
         let label = UILabel()
         label.textColor = TUOKOUXIUSwiftbaiseC
@@ -27,6 +29,11 @@ class HomeSubContentCell2: UITableViewCell, UICollectionViewDelegate, UICollecti
         v.backgroundColor = TUOKOUXIUWhiteA10
         return v
     }()
+    
+    func tukou_resModel(explpreArray: [ExploreItem]) {
+        self.tufuh_explpreArray = explpreArray
+        tufuh_collcV.reloadData()
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -95,7 +102,7 @@ class HomeSubContentCell2: UITableViewCell, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return min(tufuh_dataArr.count, 20)
-        return 10
+        return self.tufuh_explpreArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -113,7 +120,10 @@ class HomeSubContentCell2: UITableViewCell, UICollectionViewDelegate, UICollecti
 //        }
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHHHTabCollVCellId", for: indexPath) as! TUOKOUXIUSwiftHHHCollVCell
-        cell.tukou_resModel(["name":""])
+        if self.tufuh_explpreArray.count > 0 {
+            let model = self.tufuh_explpreArray[indexPath.row]
+            cell.tukou_resModel(model: model)
+        }
 //        switch tufuh_dataArr[indexPath.row] {
 //        case .dict(let dict):
 //            cell.tukou_resModel(dict)

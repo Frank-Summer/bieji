@@ -5,7 +5,7 @@ import Kingfisher
 
 class TUOKOUXIUSwiftHHHCollVCell3: UICollectionViewCell {
     
-    private var tufuh_mDict: [String: Any] = [:]
+    private var tufuh_model: SocialProof?
 
     private let tufuh_headIV: UIImageView = {
         let iv = UIImageView()
@@ -66,24 +66,21 @@ class TUOKOUXIUSwiftHHHCollVCell3: UICollectionViewCell {
             make.height.equalTo(40)
         }
         tufuh_contentL.snp.makeConstraints { make in
-            make.top.equalTo(tufuh_headIV.snp.bottom).offset(10)
+            make.top.equalTo(tufuh_headIV.snp.bottom).offset(8)
             make.left.equalToSuperview().offset(12)
             make.right.equalToSuperview().offset(-10)
         }
     }
     
-    func tukou_resModel(_ model: [String: Any]) {
-        tufuh_mDict = model
+    func tukou_resModel(model: SocialProof) {
+        self.tufuh_model = model
             
-        let tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(model["haibao"])
-
-        if let url = URL(string: tufuh_ulrS) {
+        if let urlString = self.tufuh_model?.avatar, let url = URL(string: urlString) {
             tufuh_headIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
         }
-        tufuh_nameL.text = "huoluo"
-        tufuh_contentL.setText("""
-        ”夜里思绪翻涌时，它像在胸腔铺了一层柔软。” — 晚间·入睡前
-        """, lineSpacing: 5)
+
+        tufuh_nameL.text = self.tufuh_model?.username
+        tufuh_contentL.setText(self.tufuh_model?.content ?? "", lineSpacing: 4)
         
     }
 }

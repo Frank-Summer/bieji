@@ -24,7 +24,7 @@ class HomeSubContentCell5: UITableViewCell {
 //        v.backgroundColor = TUOKOUXIUWhiteA10
 //        return v
 //    }()
-    
+    private var tufuh_model: AcousticSection?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -70,7 +70,13 @@ class HomeSubContentCell5: UITableViewCell {
 //            make.height.equalTo(1)
 //        }
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
+    func tukou_resModel(model: AcousticSection) {
+        self.tufuh_model = model
+            
+        tufuh_titleL.text = self.tufuh_model?.tag
+        if let item: AcousticItem = self.tufuh_model?.items[0] {
+            tufuh_contL.setText(item.description, lineSpacing: 6)
+        }
+        
+    }
 }

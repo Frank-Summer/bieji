@@ -52,6 +52,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
 
     // MARK: - 播放器状态
     let videoURL: URL?               // 当前子控制器视频 URL（初始化注入）
+    var detailModel: MusicModel?
     //音频
     private var audioPlayer: AVPlayer?
     let audioURL: URL?
@@ -61,11 +62,13 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     var tufuh_gaiViamgeView: UIImageView?
     var tufuh_gaiVtitleL: UILabel?
     var tufuh_gaiVcontentL: UILabel?
+    let tufuh_model:SceneModel?
     // 标志，表示是否已经在 cell 上UILabel化了播放器（避免重复）
     private var didSetupPlayerInCell = false
 
     // MARK: - 生命周期
-    init(videoURL: URL, audioURL: URL) {
+    init(videoURL: URL, audioURL: URL, tufuh_model: SceneModel) {
+        self.tufuh_model = tufuh_model
         self.videoURL = videoURL
         self.audioURL = audioURL
         super.init(nibName: nil, bundle: nil)
@@ -80,6 +83,11 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .black
+        Task {
+            guard let url = self.tufuh_model?.songUuids[0] else { return }
+            self.detailModel = await AuthService.getMusicDetail(Uuid: url)
+            print("✅ model 获取成功")
+        }
 
         // 1) 先创建 tableView（不要在 viewDidLoad 中触发 cell 的 layout 或 访问可见 cells）
         view.addSubview(tufuh_tabV)
@@ -89,9 +97,9 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         tufuh_tabV.register(HomeSubContentCell1.self, forCellReuseIdentifier: "HomeSubContentCell1Id")
         tufuh_tabV.register(HomeSubContentCell2.self, forCellReuseIdentifier: "HomeSubContentCell2Id")
         tufuh_tabV.register(HomeSubContentCell3.self, forCellReuseIdentifier: "HomeSubContentCell3Id")
-        tufuh_tabV.register(HomeSubContentCell4.self, forCellReuseIdentifier: "HomeSubContentCell4Id")
-        tufuh_tabV.register(HomeSubContentCell5.self, forCellReuseIdentifier: "HomeSubContentCell5Id")
-        tufuh_tabV.register(HomeSubContentCell6.self, forCellReuseIdentifier: "HomeSubContentCell6Id")
+        tufuh_tabV.register(HomeSubContentCell44.self, forCellReuseIdentifier: "HomeSubContentCell44Id")
+//        tufuh_tabV.register(HomeSubContentCell5.self, forCellReuseIdentifier: "HomeSubContentCell5Id")
+//        tufuh_tabV.register(HomeSubContentCell6.self, forCellReuseIdentifier: "HomeSubContentCell6Id")
         tufuh_tabV.register(HomeSubContentCell7.self, forCellReuseIdentifier: "HomeSubContentCell7Id")
         tufuh_tabV.register(HomeSubContentCell8.self, forCellReuseIdentifier: "HomeSubContentCell8Id")
         
@@ -243,11 +251,10 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         playerView.cleanup()
     }
 
-    // MARK: - tableView 数据源/代理
     func numberOfSections(in tableView: UITableView) -> Int { 2 }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : 8
+        return section == 0 ? 1 : 6
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -255,27 +262,84 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             return TUOKOUXIUSwiftSCRE_H
         } else {
             if indexPath.row == 0 {
-                if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
-                    return 388
+                if let meta = self.detailModel?.meta, let introductions = self.detailModel?.introductions {
+                    let introductions = self.detailModel?.introductions ?? ""
+                    
+                    let height = TUOKOUXIUSSStringUtils.tukou_textSize(text: introductions, font: TUOKOUXIUSwiftFont.regular(18), maxSize: CGSize(width: TUOKOUXIUSwiftSCRE_W - 48, height: .greatestFiniteMagnitude) ,lineSpacing: 10).height
+                    if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
+                        return 164 + height + 10
+                    }
+                    return 194 + height + 10
+                } else {
+                    return 0.01
                 }
-                return 418  //content 224
             } else if indexPath.row == 1 {
                 if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
                     return 0.01
                 }
-                return 185 * TUOKOUXIUDeviceInfo.scaleX + 28 + 32 + 16
+                if let explpreArray = self.detailModel?.explore, explpreArray.count > 0 {
+                    return 185 * TUOKOUXIUDeviceInfo.scaleX + 28 + 32 + 16
+                } else {
+                    return 0.01
+                }
             } else if indexPath.row == 2 {
-                return 320 * TUOKOUXIUDeviceInfo.scaleX + 32
+                if let bannersArray = self.detailModel?.banners, bannersArray.count > 0 {
+                    return 320 * TUOKOUXIUDeviceInfo.scaleX + 32
+                } else {
+                    return 0.01
+                }
             } else if indexPath.row == 3 {
-                return 16 + 24 + 10 + 20 + 80 + 20 //content 80
+                if let principles = self.detailModel?.acousticTech?.principles, principles.count > 0 {
+                    let pri: AcousticSection = principles[0]
+                    let itemsArray:[AcousticItem] = pri.items
+                    var tagH = 0
+                    var desH = 0
+                    for item in itemsArray {
+                        let itemStr = item.description
+                        tagH = tagH + 40
+                        let height = TUOKOUXIUSSStringUtils.tukou_textSize(text:
+                            itemStr,
+                            font: TUOKOUXIUSwiftFont.regular(14),
+                            maxSize: CGSize(width: TUOKOUXIUSwiftSCRE_W - 48, height: .greatestFiniteMagnitude), lineSpacing: 6
+                        ).height
+                        desH = desH + Int(height) + 10
+                    }
+                    return CGFloat(16 + 24 + tagH + desH + 15)
+                } else {
+                    return 0.01
+                }
+//                return 16 + 24 + 10 + 20 + 80 + 20 + 10 + 20 + 10 + 120 + 10 + 20 + 10 + 80 //content 80
             } else if indexPath.row == 4 {
-                return 10 + 20 + 10 + 120 //content 120
+                if let instruments = self.detailModel?.acousticTech?.instruments, instruments.count > 0 {
+                    let aco: AcousticSection = instruments[0]
+                    let itemsArray:[AcousticItem] = aco.items
+                    var desH = 0
+                    for item in itemsArray {
+                        let nameStr = item.name ?? ""
+                        let width = TUOKOUXIUSSStringUtils.tukou_sizWithT(
+                            nameStr,
+                            font: TUOKOUXIUSwiftFont.semibold(14),
+                            maxSize: CGSize(width: TUOKOUXIUSwiftSCRE_W, height: 24)
+                        ).width
+                        let itemStr = item.description
+                        
+                        let height = TUOKOUXIUSSStringUtils.tukou_textSize(text:
+                            itemStr,
+                            font: TUOKOUXIUSwiftFont.regular(14),
+                            maxSize: CGSize(width: TUOKOUXIUSwiftSCRE_W - width - 48 - 34, height: .greatestFiniteMagnitude), lineSpacing: 6
+                        ).height
+                        desH = desH + Int(height) + 10
+                    }
+                    return CGFloat(40 + 10 + desH + 12) //content 262
+                } else {
+                    return 0.01
+                }
             } else if indexPath.row == 5 {
-                return 10 + 20 + 10 + 80  //content 80
-            } else if indexPath.row == 6 {
-                return 16 + 24 + 10 + 262 + 12 //content 262
-            } else if indexPath.row == 7 {
-                return 16 + 16 + 134
+                if let socialProofs = self.detailModel?.socialProofs, socialProofs.count > 0 {
+                    return 16 + 16 + 134
+                } else {
+                    return 0.01
+                }
             }
         }
         return 0.01
@@ -310,39 +374,83 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             return cell
         } else {
             if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell1Id", for: indexPath) as! HomeSubContentCell1
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                cell.tukou_refresh()
-                return cell
+                if let meta = self.detailModel?.meta, let introductions = self.detailModel?.introductions {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell1Id", for: indexPath) as! HomeSubContentCell1
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    
+                    cell.tukou_resModel(meta: meta, introductions: introductions)
+                    
+                    cell.tukou_refresh()
+                    return cell
+                } else {
+                    let cell = UITableViewCell()
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    return cell
+                }
             } else if indexPath.row == 1 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell2Id", for: indexPath) as! HomeSubContentCell2
-                cell.tukou_refresh()
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                return cell
+                if let explpreArray = self.detailModel?.explore, explpreArray.count > 0 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell2Id", for: indexPath) as! HomeSubContentCell2
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    
+                    cell.tukou_resModel(explpreArray: explpreArray)
+                    
+                    cell.tukou_refresh()
+                    return cell
+                } else {
+                    let cell = UITableViewCell()
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    return cell
+                }
             } else if indexPath.row == 2 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell3Id", for: indexPath) as! HomeSubContentCell3
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                return cell
+                if let bannersArray = self.detailModel?.banners, bannersArray.count > 0 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell3Id", for: indexPath) as! HomeSubContentCell3
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    
+                    cell.tukou_resModel(banners: bannersArray)
+                    
+                    return cell
+                } else {
+                    let cell = UITableViewCell()
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    return cell
+                }
             } else if indexPath.row == 3 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell4Id", for: indexPath) as! HomeSubContentCell4
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                return cell
+                if let principles = self.detailModel?.acousticTech?.principles, principles.count > 0 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell44Id", for: indexPath) as! HomeSubContentCell44
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    cell.tukou_resModel(tufuh_principlesArray: principles)
+                    return cell
+                } else {
+                    let cell = UITableViewCell()
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    return cell
+                }
             } else if indexPath.row == 4 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell5Id", for: indexPath) as! HomeSubContentCell5
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                return cell
-            } else if indexPath.row == 5 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell6Id", for: indexPath) as! HomeSubContentCell6
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                return cell
-            } else if indexPath.row == 6 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell7Id", for: indexPath) as! HomeSubContentCell7
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                return cell
+                if let instruments = self.detailModel?.acousticTech?.instruments, instruments.count > 0 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell7Id", for: indexPath) as! HomeSubContentCell7
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                
+                    cell.tukou_resModel(tufuh_instrumentsArray: instruments)
+                
+                    return cell
+                } else {
+                    let cell = UITableViewCell()
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    return cell
+                }
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell8Id", for: indexPath) as! HomeSubContentCell8
-                cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                return cell
+                if let socialProofs = self.detailModel?.socialProofs, socialProofs.count > 0 {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell8Id", for: indexPath) as! HomeSubContentCell8
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                
+                    cell.tukou_resModel(tufuh_socialProofsArray: socialProofs)
+                
+                    return cell
+                } else {
+                    let cell = UITableViewCell()
+                    cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                    return cell
+                }
             }
         }
     }

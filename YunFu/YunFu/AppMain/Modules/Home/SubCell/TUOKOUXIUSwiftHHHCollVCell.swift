@@ -5,7 +5,7 @@ import Kingfisher
 
 class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
     
-    private var tufuh_mDict: [String: Any] = [:]
+    private var tufuh_model: ExploreItem?
 
     private let tufuh_coverIV: UIImageView = {
         let iv = UIImageView()
@@ -80,18 +80,18 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
         }
     }
     
-    func tukou_resModel(_ model: [String: Any]) {
-        tufuh_mDict = model
+    func tukou_resModel(model: ExploreItem) {
+        self.tufuh_model = model
             
-        let tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(model["haibao"])
-
-        if let url = URL(string: tufuh_ulrS) {
+        tufuh_typeL.text = self.tufuh_model?.headline
+        tufuh_contentL.text = self.tufuh_model?.subhead
+        
+        if let urlString = self.tufuh_model?.musicPic, let url = URL(string: urlString) {
             tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
         }
+        
         tufuh_coverIV.image = UIImage(named: "icon_tukou_bg")
         tufuh_playingIV.image = UIImage(named: "icon_tukou_logo")
-        tufuh_typeL.text = "自然场景"
-        tufuh_contentL.text = "稳定氛围/长效专注"
         
     }
 }

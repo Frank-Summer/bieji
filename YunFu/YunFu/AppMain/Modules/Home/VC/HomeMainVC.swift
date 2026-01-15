@@ -120,8 +120,12 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     override func viewDidLoad() {
         super.viewDidLoad()
         Task {
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray = await AuthService.getlist()
-            if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count>0 {
+            let response = await AuthService.getScenesList()
+
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray = response?.scenes ?? []
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray = response?.sort ?? []
+            
+            if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.count > 0 {
                 await MainActor.run {
                     tukou_clickRefresh2()
                     tukou_clickRefresh3()
@@ -488,12 +492,12 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
 
     lazy var tufuh_pageTitV: TUOKOUXIUSwiftPagTitV = {
 
-        var tufuh_arr = [String]()
-        for model in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray {
-            let name = model.sceneName
-            tufuh_arr.append(name)
-
-        }
+        var tufuh_arr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray
+//        for model in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray {
+//            let name = model.sceneName
+//            tufuh_arr.append(name)
+//
+//        }
         
         let tufuh_conf = TUOKOUXIUSwiftPagTitVConf.tukou_pageTitVCon()
 //        tufuh_conf.tufuh_titGradiEffe = true
@@ -539,8 +543,8 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")!,
             URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Owl/Epic_Nature_Sounds/Owl_-_Ocean_Waves.mp3")!
         ]
-        for (i, item) in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.enumerated() {
-            let v1 = HomeSubVC(videoURL: urls[i], audioURL: urls2[i])
+        for (i, model) in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.enumerated() {
+            let v1 = HomeSubVC(videoURL: urls[0], audioURL: urls2[0], tufuh_model: model)
             v1.tufuh_num = i
             childVCs.append(v1)
         }

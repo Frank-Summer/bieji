@@ -14,6 +14,8 @@ class HomeSubContentCell3: UITableViewCell, UICollectionViewDelegate, UICollecti
     
     private var tufuh_dataArr: [TufuhItemNew2] = []
     
+    private var tufuh_bannerArray: [BannerItem] = []
+    
     private lazy var tufuh_lineV: UIView = {
         let v = UIView()
         v.backgroundColor = TUOKOUXIUWhiteA10
@@ -26,6 +28,11 @@ class HomeSubContentCell3: UITableViewCell, UICollectionViewDelegate, UICollecti
 //        contentView.backgroundColor = .black
         contentView.isUserInteractionEnabled = true
         tukou_initV()
+    }
+    
+    func tukou_resModel(banners: [BannerItem]) {
+        self.tufuh_bannerArray = banners
+        tufuh_collcV.reloadData()
     }
     
     required init?(coder: NSCoder) {
@@ -67,7 +74,7 @@ class HomeSubContentCell3: UITableViewCell, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return min(tufuh_dataArr.count, 20)
-        return 10
+        return self.tufuh_bannerArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -85,7 +92,10 @@ class HomeSubContentCell3: UITableViewCell, UICollectionViewDelegate, UICollecti
 //        }
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHomeTableViewCollCellId", for: indexPath) as! TUOKOUXIUSwiftHHHCollVCell2
-        cell.tukou_resModel(["name":""])
+        if self.tufuh_bannerArray.count > 0 {
+            let model = self.tufuh_bannerArray[indexPath.row]
+            cell.tukou_resModel(model: model)
+        }
 //        switch tufuh_dataArr[indexPath.row] {
 //        case .dict(let dict):
 //            cell.tukou_resModel(dict)

@@ -21,6 +21,7 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
 //    var tufuh_zmArr: NSMutableArray = NSMutableArray()
 
     var tufuh_homeArray: [SceneModel] = []
+    var tufuh_sortArray: [String] = []
     var tufuh_selectNum: Int = 0
 //    var tufuh_dsJiArr: [Any] = []
     

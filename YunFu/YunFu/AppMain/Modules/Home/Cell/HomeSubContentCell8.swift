@@ -13,7 +13,7 @@ class HomeSubContentCell8: UITableViewCell, UICollectionViewDelegate, UICollecti
     var tufuh_priDict: [String: Any] = [:]
     
     private var tufuh_dataArr: [TufuhItemNew3] = []
-    
+    private var tufuh_socialProofsArray: [SocialProof] = []
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -51,9 +51,13 @@ class HomeSubContentCell8: UITableViewCell, UICollectionViewDelegate, UICollecti
 //        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
 //    }
     
+    func tukou_resModel(tufuh_socialProofsArray: [SocialProof]) {
+        self.tufuh_socialProofsArray = tufuh_socialProofsArray
+        tufuh_collcV.reloadData()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return min(tufuh_dataArr.count, 20)
-        return 10
+        return self.tufuh_socialProofsArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -71,12 +75,10 @@ class HomeSubContentCell8: UITableViewCell, UICollectionViewDelegate, UICollecti
 //        }
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHHHTabCollVCellId", for: indexPath) as! TUOKOUXIUSwiftHHHCollVCell3
-        cell.tukou_resModel(["name":""])
-//        switch tufuh_dataArr[indexPath.row] {
-//        case .dict(let dict):
-//            cell.tukou_resModel(dict)
-//        case .array(_): break
-//        }
+        if self.tufuh_socialProofsArray.count > 0 {
+            let model = self.tufuh_socialProofsArray[indexPath.row]
+            cell.tukou_resModel(model: model)
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

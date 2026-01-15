@@ -149,6 +149,43 @@ class TUOKOUXIUSSStringUtils: NSObject {
         )
         return boundingRect.size
     }
+    //需要添加行间距的
+    static func tukou_textSize(
+        text: String,
+        font: UIFont,
+        maxSize: CGSize,
+        lineSpacing: CGFloat = 4,
+        alignment: NSTextAlignment = .left,
+        lineHeightMultiple: CGFloat = 0
+    ) -> CGSize {
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.alignment = alignment
+
+        if lineHeightMultiple > 0 {
+            paragraphStyle.lineHeightMultiple = lineHeightMultiple
+        }
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .paragraphStyle: paragraphStyle
+        ]
+
+        let attributedText = NSAttributedString(string: text, attributes: attributes)
+
+        let rect = attributedText.boundingRect(
+            with: maxSize,
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil
+        )
+
+        // 向上取整，防止 1px 截断
+        return CGSize(
+            width: ceil(rect.width),
+            height: ceil(rect.height)
+        )
+    }
 }
 
 

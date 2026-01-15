@@ -4,7 +4,7 @@ import SnapKit
 
 class TUOKOUXIUExploreVC: UIViewController {
     
-    private let tufuh_arr: [String] = [
+    private var tufuh_arr: [String] = [
         "通勤","深睡眠","婴儿安睡","睡午觉","图书馆","健身","瑜伽","跑步",
         "深夜专注","专注","工作","阅读","减压","胎教","宠物陪伴","放松",
         "经期舒展","冥想","打游戏","深夜EMO"
@@ -102,6 +102,7 @@ class TUOKOUXIUExploreVC: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        tufuh_arr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray
         indexItemNum = 2
         guard !didSetupLayout else { return }
         didSetupLayout = true

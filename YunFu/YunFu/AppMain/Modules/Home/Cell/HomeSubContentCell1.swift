@@ -31,7 +31,7 @@ class HomeSubContentCell1: UITableViewCell {
     }()
     private let tufuh_contL: UILabel = {
         let label = UILabel()
-        label.textColor = TUOKOUXIUSwiftbaiseC
+        label.textColor = TUOKOUXIUWhiteA80
         label.font = TUOKOUXIUSwiftFont.regular(18)
         label.numberOfLines = 0
         return label
@@ -54,6 +54,19 @@ class HomeSubContentCell1: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var meta: MetaInfo?
+    private var introductions: String?
+    
+    func tukou_resModel(meta: MetaInfo, introductions: String) {
+        self.meta = meta
+        self.introductions = introductions
+        
+        tufuh_titleL.text = self.meta?.internalName
+        tufuh_subTitleL.text = self.meta?.subTitle
+
+        tufuh_contL.setText(self.introductions ?? "", lineSpacing: 10)
+    }
+    
     private func tukou_initV() {
         contentView.addSubview(tufuh_titleL)
         contentView.addSubview(tufuh_subTitleL)
@@ -63,14 +76,6 @@ class HomeSubContentCell1: UITableViewCell {
         contentView.addSubview(tufuh_contL)
         contentView.addSubview(tufuh_lineV)
         
-        tufuh_titleL.text = "东方禅境"
-        tufuh_subTitleL.text = "空灵东方之声，抚平内在涟漪"
-
-        tufuh_contL.setText("""
-        以东方器物与吟诵为灵感，营造静谧而温和的内在空间。
-        不同于情绪化的常规音乐，它弱化节拍与旋律锋芒，以延绵的泛音与宽阔的空间感，轻轻包裹专注与休息。
-        你无需刻意参与，声音会在不知不觉间抚平紧张与脑疲劳，让思绪慢慢安住于当下。
-        """, lineSpacing: 10)
         
         tufuh_titleL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(0)

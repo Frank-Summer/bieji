@@ -25,7 +25,7 @@ class HomeSubContentCell9: UITableViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
+    private var tufuh_model: AcousticItem?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -43,10 +43,8 @@ class HomeSubContentCell9: UITableViewCell {
         contentView.addSubview(tufuh_subTitleL)
         contentView.addSubview(tufuh_contL)
 
-        tufuh_subTitleL.text = "敲钵："
-        tufuh_contL.text = """
-        长尾泛音，4–7秒自然衰减
-        """
+//        tufuh_subTitleL.text = ""
+//        tufuh_contL.text = ""
         
         tufuh_hintIV.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(0)
@@ -60,12 +58,13 @@ class HomeSubContentCell9: UITableViewCell {
         }
 
         tufuh_contL.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(0)
+            make.top.equalToSuperview().offset(3)
             make.left.equalTo(tufuh_subTitleL.snp.right).offset(10)
-            make.height.equalTo(24)
         }
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
+    func tukou_resModel(acousticItem: AcousticItem) {
+        self.tufuh_model = acousticItem
+        tufuh_subTitleL.text = "\(self.tufuh_model?.name ?? "")："
+        tufuh_contL.setText(self.tufuh_model?.description ?? "", lineSpacing: 6)
+    }
 }

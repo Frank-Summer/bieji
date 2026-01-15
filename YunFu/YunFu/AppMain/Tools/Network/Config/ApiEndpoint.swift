@@ -12,7 +12,9 @@ enum ApiEndpoint {
     
     //************************************************** 首页 ******************************************************/
     //场景信息卡片
-    static let getlist = "/v1/scenes/list"
+    static let getScenesList = "/v1/scenes/list"
+    //获取音乐详情
+    static let getMusicDetail = "/v1/scenes/music/detail"
     //获取音频信息
     static let getmusicinfo = "/v1/catalog/getmusicinfo"
     //收藏

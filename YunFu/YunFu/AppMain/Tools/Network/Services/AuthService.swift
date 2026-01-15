@@ -102,25 +102,21 @@ final class AuthService {
         return response
     }
     
-    
-    
-    
-    static func getlist() async -> [SceneModel] {
+    static func getScenesList() async -> ScenesResponse? {
 
         // 1️⃣ 当前时间（时:分）
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         let timeHM = formatter.string(from: Date())
 
-
-        // 4️⃣ 组装请求参数
+        // 2️⃣ 请求参数
         let params: [String: Any] = [
             "time": timeHM,
         ]
 
-        // 5️⃣ 发起请求
+        // 3️⃣ 发起请求
         let result = await HTTPClient.shared.request(
-            ApiEndpoint.getlist,
+            ApiEndpoint.getScenesList,
             method: "POST",
             params: params
         )
@@ -130,10 +126,35 @@ final class AuthService {
             result.code == 0,
             let body = result.bodydata
         else {
-            return []
+            return nil
         }
 
-        return SceneModel.parseScenes(body: body)
+        return ScenesResponse.parseScenesResponse(body: body)
+    }
+    
+    static func getMusicDetail(Uuid:String) async -> MusicModel? {
+
+        // 2️⃣ 请求参数
+        let params: [String: Any] = [
+            "songUuid": Uuid,
+        ]
+
+        // 3️⃣ 发起请求
+        let result = await HTTPClient.shared.request(
+            ApiEndpoint.getMusicDetail,
+            method: "GET",
+            params: params
+        )
+
+        guard
+            let result = result,
+            result.code == 0,
+            let body = result.bodydata
+        else {
+            return nil
+        }
+
+        return MusicModel.parseDetail(body: body)
     }
     
     

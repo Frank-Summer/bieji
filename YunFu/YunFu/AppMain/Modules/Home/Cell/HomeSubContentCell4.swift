@@ -31,6 +31,7 @@ class HomeSubContentCell4: UITableViewCell {
 //        v.backgroundColor = TUOKOUXIUWhiteA10
 //        return v
 //    }()
+    private var tufuh_model: AcousticSection?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,13 +50,13 @@ class HomeSubContentCell4: UITableViewCell {
         contentView.addSubview(tufuh_contL)
 //        contentView.addSubview(tufuh_lineV)
         
-        tufuh_titleL.text = "工作原理"
-        tufuh_subTitleL.text = "音乐结构"
-        tufuh_contL.setText("""
-        五声音阶与更纯和的比率，降低不协和与紧张。
-        长音与缓慢包络，减少瞬态干扰，利于持续专注。
-        细微随机（1/f 起伏）与呼吸节律，避免听觉疲劳。
-        """, lineSpacing: 6)
+//        tufuh_titleL.text = "工作原理"
+//        tufuh_subTitleL.text = "音乐结构"
+//        tufuh_contL.setText("""
+//        五声音阶与更纯和的比率，降低不协和与紧张。
+//        长音与缓慢包络，减少瞬态干扰，利于持续专注。
+//        细微随机（1/f 起伏）与呼吸节律，避免听觉疲劳。
+//        """, lineSpacing: 6)
         
         tufuh_titleL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
@@ -83,7 +84,13 @@ class HomeSubContentCell4: UITableViewCell {
 //            make.height.equalTo(1)
 //        }
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
+    func tukou_resModel(model: AcousticSection) {
+        self.tufuh_model = model
+        tufuh_titleL.text = self.tufuh_model?.tag
+        if let item: AcousticItem = self.tufuh_model?.items[0] {
+            tufuh_subTitleL.text = item.tag
+            tufuh_contL.setText(item.description, lineSpacing: 6)
+        }
+        
+    }
 }

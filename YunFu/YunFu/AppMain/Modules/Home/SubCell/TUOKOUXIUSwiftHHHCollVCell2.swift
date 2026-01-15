@@ -5,7 +5,7 @@ import Kingfisher
 
 class TUOKOUXIUSwiftHHHCollVCell2: UICollectionViewCell {
     
-    private var tufuh_mDict: [String: Any] = [:]
+    private var tufuh_model: BannerItem?
 
     private let tufuh_coverIV: UIImageView = {
         let iv = UIImageView()
@@ -55,18 +55,15 @@ class TUOKOUXIUSwiftHHHCollVCell2: UICollectionViewCell {
         }
     }
     
-    func tukou_resModel(_ model: [String: Any]) {
-        tufuh_mDict = model
-            
-        let tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(model["haibao"])
-
-        if let url = URL(string: tufuh_ulrS) {
+    func tukou_resModel(model: BannerItem) {
+        self.tufuh_model = model
+        
+        if let urlString = self.tufuh_model?.pic, let url = URL(string: urlString) {
             tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
         }
+        tufuh_contentL.setText(self.tufuh_model?.headline ?? "", lineSpacing: 6)
+        
+        //
         tufuh_coverIV.image = UIImage(named: "icon_tukou_bg")
-        tufuh_contentL.setText("""
-        风在山谷里转一遍，带着悠远
-        的回响
-        """, lineSpacing: 6)
     }
 }
