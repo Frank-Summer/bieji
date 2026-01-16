@@ -47,9 +47,6 @@ class HomeSubContentCell8: UITableViewCell, UICollectionViewDelegate, UICollecti
         contentView.addSubview(tufuh_collcV)
         
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
     
     func tukou_resModel(tufuh_socialProofsArray: [SocialProof]) {
         self.tufuh_socialProofsArray = tufuh_socialProofsArray

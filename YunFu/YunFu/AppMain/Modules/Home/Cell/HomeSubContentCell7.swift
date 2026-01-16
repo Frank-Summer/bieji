@@ -63,8 +63,6 @@ class HomeSubContentCell7: UITableViewCell, UITableViewDelegate, UITableViewData
         
         contentView.addSubview(tufuh_lineV)
         
-//        tufuh_titleL.text = ""
-        
         tufuh_titleL.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
             make.top.equalToSuperview().offset(12)

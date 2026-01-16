@@ -42,9 +42,6 @@ class HomeSubContentCell9: UITableViewCell {
         contentView.addSubview(tufuh_hintIV)
         contentView.addSubview(tufuh_subTitleL)
         contentView.addSubview(tufuh_contL)
-
-//        tufuh_subTitleL.text = ""
-//        tufuh_contL.text = ""
         
         tufuh_hintIV.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(0)

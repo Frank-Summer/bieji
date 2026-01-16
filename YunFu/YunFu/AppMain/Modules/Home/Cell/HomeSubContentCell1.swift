@@ -161,7 +161,5 @@ class HomeSubContentCell1: UITableViewCell {
     @objc func tukou_goToMore() {
         
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
+
 }

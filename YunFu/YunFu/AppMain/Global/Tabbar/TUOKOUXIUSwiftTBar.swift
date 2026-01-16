@@ -154,12 +154,16 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             .sink { [weak self] _ in self?.clickCenterBtn() }
             .store(in: &cancellables)
 
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUToggleTypePlayback"))
+            .sink { [weak self] _ in self?.toggleTypePlayback() }
+            .store(in: &cancellables)
+        
         tufuh_selInd = -1
         tukou_setTabBar()
         tukou_setContainerV()
         
         self.tukou_setTabBTitArr()
-        updateCenterText(title: "东方禅境", subtitle: "瑜伽0")
+//        updateCenterText(title: "", subtitle: "")
         if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp {
             enterBtn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-140/2, y: 7, width: 140, height: 52)
             enterBtn.backgroundColor = TUOKOUXIUSwiftbaiseC
@@ -484,6 +488,10 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             self.centerLabel.alpha = 1
             self.leftIcon.alpha = 1
         } completion: { [self] _ in
+            let meta = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo
+            let musicStr:String = meta?.internalName ?? ""
+            let nameStr:String = meta?.artist?.name ?? ""
+            updateCenterText(title: musicStr, subtitle: nameStr)
             buttonWidthConstraint.constant = LayoutConstants.centerButtonExpandedSize
     
             // 移除旧的居中约束，添加新的右侧约束
@@ -606,6 +614,11 @@ class TUOKOUXIUSwiftTBar: UIViewController {
                 )
             }
         }
+    }
+    
+    private func toggleTypePlayback() {
+        self.isPlay = true
+        rightIcon.image = UIImage(named: "tab_home_play")
     }
     
     @objc private func clickPlayBtn() {

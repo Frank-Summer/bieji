@@ -96,12 +96,8 @@ class HomeSubContentCell2: UITableViewCell, UICollectionViewDelegate, UICollecti
         }
         
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return min(tufuh_dataArr.count, 20)
         return self.tufuh_explpreArray.count
     }
     

@@ -20,6 +20,9 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     var tufuh_blockingBtn: UIButton?
     var tufuh_noNetV: UIView?
     
+    var tufuh_musicL: UILabel?
+    var tufuh_nameL: UILabel?
+    
     var tufuh_musicW: TUOKOUXIUMusicW?
     var tufuh_ttitleV: UIView?
     var tufuh_topTypeV: TUOKOUXIUTopTypeViewW?
@@ -58,67 +61,11 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShoTabb"), object: nil)
     }
 
-    func tufuh_updaWScroll(_ noti: Notification) {
-        guard let info = noti.userInfo,
-              let progress = info["progress"] as? CGFloat,
-              let updaW = self.tufuh_toolsW else { return }
-        
-        // 非线性曲线（苹果弹性 + ease-out 混合）
-        // 更丝滑：前面非常慢，后面变快
-        let smoothP = pow(progress, 1.8)
-
-        // 计算动画参数
-        let moveY = smoothP * 82                               // 下移距离
-        let scale = 1 - smoothP * 0.06                         // 1 → 0.94（苹果浮层）
-        let alphaV = 1 - smoothP                               // 透明度
-        let shadowAlpha = max(0, 0.3 - smoothP * 0.3)          // 阴影淡出
-        let blurAlpha = 1 - smoothP                            // blur 透明度
-
-        let views = updaW.subviews
-        let updaW2 = self.tufuh_musicW
-        let views2 = updaW2!.subviews
-        for v in views {
-
-            // transform：位移 + 缩放（丝滑核心）
-            let t = CGAffineTransform(translationX: 0, y: moveY)
-                .scaledBy(x: scale, y: scale)
-            v.transform = t
-
-            // alpha
-            v.alpha = alphaV
-
-            // 阴影动态变化
-            v.layer.shadowOpacity = Float(shadowAlpha)
-
-            // 如果是毛玻璃视图，调整其 alpha
-            if let blur = v as? UIVisualEffectView {
-                blur.alpha = blurAlpha
-            }
-        }
-        for v in views2 {
-
-            // transform：位移 + 缩放（丝滑核心）
-            let t = CGAffineTransform(translationX: 0, y: moveY)
-                .scaledBy(x: scale, y: scale)
-            v.transform = t
-
-            // alpha
-            v.alpha = alphaV
-
-            // 阴影动态变化
-            v.layer.shadowOpacity = Float(shadowAlpha)
-
-            // 如果是毛玻璃视图，调整其 alpha
-            if let blur = v as? UIVisualEffectView {
-                blur.alpha = blurAlpha
-            }
-        }
-
-        updaW.isHidden = (progress >= 0.999)
-        updaW2!.isHidden = (progress >= 0.999)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIURefreshHomeWindow"))
+            .sink { [weak self] _ in self?.refreshHomeWindow() }
+            .store(in: &cancellables)
         Task {
             let response = await AuthService.getScenesList()
 
@@ -140,16 +87,21 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUUpdaWScroll"))
             .sink { [weak self] notification in self?.tufuh_updaWScroll(notification) }
             .store(in: &cancellables)
-        NotificationCenter.default.addObserver(self, selector: #selector(enterMainView),
-                                               name: Notification.Name("TUOKOUXIUEnterMainView"), object: nil)
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUEnterMainView"))
+            .sink { [weak self] _ in self?.enterMainView() }
+            .store(in: &cancellables)
         if TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() == 0 {
             tukou_noNetwV()
             return
         }
-//        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
-
-        
-//        }
+    }
+    
+    private func refreshHomeWindow() {
+        let meta = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo
+        let musicStr:String = meta?.internalName ?? ""
+        let nameStr:String = meta?.artist?.name ?? ""
+        tufuh_musicL?.text = musicStr
+        tufuh_nameL?.text = "艺术家：\(musicStr)"
     }
     
     func tukou_clickRefresh3() {
@@ -164,12 +116,12 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         musicIV.layer.cornerRadius = 12
         musicIV.layer.masksToBounds = true
         
-        let musicL = UILabel.tukou_bjLabel(CGRect(x: musicIV.frame.maxX + 8, y: 8, width: 120, height: 24), text: "东方禅境的艺术", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
-        
+        let musicL = UILabel.tukou_bjLabel(CGRect(x: musicIV.frame.maxX + 8, y: 8, width: 120, height: 24), text: "", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
+        tufuh_musicL = musicL
         let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUWhiteA60)
         
-        let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
-        
+        let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
+        tufuh_nameL = nameL
         let contentV = UIView.tukou_bjView(CGRect(x: TUOKOUXIUSwiftSCRE_W/2-335/2, y: 0, width: 335, height: 80), superView: self.tufuh_toolsW!, bgColor: TUOKOUXIUSwiftwuseC)
         let intervalWidth = (335-20-40*4-48)/4
         let collectionBtn = UIButton.tukou_bjBtn(CGRect(x: 10, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_collection_default"), superView: contentV, action: #selector(clickCollect(_:)))
@@ -217,12 +169,23 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         self.tufuh_musicW!.tuks_spy = TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 44 + 32 + 10
         self.tufuh_musicW!.tuks_spwidth = 256
         self.tufuh_musicW!.tuks_spheight = 72
+        tufuh_musicL?.removeFromSuperview()
+        tufuh_musicL = nil
+        tufuh_nameL?.removeFromSuperview()
+        tufuh_nameL = nil
         tufuh_ttitleV?.removeFromSuperview()
         tufuh_ttitleV = nil
         tufuh_ttitleV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: 256, height: 72), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUWhiteA10)
         tufuh_ttitleV?.layer.cornerRadius = 20
         let musicTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 0, width: 256, height: 40), text: "东方禅境", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.semibold(24), textColor: .white)
         let musicSubTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 40, width: 256, height: 32), text: "空灵东方之声，抚平内在涟漪", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
+        let meta = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo
+        let musicStr:String = meta?.internalName ?? ""
+        let subTitleStr:String = meta?.subTitle ?? ""
+        musicTitleL.text = musicStr
+        musicSubTitleL.text = subTitleStr
+        
+        
         tufuh_pageTitV.isHidden = true
         tufuh_homeSceneBtn?.isHidden = true
         
@@ -277,13 +240,15 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         musicIV.layer.cornerRadius = 12
         musicIV.layer.masksToBounds = true
         
-        let musicL = UILabel.tukou_bjLabel(CGRect(x: musicIV.frame.maxX + 8, y: 8, width: 120, height: 24), text: "东方禅境的艺术", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
-        
+        let musicL = UILabel.tukou_bjLabel(CGRect(x: musicIV.frame.maxX + 8, y: 8, width: 120, height: 24), text: "", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(16), textColor: .white)
+        tufuh_musicL = musicL
         let lineV = UIView.tukou_bjView(CGRect(x: musicL.frame.maxX + 8, y: 14, width: 1, height: 12), superView: titleV, bgColor: TUOKOUXIUWhiteA60)
         
-        let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "艺术家：包玉树", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
-        
+        let nameL = UILabel.tukou_bjLabel(CGRect(x: lineV.frame.maxX + 14, y: 8, width: 120, height: 24), text: "", superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
+        tufuh_nameL = nameL
+        refreshHomeWindow()
         self.view.addSubview(self.tufuh_musicW!)
+        
     }
     
     //点击展开类型
@@ -531,20 +496,20 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     lazy var tufuh_pageContScrV: TUOKOUXIUSwiftPagContScrV = {
         var childVCs: [UIViewController] = []
         
-        let urls = [
-            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!,
-            URL(string: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")!,
-            URL(string: "https://test-streams.mux.dev/pts_shift/master.m3u8")!,
-            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!
-        ]
-        let urls2 = [
-            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!,
-            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
-            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")!,
-            URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Owl/Epic_Nature_Sounds/Owl_-_Ocean_Waves.mp3")!
-        ]
+//        let urls = [
+//            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!,
+//            URL(string: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")!,
+//            URL(string: "https://test-streams.mux.dev/pts_shift/master.m3u8")!,
+//            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!
+//        ]
+//        let urls2 = [
+//            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!,
+//            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
+//            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")!,
+//            URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Owl/Epic_Nature_Sounds/Owl_-_Ocean_Waves.mp3")!
+//        ]
         for (i, model) in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.enumerated() {
-            let v1 = HomeSubVC(videoURL: urls[0], audioURL: urls2[0], tufuh_model: model)
+            let v1 = HomeSubVC(tufuh_model: model)
             v1.tufuh_num = i
             childVCs.append(v1)
         }
@@ -561,11 +526,17 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     func tukou_pageTitV(_ pageTitleView: TUOKOUXIUSwiftPagTitV, selectedIndex: Int) {
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = selectedIndex
         self.tufuh_pageContScrV.tukou_pageContScrVCurrInd(selectedIndex)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUToggleTypePlayback"), object:  nil)
+        }
     }
 
     func tukou_pageContScrV(_ pageContentScrollView: TUOKOUXIUSwiftPagContScrV, progress: CGFloat, originalIndex: Int, targetIndex: Int) {
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = targetIndex
         self.tufuh_pageTitV.tukou_pageTitVWithPro(progress: progress, originalIndex: originalIndex, targetIndex: targetIndex)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUToggleTypePlayback"), object:  nil)
+        }
     }
 
     func tukou_topVi() {
@@ -712,5 +683,63 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
                              bgColor: TUOKOUXIUWhiteA10,
                              cornerRadius: 12)
     }
+    func tufuh_updaWScroll(_ noti: Notification) {
+        guard let info = noti.userInfo,
+              let progress = info["progress"] as? CGFloat,
+              let updaW = self.tufuh_toolsW else { return }
+        
+        // 非线性曲线（苹果弹性 + ease-out 混合）
+        // 更丝滑：前面非常慢，后面变快
+        let smoothP = pow(progress, 1.8)
 
+        // 计算动画参数
+        let moveY = smoothP * 82                               // 下移距离
+        let scale = 1 - smoothP * 0.06                         // 1 → 0.94（苹果浮层）
+        let alphaV = 1 - smoothP                               // 透明度
+        let shadowAlpha = max(0, 0.3 - smoothP * 0.3)          // 阴影淡出
+        let blurAlpha = 1 - smoothP                            // blur 透明度
+
+        let views = updaW.subviews
+        let updaW2 = self.tufuh_musicW
+        let views2 = updaW2!.subviews
+        for v in views {
+
+            // transform：位移 + 缩放（丝滑核心）
+            let t = CGAffineTransform(translationX: 0, y: moveY)
+                .scaledBy(x: scale, y: scale)
+            v.transform = t
+
+            // alpha
+            v.alpha = alphaV
+
+            // 阴影动态变化
+            v.layer.shadowOpacity = Float(shadowAlpha)
+
+            // 如果是毛玻璃视图，调整其 alpha
+            if let blur = v as? UIVisualEffectView {
+                blur.alpha = blurAlpha
+            }
+        }
+        for v in views2 {
+
+            // transform：位移 + 缩放（丝滑核心）
+            let t = CGAffineTransform(translationX: 0, y: moveY)
+                .scaledBy(x: scale, y: scale)
+            v.transform = t
+
+            // alpha
+            v.alpha = alphaV
+
+            // 阴影动态变化
+            v.layer.shadowOpacity = Float(shadowAlpha)
+
+            // 如果是毛玻璃视图，调整其 alpha
+            if let blur = v as? UIVisualEffectView {
+                blur.alpha = blurAlpha
+            }
+        }
+
+        updaW.isHidden = (progress >= 0.999)
+        updaW2!.isHidden = (progress >= 0.999)
+    }
 }

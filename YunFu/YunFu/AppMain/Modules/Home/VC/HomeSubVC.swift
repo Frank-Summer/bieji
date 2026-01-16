@@ -51,11 +51,11 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     }
 
     // MARK: - 播放器状态
-    let videoURL: URL?               // 当前子控制器视频 URL（初始化注入）
+    var videoURL: URL?               // 当前子控制器视频 URL（初始化注入）
     var detailModel: MusicModel?
     //音频
     private var audioPlayer: AVPlayer?
-    let audioURL: URL?
+    var audioURL: URL?
     var player: AVPlayer?          // AVPlayer 类属性（可复用或替换 item）
     private var observedItem: AVPlayerItem? // 当前正在监听的 item（用于安全移除 KVO）
     var tufuh_gaiV: UIView?
@@ -67,10 +67,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     private var didSetupPlayerInCell = false
 
     // MARK: - 生命周期
-    init(videoURL: URL, audioURL: URL, tufuh_model: SceneModel) {
+    init(tufuh_model: SceneModel) {
         self.tufuh_model = tufuh_model
-        self.videoURL = videoURL
-        self.audioURL = audioURL
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -84,9 +82,14 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
         view.backgroundColor = .black
         Task {
-            guard let url = self.tufuh_model?.songUuids[0] else { return }
+            guard let url = self.tufuh_model?.songUuids[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum] else { return }
             self.detailModel = await AuthService.getMusicDetail(Uuid: url)
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel = self.detailModel
             print("✅ model 获取成功")
+            self.videoURL = URL(string: self.detailModel?.videoFileUrl ?? "")
+            self.audioURL = URL(string: self.detailModel?.musicFileUrls[0] ?? "")
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo = self.detailModel?.meta
+            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshHomeWindow"), object: nil)
         }
 
         // 1) 先创建 tableView（不要在 viewDidLoad 中触发 cell 的 layout 或 访问可见 cells）
@@ -97,9 +100,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         tufuh_tabV.register(HomeSubContentCell1.self, forCellReuseIdentifier: "HomeSubContentCell1Id")
         tufuh_tabV.register(HomeSubContentCell2.self, forCellReuseIdentifier: "HomeSubContentCell2Id")
         tufuh_tabV.register(HomeSubContentCell3.self, forCellReuseIdentifier: "HomeSubContentCell3Id")
-        tufuh_tabV.register(HomeSubContentCell44.self, forCellReuseIdentifier: "HomeSubContentCell44Id")
-//        tufuh_tabV.register(HomeSubContentCell5.self, forCellReuseIdentifier: "HomeSubContentCell5Id")
-//        tufuh_tabV.register(HomeSubContentCell6.self, forCellReuseIdentifier: "HomeSubContentCell6Id")
+        tufuh_tabV.register(HomeSubContentCell4.self, forCellReuseIdentifier: "HomeSubContentCell4Id")
+
         tufuh_tabV.register(HomeSubContentCell7.self, forCellReuseIdentifier: "HomeSubContentCell7Id")
         tufuh_tabV.register(HomeSubContentCell8.self, forCellReuseIdentifier: "HomeSubContentCell8Id")
         
@@ -241,7 +243,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         super.viewWillDisappear(animated)
         // 暂停并保留 item（如果你希望切走时销毁，可以调用 cleanup()）
         playerView.pause()
-//        audioPlayer?.pause()
+        audioPlayer?.pause()
     }
 
     deinit {
@@ -308,7 +310,6 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                 } else {
                     return 0.01
                 }
-//                return 16 + 24 + 10 + 20 + 80 + 20 + 10 + 20 + 10 + 120 + 10 + 20 + 10 + 80 //content 80
             } else if indexPath.row == 4 {
                 if let instruments = self.detailModel?.acousticTech?.instruments, instruments.count > 0 {
                     let aco: AcousticSection = instruments[0]
@@ -330,7 +331,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                         ).height
                         desH = desH + Int(height) + 10
                     }
-                    return CGFloat(40 + 10 + desH + 12) //content 262
+                    return CGFloat(40 + 10 + desH + 12)
                 } else {
                     return 0.01
                 }
@@ -416,7 +417,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                 }
             } else if indexPath.row == 3 {
                 if let principles = self.detailModel?.acousticTech?.principles, principles.count > 0 {
-                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell44Id", for: indexPath) as! HomeSubContentCell44
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "HomeSubContentCell4Id", for: indexPath) as! HomeSubContentCell4
                     cell.backgroundColor = TUOKOUXIUSwiftheiseC
                     cell.tukou_resModel(tufuh_principlesArray: principles)
                     return cell
