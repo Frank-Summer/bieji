@@ -32,7 +32,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     var countdownTimer: Timer?
     var countdownRemainingSeconds: Int = 0
     var tufuh_container: UIView?
-
+    var tufuh_isClickTypeBtn: Bool = false
 //    var tufuh_isFirWil: Bool = false
     var tufuh_isMusicOpen: Bool = false
     private var cancellables = Set<AnyCancellable>()
@@ -83,7 +83,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             }
         }
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = 0
-        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jzGFV(TUOKOUXIUSwiftKeyWinRoV)
+
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUUpdaWScroll"))
             .sink { [weak self] notification in self?.tufuh_updaWScroll(notification) }
             .store(in: &cancellables)
@@ -101,7 +101,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         let musicStr:String = meta?.internalName ?? ""
         let nameStr:String = meta?.artist?.name ?? ""
         tufuh_musicL?.text = musicStr
-        tufuh_nameL?.text = "艺术家：\(musicStr)"
+        tufuh_nameL?.text = "艺术家：\(nameStr)"
     }
     
     func tukou_clickRefresh3() {
@@ -177,8 +177,8 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         tufuh_ttitleV = nil
         tufuh_ttitleV = UIView.tukou_bjView(CGRect(x: 0, y: 0, width: 256, height: 72), superView: self.tufuh_musicW!, bgColor: TUOKOUXIUWhiteA10)
         tufuh_ttitleV?.layer.cornerRadius = 20
-        let musicTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 0, width: 256, height: 40), text: "东方禅境", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.semibold(24), textColor: .white)
-        let musicSubTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 40, width: 256, height: 32), text: "空灵东方之声，抚平内在涟漪", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
+        let musicTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 0, width: 256, height: 40), text: "", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.semibold(24), textColor: .white)
+        let musicSubTitleL = UILabel.tukou_bjLabel(CGRect(x: 0, y: 40, width: 256, height: 32), text: "", superView: tufuh_ttitleV!, textAlignment: .center, font: TUOKOUXIUSwiftFont.regular(14), textColor: TUOKOUXIUWhiteA60)
         let meta = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo
         let musicStr:String = meta?.internalName ?? ""
         let subTitleStr:String = meta?.subTitle ?? ""
@@ -202,10 +202,10 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         let titleIV = UIImageView.tukou_bjImageV(CGRect(x: 8, y: 4, width: 24, height: 24), superView: titleV, image: UIImage(named: "sleep"))
         let model:SceneModel = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum]
         let name = model.sceneName
-        let musicL = UILabel.tukou_bjLabel(CGRect(x: titleIV.frame.maxX + 6, y: 4, width: 42, height: 24), text: name, superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: .white)
+        UILabel.tukou_bjLabel(CGRect(x: titleIV.frame.maxX + 6, y: 4, width: 42, height: 24), text: name, superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: .white)
         
         let moreBtn = UIButton.tukou_bjBtn(CGRect(x: titleV.frame.maxX + 8, y: 0, width: 32, height: 32), target: self, image: UIImage(named: "home_scene_x"), superView: self.tufuh_topTypeV!, action: #selector(clickTypeVOpen))
-//        moreBtn.backgroundColor = TUOKOUXIUWhiteA10
+
         moreBtn.layer.cornerRadius = 16
         moreBtn.layer.borderColor = TUOKOUXIUWhiteA20.cgColor
         moreBtn.layer.borderWidth = 1
@@ -262,7 +262,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         botV.layer.borderWidth = 1
         tufuh_selectTypeV!.tukou_addTapGesture(target: self, action: #selector(clickCloseTypeUpdateV))
         let pan = UIPanGestureRecognizer(target: self, action: #selector(clickCloseTypeUpdateV))
-        pan.cancelsTouchesInView = false  // ⭐️ 关键：不拦截事件
+        pan.cancelsTouchesInView = false
         tufuh_selectTypeV!.addGestureRecognizer(pan)
         self.tufuh_scrV = UIScrollView.tukou_bjScrollV(
             CGRect(x: 0, y: 16, width: 152, height: 164),
@@ -275,9 +275,13 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             let model:SceneModel = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray[i]
             let tufuh_string = model.sceneName
             let btnY = i * (32 + 12)
-            let typeBtn = UIButton.tukou_bjBtn(CGRect(x: 16, y: btnY, width: 120, height: 32), target: self, image: UIImage(named: "sleep"), superView: self.tufuh_scrV, action: #selector(clickTypeUpdate(_:)))
+            let img = UIImage(named: tufuh_string.iconName)?.resized(to: CGSize(width: 24, height: 24))
+
+            let typeBtn = UIButton.tukou_bjBtn(CGRect(x: 16, y: btnY, width: 120, height: 32), target: self, image: img, superView: self.tufuh_scrV, action: #selector(clickTypeUpdate(_:)))
             typeBtn.layer.cornerRadius = 16
-            typeBtn.setImageTitleSpacing(4, shiftLeft: 16)
+            typeBtn.contentHorizontalAlignment = .left
+            
+            typeBtn.setImageTitleSpacing2(4, shiftLeft: 16)
 
             typeBtn.setTitle(tufuh_string, for: .normal)
             typeBtn.titleLabel?.font = TUOKOUXIUSwiftFont.regular(14)
@@ -310,6 +314,24 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         if (tufuh_topSelectTypeV != nil) {
             clickCloseTopSelectTypeV()
         }
+        guard btn.tag != TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum else { return }
+        clickBackType()
+        self.tufuh_pageTitV.tukou_cutBtnAction(selectedIndex: btn.tag)
+    }
+    
+    @objc func clickFullScreenTypeUpdate(_ gesture: UITapGestureRecognizer) {
+        guard let view = gesture.view else { return }
+        if (tufuh_selectTypeV != nil) {
+            tufuh_selectTypeV?.isHidden = true
+            tufuh_selectTypeV?.removeFromSuperview()
+            tufuh_selectTypeV = nil
+        }
+        if (tufuh_topSelectTypeV != nil) {
+            clickCloseTopSelectTypeV()
+        }
+        guard view.tag != TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum else { return }
+        clickBackType()
+        self.tufuh_pageTitV.tukou_cutBtnAction(selectedIndex: view.tag)
     }
     
     //点击收藏
@@ -418,18 +440,6 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     @objc func clickShare() {
         print("点击分享")
     }
-    
-//    func tukou_clickRefresh() {
-//        TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jzGFV(TUOKOUXIUSwiftKeyWinRoV)
-//        
-//        self.tufuh_block = { [weak self] isSuccess in
-//            TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_gbGFV()
-//            guard let self = self else { return }
-//            if isSuccess {
-//                self.tukou_clickRefresh2()
-//            }
-//        }
-//    }
 
     @objc func tukou_clickRefresh2() {
         if TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() == 0 { return }
@@ -463,7 +473,6 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
 //            tufuh_arr.append(name)
 //
 //        }
-        
         let tufuh_conf = TUOKOUXIUSwiftPagTitVConf.tukou_pageTitVCon()
 //        tufuh_conf.tufuh_titGradiEffe = true
         tufuh_conf.tufuh_titClr = TUOKOUXIUWhiteA40
@@ -524,14 +533,21 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     }()
 
     func tukou_pageTitV(_ pageTitleView: TUOKOUXIUSwiftPagTitV, selectedIndex: Int) {
+        self.tufuh_isClickTypeBtn = true
+        print("点击类型\(selectedIndex)")
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = selectedIndex
         self.tufuh_pageContScrV.tukou_pageContScrVCurrInd(selectedIndex)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUToggleTypePlayback"), object:  nil)
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.tufuh_isClickTypeBtn = false
+        }
     }
 
     func tukou_pageContScrV(_ pageContentScrollView: TUOKOUXIUSwiftPagContScrV, progress: CGFloat, originalIndex: Int, targetIndex: Int) {
+        if self.tufuh_isClickTypeBtn { return }
+        print("滑到类型\(targetIndex)")
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = targetIndex
         self.tufuh_pageTitV.tukou_pageTitVWithPro(progress: progress, originalIndex: originalIndex, targetIndex: targetIndex)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -583,8 +599,10 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             let tufuh_string = model.sceneName
             let btnY = 30 + i * (48 + 20)
             let typeV = UIView.tukou_bjView(CGRect(x: 0, y: btnY, width: Int(TUOKOUXIUSwiftSCRE_W), height: 48), superView: tufuh_scrTypeV, bgColor: TUOKOUXIUSwiftwuseC)
-            typeV.tukou_addTapGesture(target: self, action: #selector(clickTypeUpdate(_:)))
-            let typeIconIV = UIImageView.tukou_bjImageV(CGRect(x: 20, y: 0, width: 48, height: 48), superView: typeV, image: UIImage(named: "sleep"))
+            typeV.tag = i
+            typeV.tukou_addTapGesture(target: self, action: #selector(clickFullScreenTypeUpdate(_:)))
+            let typeIconIV = UIImageView.tukou_bjImageV(CGRect(x: 20, y: 0, width: 48, height: 48), superView: typeV, image: UIImage(named: tufuh_string.iconName))
+            typeIconIV.contentMode = .center
             typeIconIV.backgroundColor = TUOKOUXIUSwiftwuseC
             typeIconIV.layer.cornerRadius = 24
             typeIconIV.layer.masksToBounds = true

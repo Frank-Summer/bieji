@@ -197,6 +197,22 @@ extension UIButton {
 }
 
 extension UIButton {
+    func setImageTitleSpacing2(_ spacing: CGFloat, shiftLeft: CGFloat = 0) {
+        let half = spacing / 2.0
+        
+        // 保证先把 image & title 的相对间距搞好
+        // 这样 image 与 title 的相对位置固定为 spacing
+        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: -half, bottom: 0, right: half)
+        self.titleEdgeInsets = UIEdgeInsets(top: 0, left: half, bottom: 0, right: -half)
+
+        // 整体向左/向右移动：通过 contentEdgeInsets 调整内容绘制区域
+        // 向左移动：contentEdgeInsets.left 设为负值；为了视觉居中，right 设为正值同等大小（可调整）
+        // 注意：负的 contentEdgeInsets 会让内容超出按钮 bounds；确保按钮有足够空间或按钮父视图允许
+        self.contentEdgeInsets = UIEdgeInsets(top: 0,
+                                              left: 10,
+                                              bottom: 0,
+                                              right: 0)
+    }
     /// 设置图片在左、文字在右，并可以整体向左/向右偏移
     /// - Parameters:
     ///   - spacing: 图片与文字之间的间距（>=0）

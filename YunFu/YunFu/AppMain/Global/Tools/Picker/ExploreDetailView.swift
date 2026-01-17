@@ -125,7 +125,7 @@ class ExploreDetailView: UIView, UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            if let meta = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel?.meta, let introductions = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel?.introductions {
+            if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel?.meta != nil, TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel?.introductions != nil {
                 let introductions = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel?.introductions ?? ""
                 
                 let height = TUOKOUXIUSSStringUtils.tukou_textSize(text: introductions, font: TUOKOUXIUSwiftFont.regular(18), maxSize: CGSize(width: TUOKOUXIUSwiftSCRE_W - 48, height: .greatestFiniteMagnitude) ,lineSpacing: 10).height

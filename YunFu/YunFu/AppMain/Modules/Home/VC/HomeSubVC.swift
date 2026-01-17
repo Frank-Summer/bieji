@@ -9,7 +9,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     
     // MARK: - 公共/UI
     private let playerView = VideoPlayerView()           // 只创建一次
-    private let loadingView: UIActivityIndicatorView = {
+    private let loadingView: UIActivityIndicatorView = { // 调试时 所有loadingView都给注释 之后需要解开
         let lv = UIActivityIndicatorView(style: .large)
         lv.color = .white
         lv.hidesWhenStopped = true
@@ -82,14 +82,18 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         super.viewDidLoad()
         view.backgroundColor = .black
         Task {
-            guard let url = self.tufuh_model?.songUuids[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum] else { return }
-            self.detailModel = await AuthService.getMusicDetail(Uuid: url)
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel = self.detailModel
-            print("✅ model 获取成功")
-            self.videoURL = URL(string: self.detailModel?.videoFileUrl ?? "")
-            self.audioURL = URL(string: self.detailModel?.musicFileUrls[0] ?? "")
-            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo = self.detailModel?.meta
-            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshHomeWindow"), object: nil)
+            if let uids = self.tufuh_model?.songUuids, uids.count > TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum {
+                guard let url = self.tufuh_model?.songUuids[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum] else { return }
+                self.detailModel = await AuthService.getMusicDetail(Uuid: url)
+                TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel = self.detailModel
+                print("✅ model 获取成功")
+                self.videoURL = URL(string: self.detailModel?.videoFileUrl ?? "")
+                if let urls = self.detailModel?.musicFileUrls, urls.count > 0 {
+                    self.audioURL = URL(string: urls[0])
+                }
+                TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo = self.detailModel?.meta
+                NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshHomeWindow"), object: nil)
+            }
         }
 
         // 1) 先创建 tableView（不要在 viewDidLoad 中触发 cell 的 layout 或 访问可见 cells）
@@ -106,9 +110,9 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         tufuh_tabV.register(HomeSubContentCell8.self, forCellReuseIdentifier: "HomeSubContentCell8Id")
         
         // loading
-        view.addSubview(loadingView)
-        loadingView.center = view.center
-        loadingView.startAnimating()
+//        view.addSubview(loadingView)
+//        loadingView.center = view.center
+//        loadingView.startAnimating()
         
 //        if (self.audioURL != nil) {
 //            playAudio(with: self.audioURL)
@@ -264,7 +268,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             return TUOKOUXIUSwiftSCRE_H
         } else {
             if indexPath.row == 0 {
-                if let meta = self.detailModel?.meta, let introductions = self.detailModel?.introductions {
+                if self.detailModel?.meta != nil, self.detailModel?.introductions != nil {
                     let introductions = self.detailModel?.introductions ?? ""
                     
                     let height = TUOKOUXIUSSStringUtils.tukou_textSize(text: introductions, font: TUOKOUXIUSwiftFont.regular(18), maxSize: CGSize(width: TUOKOUXIUSwiftSCRE_W - 48, height: .greatestFiniteMagnitude) ,lineSpacing: 10).height
@@ -475,7 +479,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                     playerView.play()
                 } else {
                     // 若还没 ready，保持 loading 状态
-                    loadingView.startAnimating()
+//                    loadingView.startAnimating()
                 }
             }
         }
@@ -483,6 +487,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
 
     // MARK: - 核心：在 cell 完成 layout 后才 attach player 并创建 item
     private func setupPlayerInCell(cell: VideoPlayerCell) {
+        guard (videoURL != nil) else { return }
         // 防止重复 setup
         guard !didSetupPlayerInCell else { return }
         didSetupPlayerInCell = true
@@ -497,7 +502,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
 
         // 2. 开始创建 AVPlayerItem & AVPlayer（注意：不要先调用 play，等 status ready 后再 play）
         // 显示 loading（如果还在 loading）
-        loadingView.startAnimating()
+//        loadingView.startAnimating()
 
         // 移除对旧 item 的观察（如果有）
         removeObserverFromCurrentItem()
@@ -530,7 +535,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         // 当需要切换到新 URL 时：
         // 1. 暂停当前播放
         playerView.pause()
-        loadingView.startAnimating()
+//        loadingView.startAnimating()
 
         // 2. 移除旧 item observer
         removeObserverFromCurrentItem()
@@ -571,7 +576,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             guard let self = self else { return }
             if item.status == .readyToPlay {
                 // item ready → 停止 loading 并播放（仅在 cell 可见时播放）
-                self.loadingView.stopAnimating()
+//                self.loadingView.stopAnimating()
                 // 只有当第一个 cell 可见时才自动播放，避免在不可见时开始播放
                 if let firstCell = self.tufuh_tabV.cellForRow(at: IndexPath(row: 0, section: 0)) as? VideoPlayerCell {
                     let cellFrame = self.tufuh_tabV.convert(firstCell.frame, to: self.view)
@@ -581,7 +586,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                 }
             } else if item.status == .failed {
                 // 播放失败也要隐藏 loading，并可以做重试逻辑
-                self.loadingView.stopAnimating()
+//                self.loadingView.stopAnimating()
                 // 可选：显示错误 UI / 重试按钮
             }
         }
@@ -618,7 +623,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                     }
                 }
             } else {
-                self.loadingView.startAnimating()
+//                self.loadingView.startAnimating()
             }
         }
     }

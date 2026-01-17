@@ -127,4 +127,11 @@ extension UIImage {
         guard let finalCG = context.createCGImage(outputImage, from: inputImage.extent) else { return nil }
         return UIImage(cgImage: finalCG, scale: self.scale, orientation: self.imageOrientation)
     }
+    func resized(to size: CGSize) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        draw(in: CGRect(origin: .zero, size: size))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage ?? self
+    }
 }

@@ -258,6 +258,10 @@ class TUOKOUXIUSwiftPagTitV: UIView {
         }
     }
     
+    func tukou_cutBtnAction(selectedIndex: Int) {
+        tukou_btnAction(tufuh_btnMArr[selectedIndex])
+    }
+    
     @objc func tukou_btnAction(_ button: UIButton) {
         tukou_bianSeledBtn(button)
         

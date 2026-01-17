@@ -617,6 +617,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     }
     
     private func toggleTypePlayback() {
+        if self.isPlay { return }
         self.isPlay = true
         rightIcon.image = UIImage(named: "tab_home_play")
     }
