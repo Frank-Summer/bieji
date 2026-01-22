@@ -6,7 +6,7 @@ class HomeSubContentCell9: UITableViewCell {
     
     private lazy var tufuh_hintIV: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "home_blocking")
+        imageView.image = UIImage(named: "Variant5")
         return imageView
     }()
     

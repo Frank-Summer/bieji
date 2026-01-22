@@ -157,5 +157,22 @@ final class AuthService {
         return MusicModel.parseDetail(body: body)
     }
     
+    static func getExploreDetail() async -> MusicModel? {
+        // 3️⃣ 发起请求
+        let result = await HTTPClient.shared.request(
+            ApiEndpoint.getExploreDetail,
+            method: "GET"
+        )
+
+        guard
+            let result = result,
+            result.code == 0,
+            let body = result.bodydata
+        else {
+            return nil
+        }
+
+        return MusicModel.parseDetail(body: body)
+    }
     
 }

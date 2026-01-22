@@ -5,6 +5,7 @@ import Kingfisher
 
 class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSource {
     private var isPlayerSetup = false
+
     var tufuh_num: Int = 0
     
     // MARK: - 公共/UI
@@ -33,7 +34,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     }()
     
     func playAudio(with url: URL) {
-        let item = AVPlayerItem(url: url)
+        
+        let item = urlAddToken(url: url)
 
         if audioPlayer == nil {
             audioPlayer = AVPlayer(playerItem: item)
@@ -43,6 +45,26 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
 
         audioPlayer?.volume = 1.0
         audioPlayer?.play()
+    }
+    
+    func urlAddToken(url: URL) -> AVPlayerItem {
+        var headers: [String: String] = [:]
+
+        if let token = TokenStorage.shared.accessToken {
+            headers["Authorization"] = "Bearer \(token)"
+            // 如果你后端不是 Bearer，自行改
+            // headers["token"] = token
+        }
+
+        let asset = AVURLAsset(
+            url: url,
+            options: [
+                "AVURLAssetHTTPHeaderFieldsKey": headers
+            ]
+        )
+
+        let item = AVPlayerItem(asset: asset)
+        return item
     }
     
     func stopAudio() {
@@ -57,7 +79,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     private var audioPlayer: AVPlayer?
     var audioURL: URL?
     var player: AVPlayer?          // AVPlayer 类属性（可复用或替换 item）
-    private var observedItem: AVPlayerItem? // 当前正在监听的 item（用于安全移除 KVO）
+    
+    private var statusObservation: NSKeyValueObservation?
     var tufuh_gaiV: UIView?
     var tufuh_gaiViamgeView: UIImageView?
     var tufuh_gaiVtitleL: UILabel?
@@ -128,7 +151,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         //刷新页面
         NotificationCenter.default.addObserver(self, selector: #selector(refreshSubView),
                                                name: Notification.Name("TUOKOUXIURefreshSubView"), object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(toTop),
+                                               name: Notification.Name("TUOKOUXIUToTop"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(enterMainView),
                                                name: Notification.Name("TUOKOUXIUEnterMainView"), object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(refreshData),
@@ -160,12 +184,20 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         }
     }
     
+    @objc func toTop() {
+        tufuh_tabV.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+    }
+    
     @objc private func refreshData() {
         let model:SceneModel = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray[tufuh_num]
         let tufuh_ulrString = model.backgroundUrl
         let tufuh_titleString = model.displayCopyTitle
         let tufuh_contentString = model.displayCopy
-        tufuh_gaiViamgeView?.kf.setImage(with: URL(string: tufuh_ulrString))
+        
+        tufuh_gaiViamgeView?.kf.setImage(with: URL(string: tufuh_ulrString),
+            options: [
+            .requestModifier(ImageAuthModifier())
+        ])
         tufuh_gaiVtitleL?.text = tufuh_titleString
         tufuh_gaiVcontentL?.text = tufuh_contentString
     }
@@ -179,13 +211,14 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             if self.player?.currentItem?.status == .readyToPlay {
-                self.playerView.play()
+                if isFirstCellVisible {
+                    self.playerView.play()
+                }
             }
         }
     }
     
     @objc private func refreshSubView() {
-//        tufuh_tabV.reloadData()
         let firstIndexPath = IndexPath(row: 0, section: 1)
         let secondIndexPath = IndexPath(row: 1, section: 1)
         let indexPathsToReload = [firstIndexPath, secondIndexPath]
@@ -237,7 +270,9 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             if self.player?.currentItem?.status == .readyToPlay {
-                self.playerView.play()
+                if isFirstCellVisible {
+                    self.playerView.play()
+                }
             }
         }
 //        audioPlayer?.play()
@@ -253,7 +288,6 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     deinit {
         // 移除通知 & KVO & cleanup
         NotificationCenter.default.removeObserver(self)
-        removeObserverFromCurrentItem()
         playerView.cleanup()
     }
 
@@ -369,7 +403,6 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
 
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: VideoPlayerCell.identifier, for: indexPath) as! VideoPlayerCell
-
             // 当 cell layout 完成后回调 setupPlayerInCell（避免 table 在未 attach 时就 layout）
             cell.onReadyForPlayer = { [weak self, weak cell] in
                 guard let self = self, let cell = cell else { return }
@@ -468,21 +501,19 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         NotificationCenter.default.post(name: NSNotification.Name("TUOKOUXIUUpdaWScroll"), object: nil,
                                         userInfo: ["progress": progress])
 
-        // 控制第一个 cell 的播放/暂停（只控制 play/pause，不做 item 切换）
-        if let firstCell = tufuh_tabV.cellForRow(at: IndexPath(row: 0, section: 0)) as? VideoPlayerCell {
-            let cellFrame = tufuh_tabV.convert(firstCell.frame, to: view)
-            if cellFrame.maxY < 0 || cellFrame.minY > view.bounds.height {
-                playerView.pause()
-            } else {
-                // 只有 item ready 时才 play
-                if player?.currentItem?.status == .readyToPlay {
-                    playerView.play()
-                } else {
-                    // 若还没 ready，保持 loading 状态
-//                    loadingView.startAnimating()
-                }
-            }
+        // 1️⃣ 第一个 cell 不可见 → 直接 pause
+        guard isFirstCellVisible else {
+            playerView.pause()
+            return
         }
+        // 2️⃣ 可见，但 item 还没 ready → 等待（保持 loading）
+        guard player?.currentItem?.status == .readyToPlay else {
+            // 若还没 ready，保持 loading 状态
+//          loadingView.startAnimating()
+            return
+        }
+        // 3️⃣ 可见 + ready → play
+        playerView.play()
     }
 
     // MARK: - 核心：在 cell 完成 layout 后才 attach player 并创建 item
@@ -503,31 +534,54 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         // 2. 开始创建 AVPlayerItem & AVPlayer（注意：不要先调用 play，等 status ready 后再 play）
         // 显示 loading（如果还在 loading）
 //        loadingView.startAnimating()
+        
+        videoPlayInit(newVideoURL: videoURL!)
+        
+        // 让 layer 的显示属性设置正确
+        playerView.configure()
+        playerView.refreshLayer()
+    }
+    
+    private func videoPlayInit(newVideoURL: URL) {
+        let newItem = urlAddToken(url: newVideoURL)
 
-        // 移除对旧 item 的观察（如果有）
-        removeObserverFromCurrentItem()
+        // 3️⃣ 监听 status（自动释放，不会崩）
+        statusObservation = newItem.observe(\.status, options: [.initial, .new]) { [weak self] item, _ in
+            guard let self else { return }
 
-        // 创建新的 item 并监听 status
-        let item = AVPlayerItem(url: videoURL!)
-        observedItem = item
-        item.addObserver(self, forKeyPath: "status", options: [.new, .initial], context: nil)
-
-        // 创建或替换 player
-        if player == nil {
-            player = AVPlayer(playerItem: item)
-            player?.isMuted = true
-            playerView.setPlayer(player)
-        } else {
-            // 替换 currentItem（player 已存在）
-            player?.replaceCurrentItem(with: item)
-            // 确保 playerView 的 player 引用正确
-            if playerView.player !== player {
-                playerView.setPlayer(player)
+            DispatchQueue.main.async {
+                switch item.status {
+                case .readyToPlay:
+                    if self.isFirstCellVisible {
+                        self.playerView.play()
+                    }
+                case .failed:
+                    // 播放失败也要隐藏 loading，并可以做重试逻辑
+    //                self.loadingView.stopAnimating()
+                    // 可选：显示错误 UI / 重试按钮
+                    break
+                default:
+                    break
+                }
             }
         }
-        // 让 layer 的显示属性设置正确
-        playerView.configure(url: videoURL!)
-        playerView.refreshLayer()
+
+        // 4️⃣ 创建或替换 player
+        if player == nil {
+            player = AVPlayer(playerItem: newItem)
+            player?.isMuted = true
+
+            // 只监听一次，object = nil
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(playerDidPlayToEnd(_:)),
+                name: .AVPlayerItemDidPlayToEndTime,
+                object: nil
+            )
+            playerView.setPlayer(player)
+        } else {
+            player?.replaceCurrentItem(with: newItem)
+        }
     }
 
     // MARK: - 切换视频（外部调用，例如父 VC 切分页时）
@@ -536,23 +590,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         // 1. 暂停当前播放
         playerView.pause()
 //        loadingView.startAnimating()
-
-        // 2. 移除旧 item observer
-        removeObserverFromCurrentItem()
-
-        // 3. 创建新 item 并替换
-        let newItem = AVPlayerItem(url: newVideoURL)
-        observedItem = newItem
-        newItem.addObserver(self, forKeyPath: "status", options: [.new, .initial], context: nil)
-
-        if player == nil {
-            player = AVPlayer(playerItem: newItem)
-            player?.isMuted = true
-            playerView.setPlayer(player)
-        } else {
-            player?.replaceCurrentItem(with: newItem)
-            if playerView.player !== player { playerView.setPlayer(player) }
-        }
+        
+        videoPlayInit(newVideoURL: newVideoURL)
 
         // 确保 playerView 在第一个 cell 上（如果 cell 已经在屏幕上）
         if let firstCell = tufuh_tabV.cellForRow(at: IndexPath(row: 0, section: 0)) as? VideoPlayerCell {
@@ -566,6 +605,17 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         playAudio(with: audioURL!)
         // 切换后等待 status == .readyToPlay 的 KVO 回调触发播放（observeValue 中处理）
     }
+    
+    @objc private func playerDidPlayToEnd(_ notification: Notification) {
+        guard let item = notification.object as? AVPlayerItem else { return }
+        // 再判断一次是否可见
+        guard self.isFirstCellVisible else { return }
+        // 回到起点
+        item.seek(to: .zero) { [weak self] finished in
+            guard finished else { return }
+            self?.playerView.play()
+        }
+    }
 
     // MARK: - KVO 回调（仅监听 item.status）
     override func observeValue(forKeyPath keyPath: String?, of object: Any?,
@@ -578,11 +628,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                 // item ready → 停止 loading 并播放（仅在 cell 可见时播放）
 //                self.loadingView.stopAnimating()
                 // 只有当第一个 cell 可见时才自动播放，避免在不可见时开始播放
-                if let firstCell = self.tufuh_tabV.cellForRow(at: IndexPath(row: 0, section: 0)) as? VideoPlayerCell {
-                    let cellFrame = self.tufuh_tabV.convert(firstCell.frame, to: self.view)
-                    if !(cellFrame.maxY < 0 || cellFrame.minY > self.view.bounds.height) {
-                        self.playerView.play()
-                    }
+                if self.isFirstCellVisible {
+                    self.playerView.play()
                 }
             } else if item.status == .failed {
                 // 播放失败也要隐藏 loading，并可以做重试逻辑
@@ -592,38 +639,19 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         }
     }
 
-    // MARK: - helper: 移除旧 item 的 KVO
-    private func removeObserverFromCurrentItem() {
-        if let item = observedItem {
-            // 安全移除（避免重复移除导致崩溃）
-            if item.observationInfo != nil {
-                // 使用 try/catch 避免重复移除异常
-                do {
-                    item.removeObserver(self, forKeyPath: "status")
-                } catch {
-                    // 已移除或不存在，不处理
-                }
-            }
-            observedItem = nil
-        }
-    }
-
     // MARK: - 回前台恢复
     @objc private func appDidBecomeActive() {
 //        audioPlayer?.play()
         playerView.refreshLayer()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.03) { [weak self] in
             guard let self = self else { return }
-            if self.player?.currentItem?.status == .readyToPlay {
-                // 仅在第一个 cell 可见时恢复播放
-                if let firstCell = self.tufuh_tabV.cellForRow(at: IndexPath(row: 0, section: 0)) as? VideoPlayerCell {
-                    let cellFrame = self.tufuh_tabV.convert(firstCell.frame, to: self.view)
-                    if !(cellFrame.maxY < 0 || cellFrame.minY > self.view.bounds.height) {
-                        self.playerView.play()
-                    }
-                }
-            } else {
-//                self.loadingView.startAnimating()
+            guard self.player?.currentItem?.status == .readyToPlay else {
+                // self.loadingView.startAnimating()
+                return
+            }
+            // 仅在第一个 cell 可见时恢复播放
+            if self.isFirstCellVisible {
+                self.playerView.play()
             }
         }
     }
@@ -632,9 +660,23 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
     func destroyPlayer() {
         playerView.pause()
         audioPlayer?.pause()
-        removeObserverFromCurrentItem()
         playerView.cleanup()
         player = nil
         didSetupPlayerInCell = false
+    }
+}
+
+extension HomeSubVC {
+
+    var isFirstCellVisible: Bool {
+        let indexPath = IndexPath(row: 0, section: 0)
+
+        guard let cell = tufuh_tabV.cellForRow(at: indexPath) else {
+            return false
+        }
+
+        let cellFrame = tufuh_tabV.convert(cell.frame, to: view)
+
+        return !(cellFrame.maxY < 0 || cellFrame.minY > view.bounds.height)
     }
 }

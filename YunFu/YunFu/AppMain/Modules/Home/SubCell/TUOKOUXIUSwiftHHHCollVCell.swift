@@ -19,7 +19,7 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
     }()
     private let tufuh_playingIV: UIImageView = {
         let iv = UIImageView()
-        iv.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_cam_tag", andIsOne: false)
+//        iv.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_cam_tag", andIsOne: false)
         iv.tukou_roundCor(40)
         iv.clipsToBounds = true
         return iv
@@ -87,11 +87,8 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
         tufuh_contentL.text = self.tufuh_model?.subhead
         
         if let urlString = self.tufuh_model?.musicPic, let url = URL(string: urlString) {
-            tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
+            tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3)), .requestModifier(ImageAuthModifier())])
         }
-        
-        tufuh_coverIV.image = UIImage(named: "icon_tukou_bg")
-        tufuh_playingIV.image = UIImage(named: "icon_tukou_logo")
         
     }
 }

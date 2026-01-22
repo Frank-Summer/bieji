@@ -141,7 +141,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUHidTabb"))
             .sink { [weak self] _ in self?.tukou_hidTabb() }
             .store(in: &cancellables)
@@ -688,15 +688,14 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         
         leftIcon.layer.add(rotation, forKey: "rotationAnimation")
         isRotating = true
-        
-        print("旋转动画开始")
+//        print("旋转动画开始")
     }
 
     // 停止旋转动画
     private func stopRotationAnimation() {
         leftIcon.layer.removeAnimation(forKey: "rotationAnimation")
         isRotating = false
-        print("旋转动画停止")
+//        print("旋转动画停止")
     }
 
     // 重置图标方向（可选）

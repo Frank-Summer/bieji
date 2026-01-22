@@ -2,17 +2,11 @@
 import UIKit
 import SnapKit
 
-//enum TufuhItemNew {
-//    case dict([String: Any])
-//    case array([Any])
-//}
-
 class TUOKOUXIUExploreCell1: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var tufuh_collcV: UICollectionView!
     var tufuh_priDict: [String: Any] = [:]
     
-//    private var tufuh_dataArr: [TufuhItemNew] = []
     
     private let tufuh_titleL: UILabel = {
         let label = UILabel()
@@ -62,40 +56,26 @@ class TUOKOUXIUExploreCell1: UITableViewCell, UICollectionViewDelegate, UICollec
         }
         
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
+
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return min(tufuh_dataArr.count, 20)
+
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        switch tufuh_dataArr[indexPath.row] {
-//        case .dict(let dict):
-//            tufuh_clkItemBlk?(dict)
-//        case .array(let arr):
-//            tufuh_clkItemArrBlk?(arr)
-//        }
+
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if tufuh_dataArr.isEmpty {
-//            return collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHHHTabVHisDefCellId", for: indexPath)
-//        }
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUExploreCollVCellId", for: indexPath) as! TUOKOUXIUExploreCollVCell
         cell.tukou_resModel(["name":""])
-//        switch tufuh_dataArr[indexPath.row] {
-//        case .dict(let dict):
-//            cell.tukou_resModel(dict)
-//        case .array(_): break
-//        }
+
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        if tufuh_dataArr.isEmpty { return .zero }
+
         return CGSize(width: 60, height: 92)
     }
     
@@ -129,16 +109,4 @@ class TUOKOUXIUExploreCell1: UITableViewCell, UICollectionViewDelegate, UICollec
         return 0.01
     }
     
-    func tukou_resData(_ dataArray: [Any]) {
-//        tufuh_dataArr = dataArray.map { item in
-//            if let dict = item as? [String: Any] {
-//                return TufuhItemNew.dict(dict)
-//            } else if let arr = item as? [Any] {
-//                return TufuhItemNew.array(arr)
-//            } else {
-//                return TufuhItemNew.dict([:])
-//            }
-//        }
-        tufuh_collcV.reloadData()
-    }
 }

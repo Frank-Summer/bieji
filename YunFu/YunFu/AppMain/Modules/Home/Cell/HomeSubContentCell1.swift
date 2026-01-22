@@ -159,7 +159,10 @@ class HomeSubContentCell1: UITableViewCell {
     }
     
     @objc func tukou_goToMore() {
-        
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUToTop"), object: nil)
+        TUOKOUXIUSwiftDelaBlk(0.01) {
+            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUEnterDetailView"), object: nil)
+        }
     }
 
 }

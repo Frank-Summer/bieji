@@ -59,11 +59,9 @@ class TUOKOUXIUSwiftHHHCollVCell2: UICollectionViewCell {
         self.tufuh_model = model
         
         if let urlString = self.tufuh_model?.pic, let url = URL(string: urlString) {
-            tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
+            tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3)), .requestModifier(ImageAuthModifier())])
         }
         tufuh_contentL.setText(self.tufuh_model?.headline ?? "", lineSpacing: 6)
         
-        //
-        tufuh_coverIV.image = UIImage(named: "icon_tukou_bg")
     }
 }

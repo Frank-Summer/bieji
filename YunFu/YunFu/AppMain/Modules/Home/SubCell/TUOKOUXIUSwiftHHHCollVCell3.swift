@@ -10,7 +10,6 @@ class TUOKOUXIUSwiftHHHCollVCell3: UICollectionViewCell {
     private let tufuh_headIV: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = TUOKOUXIUSwiftZTClr8
-        iv.image = UIImage(named: "icon_tukou_logo")
         iv.tukou_roundCor(20)
         iv.clipsToBounds = true
         iv.layer.borderWidth = 1
@@ -76,7 +75,7 @@ class TUOKOUXIUSwiftHHHCollVCell3: UICollectionViewCell {
         self.tufuh_model = model
             
         if let urlString = self.tufuh_model?.avatar, let url = URL(string: urlString) {
-            tufuh_headIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
+            tufuh_headIV.kf.setImage(with: url, placeholder: UIImage(named: "default_avatar"), options: [.transition(.fade(0.3)), .requestModifier(ImageAuthModifier())])
         }
 
         tufuh_nameL.text = self.tufuh_model?.username

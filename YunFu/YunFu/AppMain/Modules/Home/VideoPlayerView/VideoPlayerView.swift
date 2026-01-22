@@ -18,7 +18,7 @@ class VideoPlayerView: UIView {
     override class var layerClass: AnyClass { AVPlayerLayer.self }
 
     /// 不再在这里创建 AVPlayer，只做 layer 配置和播放控制
-    func configure(url: URL) {
+    func configure() {
         // 保留此方法以便需要时设置 videoGravity 等
         playerLayer?.videoGravity = .resizeAspectFill
     }

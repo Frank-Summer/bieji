@@ -83,7 +83,9 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             }
         }
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = 0
-
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUEnterDetailView"))
+            .sink { [weak self] _ in self?.clickMusic() }
+            .store(in: &cancellables)
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUUpdaWScroll"))
             .sink { [weak self] notification in self?.tufuh_updaWScroll(notification) }
             .store(in: &cancellables)

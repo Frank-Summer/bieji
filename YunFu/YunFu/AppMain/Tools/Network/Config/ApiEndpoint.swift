@@ -15,6 +15,8 @@ enum ApiEndpoint {
     static let getScenesList = "/v1/scenes/list"
     //获取音乐详情
     static let getMusicDetail = "/v1/scenes/music/detail"
+    //获取探索详情
+    static let getExploreDetail = "/api/explore"
     //获取音频信息
     static let getmusicinfo = "/v1/catalog/getmusicinfo"
     //收藏

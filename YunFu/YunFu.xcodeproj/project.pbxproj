@@ -40,7 +40,6 @@
 		FEC260672E791F6600C51BEF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FEC260662E791F6600C51BEF /* SnapKit */; };
 		FEC53E722E446A46007C3144 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = FEC53E712E446A46007C3144 /* Kingfisher */; };
 		FED56E8C2E8B7CF60048AD19 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = FED56E8B2E8B7CF60048AD19 /* ZIPFoundation */; };
-		FEE81DE72C784BDC00F09998 /* TUOKOUXIUConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = FEE81DE62C784BDC00F09998 /* TUOKOUXIUConfig.plist */; };
 		FEEEF2ED2E72A5DF00FB17DB /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = FEEEF2EC2E72A5DF00FB17DB /* Toast */; };
 /* End PBXBuildFile section */
 
@@ -86,13 +85,11 @@
 		FE946B332D1BA80B007E94AC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		FEA96C8F2C64A4D20078E6B6 /* icon_tukou_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_tukou_bg.png; sourceTree = "<group>"; };
 		FEA96C962C64AAC50078E6B6 /* icon_tukou_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_tukou_logo.png; sourceTree = "<group>"; };
-		FEE81DE62C784BDC00F09998 /* TUOKOUXIUConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TUOKOUXIUConfig.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		017370A52ECF00A30045407F /* AppMain */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = AppMain; sourceTree = "<group>"; };
 		FE72D73E2E30A49000EF2C5A /* ZZZZZ */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ZZZZZ; sourceTree = "<group>"; };
-		FE9AFA642E2E352E00CD6AD1 /* SSSSS */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SSSSS; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,7 +172,6 @@
 				01D972BC2EF133C20010F90A /* YunFu.entitlements */,
 				017370A52ECF00A30045407F /* AppMain */,
 				FE72D73E2E30A49000EF2C5A /* ZZZZZ */,
-				FE9AFA642E2E352E00CD6AD1 /* SSSSS */,
 				FE3E72F42E7AB00C00FBABB0 /* AppDelegate.swift */,
 				8EED62A2198A1D13000A4449 /* Supporting Files */,
 				2FDE6A4F2971470D004C7701 /* DCloud.swift */,
@@ -191,7 +187,6 @@
 				017370C62ECF05490045407F /* Colors.xcassets */,
 				2F0BA4DB215BA12300F67004 /* LaunchScreen.storyboard */,
 				8EED62A3198A1D13000A4449 /* YunFu-Info.plist */,
-				FEE81DE62C784BDC00F09998 /* TUOKOUXIUConfig.plist */,
 				FEA96C962C64AAC50078E6B6 /* icon_tukou_logo.png */,
 				FEA96C8F2C64A4D20078E6B6 /* icon_tukou_bg.png */,
 				FE4E43AC2ECEF519004F83E2 /* gf_tukou_load.gif */,
@@ -220,7 +215,6 @@
 			fileSystemSynchronizedGroups = (
 				017370A52ECF00A30045407F /* AppMain */,
 				FE72D73E2E30A49000EF2C5A /* ZZZZZ */,
-				FE9AFA642E2E352E00CD6AD1 /* SSSSS */,
 			);
 			name = YunFu;
 			productName = YunFu;
@@ -284,7 +278,6 @@
 			files = (
 				FE4E43AD2ECEF519004F83E2 /* gf_tukou_load.gif in Resources */,
 				017370C72ECF05490045407F /* Colors.xcassets in Resources */,
-				FEE81DE72C784BDC00F09998 /* TUOKOUXIUConfig.plist in Resources */,
 				FE4E42BD2ECEE35A004F83E2 /* READM.md in Resources */,
 				01D865452EE940D000AAB028 /* Assets.xcassets in Resources */,
 				FEA96C902C64A4D20078E6B6 /* icon_tukou_bg.png in Resources */,
@@ -438,10 +431,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/YunFu/ZZZZZ/SSFangK/MyOpenSSL/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -574,10 +564,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/YunFu/ZZZZZ/SSFangK/MyOpenSSL/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

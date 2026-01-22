@@ -1,4 +1,5 @@
 import Foundation
+import Kingfisher
 
 final class TokenStorage {
 
@@ -13,6 +14,10 @@ final class TokenStorage {
         UserDefaults.standard.set(access, forKey: accessKey)
         UserDefaults.standard.set(refresh, forKey: refreshKey)
         UserDefaults.standard.synchronize()
+        
+        // 清理 Kingfisher 缓存（避免 401 图被缓存）
+        KingfisherManager.shared.cache.clearMemoryCache()
+        KingfisherManager.shared.cache.clearDiskCache()
     }
 
     /// 获取 AccessToken
@@ -31,3 +36,18 @@ final class TokenStorage {
         UserDefaults.standard.removeObject(forKey: refreshKey)
     }
 }
+
+
+final class ImageAuthModifier: ImageDownloadRequestModifier {
+
+    func modified(for request: URLRequest) -> URLRequest? {
+        var r = request
+
+        guard let token = TokenStorage.shared.accessToken,
+              !token.isEmpty else {
+            return r
+        }
+
+        r.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return r
+    }}

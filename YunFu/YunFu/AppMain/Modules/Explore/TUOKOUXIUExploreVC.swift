@@ -28,6 +28,11 @@ class TUOKOUXIUExploreVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        Task {
+            await AuthService.getExploreDetail()
+//            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel = self.detailModel
+            print("✅ model 获取成功")
+        }
     }
     
     private var isExpanded = false
@@ -75,6 +80,7 @@ class TUOKOUXIUExploreVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.backgroundColor = TUOKOUXIUSwiftheiseC
         setupUI()
     }
@@ -192,7 +198,6 @@ class TUOKOUXIUExploreVC: UIViewController {
         tableView.dataSource = self
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TUOKOUXIUExploreTabVVDefCellId")
-        tableView.register(TUOKOUXIUExploreCell1.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell1Id")
         tableView.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell2Id")
         tableView.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell3Id")
         tableView.register(TUOKOUXIUExploreCell2.self, forCellReuseIdentifier: "TUOKOUXIUExploreCell4Id")
@@ -333,9 +338,6 @@ class TUOKOUXIUExploreVC: UIViewController {
 
 extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 172
-        }
         return 265
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -349,14 +351,10 @@ extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell1Id", for: indexPath) as! TUOKOUXIUExploreCell1
-            cell.backgroundColor = TUOKOUXIUSwiftheiseC
-            return cell
-        } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell2Id", for: indexPath) as! TUOKOUXIUExploreCell2
             cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = false
@@ -365,19 +363,19 @@ extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
                 NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: nil)
             }
             return cell
-        } else if indexPath.row == 2 {
+        } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell3Id", for: indexPath) as! TUOKOUXIUExploreCell2
             cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = false
             cell.tukou_nameString("助眠")
             return cell
-        } else if indexPath.row == 3 {
+        } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell4Id", for: indexPath) as! TUOKOUXIUExploreCell2
             cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = false
             cell.tukou_nameString("放松")
             return cell
-        } else if indexPath.row == 4 {
+        } else if indexPath.row == 3 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell5Id", for: indexPath) as! TUOKOUXIUExploreCell2
             cell.backgroundColor = TUOKOUXIUSwiftheiseC
             cell.tufuh_isLock = true
