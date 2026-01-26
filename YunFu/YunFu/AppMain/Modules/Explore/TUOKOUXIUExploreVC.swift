@@ -4,22 +4,23 @@ import SnapKit
 
 class TUOKOUXIUExploreVC: UIViewController {
     
-    private var tufuh_arr: [String] = [
-        "通勤","深睡眠","婴儿安睡","睡午觉","图书馆","健身","瑜伽","跑步",
-        "深夜专注","专注","工作","阅读","减压","胎教","宠物陪伴","放松",
-        "经期舒展","冥想","打游戏","深夜EMO"
-    ]
+//    private var tufuh_arr: [String] = []
+//        "通勤","深睡眠","婴儿安睡","睡午觉","图书馆","健身","瑜伽","跑步",
+//        "深夜专注","专注","工作","阅读","减压","胎教","宠物陪伴","放松",
+//        "经期舒展","冥想","打游戏","深夜EMO"
+//    ]
 
-    private let tufuh_arr2: [String] = [
-        "commute","sleep","baby-sleep","siesta","book","gym","yoga","run",
-        "latenight-focus","focus","work","read","stress-relief","prenatal-education",
-        "pet","relax","period","meditation","game","emo"
-    ]
-    private var indexItemNum: Int = 0
+//    private let tufuh_arr2: [String] = []
+//        "commute","sleep","baby-sleep","siesta","book","gym","yoga","run",
+//        "latenight-focus","focus","work","read","stress-relief","prenatal-education",
+//        "pet","relax","period","meditation","game","emo"
+//    ]
+//    private var indexItemNum: Int = 0
     private let itemWidth: CGFloat = 76
     private let itemHeight: CGFloat = 87
     private let columnSpacing: CGFloat = 8
     private let rowSpacing: CGFloat = 12
+    private var sceneSections: [SceneSection] = []
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -28,10 +29,11 @@ class TUOKOUXIUExploreVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
+        if self.sceneSections.count > 0 { return }
         Task {
-            await AuthService.getExploreDetail()
-//            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_detailModel = self.detailModel
-            print("✅ model 获取成功")
+            let sections = await AuthService.getExploreDetail()
+            self.sceneSections = sections ?? []
+            self.tableView.reloadData()
         }
     }
     
@@ -108,10 +110,11 @@ class TUOKOUXIUExploreVC: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        tufuh_arr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray
-        indexItemNum = 2
-        guard !didSetupLayout else { return }
-        didSetupLayout = true
+//        tufuh_arr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray
+        
+//        indexItemNum = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum
+//        guard !didSetupLayout else { return }
+//        didSetupLayout = true
 
         // 初次显示用 collapsed 布局（横向滚动）
         let layout = makeCollapsedLayout()
@@ -302,42 +305,11 @@ class TUOKOUXIUExploreVC: UIViewController {
             self.view.layoutIfNeeded()
         }
     }
-    
-//    private func expand() {
-//        guard !isExpanded else { return }
-//        isExpanded = true
-//
-//        tableView.setContentOffset(.zero, animated: false)
-//
-//        let layout = makeExpandedLayout()
-//        applyLayoutConfig(layout)
-//
-//        collectionView.setCollectionViewLayout(layout, animated: false)
-//        topHeightConstraint?.update(offset: topHeightExpanded)
-//
-//        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.82, initialSpringVelocity: 0.6) {
-//            self.view.layoutIfNeeded()
-//        }
-//    }
-//
-//    private func collapse() {
-//        guard isExpanded else { return }
-//        isExpanded = false
-//
-//        let layout = makeCollapsedLayout()
-//        applyLayoutConfig(layout)
-//
-//        collectionView.setCollectionViewLayout(layout, animated: false)
-//        topHeightConstraint?.update(offset: topHeightCollapsed)
-//
-//        UIView.animate(withDuration: 0.15, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.6) {
-//            self.view.layoutIfNeeded()
-//        }
-//    }
 }
 
 extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if self.sceneSections.isEmpty { return 0.01 }
         return 265
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -351,36 +323,44 @@ extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return self.sceneSections.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell2Id", for: indexPath) as! TUOKOUXIUExploreCell2
-            cell.backgroundColor = TUOKOUXIUSwiftheiseC
-            cell.tufuh_isLock = false
-            cell.tukou_nameString("活跃")
-            cell.TUOKOUXIUclkItemBlk = { model in
-                NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: nil)
+            if self.sceneSections.count > 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell2Id", for: indexPath) as! TUOKOUXIUExploreCell2
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                cell.tufuh_isLock = false
+                cell.tukou_resData(self.sceneSections[indexPath.row])
+                cell.TUOKOUXIUclkItemBlk = { model in
+                    NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: nil)
+                }
+                return cell
             }
-            return cell
         } else if indexPath.row == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell3Id", for: indexPath) as! TUOKOUXIUExploreCell2
-            cell.backgroundColor = TUOKOUXIUSwiftheiseC
-            cell.tufuh_isLock = false
-            cell.tukou_nameString("助眠")
-            return cell
+            if self.sceneSections.count > 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell3Id", for: indexPath) as! TUOKOUXIUExploreCell2
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                cell.tufuh_isLock = false
+                cell.tukou_resData(self.sceneSections[indexPath.row])
+                return cell
+            }
         } else if indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell4Id", for: indexPath) as! TUOKOUXIUExploreCell2
-            cell.backgroundColor = TUOKOUXIUSwiftheiseC
-            cell.tufuh_isLock = false
-            cell.tukou_nameString("放松")
-            return cell
+            if self.sceneSections.count > 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell4Id", for: indexPath) as! TUOKOUXIUExploreCell2
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                cell.tufuh_isLock = false
+                cell.tukou_resData(self.sceneSections[indexPath.row])
+                return cell
+            }
         } else if indexPath.row == 3 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell5Id", for: indexPath) as! TUOKOUXIUExploreCell2
-            cell.backgroundColor = TUOKOUXIUSwiftheiseC
-            cell.tufuh_isLock = true
-            cell.tukou_nameString("专注")
-            return cell
+            if self.sceneSections.count > 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell5Id", for: indexPath) as! TUOKOUXIUExploreCell2
+                cell.backgroundColor = TUOKOUXIUSwiftheiseC
+                cell.tufuh_isLock = true
+                cell.tukou_resData(self.sceneSections[indexPath.row])
+                return cell
+            }
         }
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreTabVVDefCellId", for: indexPath)
@@ -391,13 +371,14 @@ extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
 
 extension TUOKOUXIUExploreVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        tufuh_arr.count
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TufuhIconCellId", for: indexPath) as! TufuhIconCell
-        cell.config(title: tufuh_arr[indexPath.item], imageName: tufuh_arr2[indexPath.item])
-        if indexPath.row == indexItemNum {
+        let nameString:String = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray[indexPath.item]
+        cell.config(title: TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray[indexPath.item], imageName: nameString.iconName)
+        if indexPath.row == TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum {
             cell.isSelect()
         } else {
             cell.isUnSelect()
@@ -406,9 +387,9 @@ extension TUOKOUXIUExploreVC: UICollectionViewDataSource, UICollectionViewDelega
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if indexPath.row == indexItemNum { return }
+        if indexPath.row == TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum { return }
 
-        indexItemNum = indexPath.row
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = indexPath.row
         collectionView.reloadData()
     }
 }

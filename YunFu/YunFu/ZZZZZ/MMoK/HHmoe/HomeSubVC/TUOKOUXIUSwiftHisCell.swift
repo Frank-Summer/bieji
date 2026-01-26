@@ -171,7 +171,6 @@ class TUOKOUXIUSwiftHisCell: UICollectionViewCell {
     
     private lazy var tufuh_camIV: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_cam_tag", andIsOne: false)
         return imageView
     }()
     

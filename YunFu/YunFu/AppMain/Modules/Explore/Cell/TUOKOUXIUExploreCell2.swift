@@ -4,17 +4,12 @@ import SnapKit
 
 typealias TUOKOUXIU_ClkItemBlk = (_ dict: [String: Any]) -> Void
 
-//enum TufuhItemNew {
-//    case dict([String: Any])
-//    case array([Any])
-//}
-
 class TUOKOUXIUExploreCell2: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var tufuh_collcV: UICollectionView!
-    var tufuh_priDict: [String: Any] = [:]
+    var tufuh_titleString: String?
     var tufuh_isLock: Bool = false
-//    private var tufuh_dataArr: [TufuhItemNew] = []
+    var musicsArray: [MusicItem] = []
     
     var TUOKOUXIUclkItemBlk: TUOKOUXIU_ClkItemBlk?
     
@@ -65,45 +60,32 @@ class TUOKOUXIUExploreCell2: UITableViewCell, UICollectionViewDelegate, UICollec
         }
         
     }
-//    func tukou_contStr(_ string: String?) {
-//        tufuh_contL.text = TUOKOUXIUSSStringUtils.tukou_killNil(string)
-//    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return min(tufuh_dataArr.count, 20)
-        return 10
+        return self.musicsArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        switch tufuh_dataArr[indexPath.row] {
-//        case .dict(let dict):
-        TUOKOUXIUclkItemBlk?(["id":"111"])
-//        case .array(let arr):
-//            tufuh_clkItemArrBlk?(arr)
-//        }
+//        TUOKOUXIUclkItemBlk?(["id":"111"])
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if tufuh_dataArr.isEmpty {
-//            return collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHHHTabVHisDefCellId", for: indexPath)
-//        }
+        if musicsArray.isEmpty {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUHHHTabVHisDefCellId", for: indexPath)
+        }
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TUOKOUXIUExploreCollVCell2Id", for: indexPath) as! TUOKOUXIUExploreCollVCell2
-        cell.tukou_resModel(["name":""])
+        cell.tukou_resModel(model:self.musicsArray[indexPath.row])
         if tufuh_isLock {
             cell.tukou_isLock(true)
         } else {
             cell.tukou_isLock(false)
         }
-//        switch tufuh_dataArr[indexPath.row] {
-//        case .dict(let dict):
-//            cell.tukou_resModel(dict)
-//        case .array(_): break
-//        }
+
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        if tufuh_dataArr.isEmpty { return .zero }
+        if musicsArray.isEmpty { return .zero }
         return CGSize(width: 144, height: 185)
     }
     
@@ -136,21 +118,10 @@ class TUOKOUXIUExploreCell2: UITableViewCell, UICollectionViewDelegate, UICollec
         return 0.01
     }
     
-    func tukou_resData(_ dataArray: [Any]) {
-//        tufuh_dataArr = dataArray.map { item in
-//            if let dict = item as? [String: Any] {
-//                return TufuhItemNew.dict(dict)
-//            } else if let arr = item as? [Any] {
-//                return TufuhItemNew.array(arr)
-//            } else {
-//                return TufuhItemNew.dict([:])
-//            }
-//        }
-        tufuh_collcV.reloadData()
-    }
-    
-    func tukou_nameString(_ text: String) {
-        tufuh_titleL.text = text
+    func tukou_resData(_ SS: SceneSection) {
+        self.musicsArray = SS.musics
+        self.tufuh_titleString = SS.title
+        tufuh_titleL.text = self.tufuh_titleString
         tufuh_collcV.reloadData()
     }
 }

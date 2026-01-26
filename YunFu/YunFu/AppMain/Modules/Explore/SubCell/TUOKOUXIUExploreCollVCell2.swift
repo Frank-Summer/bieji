@@ -5,7 +5,7 @@ import Kingfisher
 
 class TUOKOUXIUExploreCollVCell2: UICollectionViewCell {
     
-    private var tufuh_mDict: [String: Any] = [:]
+    private var tufuh_mDict: MusicItem?
 
     private let tufuh_coverIV: UIImageView = {
         let iv = UIImageView()
@@ -15,7 +15,6 @@ class TUOKOUXIUExploreCollVCell2: UICollectionViewCell {
     }()
     private let tufuh_playingIV: UIImageView = {
         let iv = UIImageView()
-        iv.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_cam_tag", andIsOne: false)
         iv.tukou_roundCor(40)
         iv.clipsToBounds = true
         return iv
@@ -23,9 +22,6 @@ class TUOKOUXIUExploreCollVCell2: UICollectionViewCell {
     
     private let tufuh_lockIV: UIImageView = {
         let iv = UIImageView()
-        iv.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_cam_tag", andIsOne: false)
-//        iv.tukou_roundCor(10)
-//        iv.clipsToBounds = true
         return iv
     }()
 
@@ -55,8 +51,8 @@ class TUOKOUXIUExploreCollVCell2: UICollectionViewCell {
         contentView.backgroundColor = TUOKOUXIUSwiftheiseC
         contentView.tukou_roundCor(20)
         contentView.clipsToBounds = true
-        contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = TUOKOUXIUSwiftZTClr3.cgColor
+        contentView.layer.borderWidth = 0.5
+        contentView.layer.borderColor = TUOKOUXIUWhiteA30.cgColor
         
         contentView.addSubview(tufuh_coverIV)
         contentView.addSubview(tufuh_lockIV)
@@ -95,18 +91,14 @@ class TUOKOUXIUExploreCollVCell2: UICollectionViewCell {
 
     }
     
-    func tukou_resModel(_ model: [String: Any]) {
-        tufuh_mDict = model
-            
-        let tufuh_ulrS = TUOKOUXIUSSStringUtils.tukou_killNil(model["haibao"])
-
-        if let url = URL(string: tufuh_ulrS) {
-            tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3))])
+    func tukou_resModel(model: MusicItem) {
+        self.tufuh_mDict = model
+        
+        if let urlString = self.tufuh_mDict?.musicImg, let url = URL(string: urlString) {
+            tufuh_coverIV.kf.setImage(with: url, options: [.transition(.fade(0.3)), .requestModifier(ImageAuthModifier())])
         }
-        tufuh_coverIV.image = UIImage(named: "icon_tukou_bg")
-        tufuh_playingIV.image = UIImage(named: "icon_tukou_logo")
-        tufuh_typeL.text = "自然场景"
-        tufuh_contentL.text = "稳定氛围/长效专注"
+        tufuh_typeL.text = self.tufuh_mDict?.musicName
+        tufuh_contentL.text = self.tufuh_mDict?.musicDesc
         tufuh_lockIV.image = UIImage(named: "icon_tukou_logo")
     }
     

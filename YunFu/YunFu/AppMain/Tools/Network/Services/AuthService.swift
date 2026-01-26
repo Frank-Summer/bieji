@@ -157,7 +157,7 @@ final class AuthService {
         return MusicModel.parseDetail(body: body)
     }
     
-    static func getExploreDetail() async -> MusicModel? {
+    static func getExploreDetail() async -> [SceneSection]? {
         // 3️⃣ 发起请求
         let result = await HTTPClient.shared.request(
             ApiEndpoint.getExploreDetail,
@@ -172,7 +172,6 @@ final class AuthService {
             return nil
         }
 
-        return MusicModel.parseDetail(body: body)
+        return ExploreModel.parse(body: body)
     }
-    
 }

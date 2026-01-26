@@ -19,7 +19,6 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
     }()
     private let tufuh_playingIV: UIImageView = {
         let iv = UIImageView()
-//        iv.image = TUOKOUXIUSwiftComSJ.tukou_sLcom.tukou_jiaZIcon("TUOKOUXIU_ic_cam_tag", andIsOne: false)
         iv.tukou_roundCor(40)
         iv.clipsToBounds = true
         return iv

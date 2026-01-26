@@ -110,7 +110,7 @@ class HomeSubContentCell7: UITableViewCell, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.tufuh_instrumentsArray.count == 0 {
+        if self.tufuh_instrumentsArray.isEmpty {
             return 0
         }
         let acousticSection: AcousticSection = self.tufuh_instrumentsArray[0]

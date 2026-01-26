@@ -60,7 +60,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     
     private lazy var leftIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "sleep") // 左边图标
+//        imageView.image = UIImage(named: "sleep") // 左边图标
         imageView.alpha = 0
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -353,19 +353,6 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     }
     
     func leftBtnAnimation() {
-//        UIView.animate(withDuration: 0.3,
-//                      delay: 0,
-//                      usingSpringWithDamping: 0.7,
-//                      initialSpringVelocity: 0.7,
-//                      options: .curveEaseInOut,
-//                       animations: { [self] in
-//            self.view.layoutIfNeeded()
-//            leftSideButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-//        }, completion: { _ in
-//            UIView.animate(withDuration: 0.1) { [self] in
-//                leftSideButton.transform = .identity
-//            }
-//        })
         leftSideButton.transform = CGAffineTransform(scaleX: 0.86, y: 0.86)
 
         UIView.animate(
@@ -388,19 +375,6 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     }
     
     func rightBtnAnimation() {
-//        UIView.animate(withDuration: 0.3,
-//                      delay: 0,
-//                      usingSpringWithDamping: 0.7,
-//                      initialSpringVelocity: 0.7,
-//                      options: .curveEaseInOut,
-//                       animations: { [self] in
-//            self.view.layoutIfNeeded()
-//            rightSideButton.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-//        }, completion: { _ in
-//            UIView.animate(withDuration: 0.1) { [self] in
-//                rightSideButton.transform = .identity
-//            }
-//        })
         rightSideButton.transform = CGAffineTransform(scaleX: 0.86, y: 0.86)
 
         UIView.animate(
@@ -493,7 +467,10 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             let nameStr:String = meta?.artist?.name ?? ""
             updateCenterText(title: musicStr, subtitle: nameStr)
             buttonWidthConstraint.constant = LayoutConstants.centerButtonExpandedSize
-    
+            
+            let imageStr:String = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum]
+            
+            self.leftIcon.image = UIImage(named: imageStr.iconName)
             // 移除旧的居中约束，添加新的右侧约束
             rightIconCenterXConstraint.isActive = false
     
