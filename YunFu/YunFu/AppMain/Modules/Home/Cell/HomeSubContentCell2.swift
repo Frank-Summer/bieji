@@ -2,9 +2,13 @@
 import UIKit
 import SnapKit
 
+typealias TUOKOUXIU_HomeClkItemBlk = (_ model: ExploreItem) -> Void
+
 class HomeSubContentCell2: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var tufuh_collcV: UICollectionView!
+    
+    var TUOKOUXIUHomeClkItemBlk: TUOKOUXIU_HomeClkItemBlk?
     
     private var tufuh_explpreArray: [ExploreItem] = []
     
@@ -94,7 +98,7 @@ class HomeSubContentCell2: UITableViewCell, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        TUOKOUXIUHomeClkItemBlk?(self.tufuh_explpreArray[indexPath.row])
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

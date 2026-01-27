@@ -81,11 +81,13 @@ class TUOKOUXIUExploreCollVCell2: UICollectionViewCell {
         tufuh_typeL.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-31)
             make.left.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-12)
             make.height.equalTo(22)
         }
         tufuh_contentL.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-12)
             make.left.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-12)
             make.height.equalTo(17)
         }
 

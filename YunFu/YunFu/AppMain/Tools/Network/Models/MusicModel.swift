@@ -16,8 +16,10 @@ struct MusicModel {
     let banners: [BannerItem]
     let acousticTech: AcousticTech?
     let socialProofs: [SocialProof]
-    let musicFileUrls: [String]
+    let musicFileUrl: [String]?
     let videoFileUrl: String?
+    let videoCoverUrl: String?
+    let isFavorite: Bool?
     
     static func parseDetail(body: [String: AnyCodable]) -> MusicModel? {
         guard
@@ -49,11 +51,15 @@ struct MusicModel {
         let socialProofs =
             SocialProof.parseArray(any: body["socialProof"]?.value)
 
-        let musicFileUrls =
+        let musicFileUrl =
             parseStringArray(any: body["musicFileUrl"]?.value)
 
         let videoFileUrl =
             body["videoFileUrl"]?.value as? String
+        let videoCoverUrl =
+            body["videoCoverUrl"]?.value as? String
+        let isFavorite =
+            body["isFavorite"]?.value as? Bool
 
         guard let meta = meta else {
             print("❌ meta 解析失败")
@@ -68,15 +74,19 @@ struct MusicModel {
             banners: banners,
             acousticTech: acousticTech,
             socialProofs: socialProofs,
-            musicFileUrls: musicFileUrls,
-            videoFileUrl: videoFileUrl
+            musicFileUrl: musicFileUrl,
+            videoFileUrl: videoFileUrl,
+            videoCoverUrl: videoCoverUrl,
+            isFavorite: isFavorite
         )
     }
 }
 
 func parseStringArray(any: Any?) -> [String] {
-    guard let arr = any as? [Any] else { return [] }
-    return arr.compactMap { $0 as? String }
+    if let arr = any as? [AnyCodable] {
+        return arr.compactMap { $0.value as? String }
+    }
+    return []
 }
 
 struct MetaInfo {
@@ -155,6 +165,7 @@ extension MetaInfo {
 }
 struct ExploreItem {
     let musicId: String
+    let musicUuid: String
     let headline: String
     let subhead: String
     let musicPic: String
@@ -168,6 +179,7 @@ extension ExploreItem {
             guard
                 let dict = $0.value as? [String: AnyCodable],
                 let musicId = dict["musicId"]?.value as? String,
+                let musicUuid = dict["musicUuid"]?.value as? String,
                 let headline = dict["headline"]?.value as? String,
                 let subhead = dict["subhead"]?.value as? String,
                 let musicPic = dict["musicPic"]?.value as? String
@@ -175,6 +187,7 @@ extension ExploreItem {
 
             return ExploreItem(
                 musicId: musicId,
+                musicUuid: musicUuid,
                 headline: headline,
                 subhead: subhead,
                 musicPic: musicPic

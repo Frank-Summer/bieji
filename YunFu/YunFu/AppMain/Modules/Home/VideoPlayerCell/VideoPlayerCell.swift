@@ -12,6 +12,7 @@ class VideoPlayerCell: UITableViewCell {
     static let identifier = "VideoPlayerCellIdentifier"
 
     let containerView = UIView()
+    let containerIV = UIImageView()
     /// 当 cell 完成 layout 时回调（只会触发一次）
     var onReadyForPlayer: (() -> Void)?
 
@@ -24,6 +25,11 @@ class VideoPlayerCell: UITableViewCell {
         containerView.frame = contentView.bounds
         containerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         containerView.backgroundColor = .black
+        containerView.addSubview(containerIV)
+        containerIV.frame = containerView.bounds
+        containerIV.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        containerIV.backgroundColor = .black
+        containerIV.contentMode = .scaleAspectFill
     }
 
     required init?(coder: NSCoder) {

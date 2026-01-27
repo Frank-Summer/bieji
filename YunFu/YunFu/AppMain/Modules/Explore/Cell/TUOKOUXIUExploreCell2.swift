@@ -2,7 +2,7 @@
 import UIKit
 import SnapKit
 
-typealias TUOKOUXIU_ClkItemBlk = (_ dict: [String: Any]) -> Void
+typealias TUOKOUXIU_ClkItemBlk = (_ model: MusicItem) -> Void
 
 class TUOKOUXIUExploreCell2: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -66,7 +66,7 @@ class TUOKOUXIUExploreCell2: UITableViewCell, UICollectionViewDelegate, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        TUOKOUXIUclkItemBlk?(["id":"111"])
+        TUOKOUXIUclkItemBlk?(self.musicsArray[indexPath.row])
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -70,11 +70,13 @@ class TUOKOUXIUSwiftHHHCollVCell: UICollectionViewCell {
         tufuh_typeL.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(-31)
             make.left.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-12)
             make.height.equalTo(22)
         }
         tufuh_contentL.snp.makeConstraints { make in
             make.top.equalTo(tufuh_typeL.snp.bottom).offset(2)
             make.left.equalToSuperview().offset(12)
+            make.right.equalToSuperview().offset(-12)
             make.height.equalTo(17)
         }
     }

@@ -333,7 +333,7 @@ extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
                 cell.tufuh_isLock = false
                 cell.tukou_resData(self.sceneSections[indexPath.row])
                 cell.TUOKOUXIUclkItemBlk = { model in
-                    NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: nil)
+                    NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: model)
                 }
                 return cell
             }
@@ -343,6 +343,9 @@ extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
                 cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 cell.tufuh_isLock = false
                 cell.tukou_resData(self.sceneSections[indexPath.row])
+                cell.TUOKOUXIUclkItemBlk = { model in
+                    NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: model)
+                }
                 return cell
             }
         } else if indexPath.row == 2 {
@@ -351,14 +354,20 @@ extension TUOKOUXIUExploreVC: UITableViewDataSource, UITableViewDelegate {
                 cell.backgroundColor = TUOKOUXIUSwiftheiseC
                 cell.tufuh_isLock = false
                 cell.tukou_resData(self.sceneSections[indexPath.row])
+                cell.TUOKOUXIUclkItemBlk = { model in
+                    NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: model)
+                }
                 return cell
             }
         } else if indexPath.row == 3 {
             if self.sceneSections.count > 3 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "TUOKOUXIUExploreCell5Id", for: indexPath) as! TUOKOUXIUExploreCell2
                 cell.backgroundColor = TUOKOUXIUSwiftheiseC
-                cell.tufuh_isLock = true
+                cell.tufuh_isLock = false
                 cell.tukou_resData(self.sceneSections[indexPath.row])
+                cell.TUOKOUXIUclkItemBlk = { model in
+                    NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowLeiXing"), object: model)
+                }
                 return cell
             }
         }
@@ -386,11 +395,10 @@ extension TUOKOUXIUExploreVC: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if indexPath.row == TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum { return }
-
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = indexPath.row
         collectionView.reloadData()
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShowChangJing"), object: nil)
     }
 }
 

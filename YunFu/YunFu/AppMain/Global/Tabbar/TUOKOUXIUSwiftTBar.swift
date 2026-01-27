@@ -60,7 +60,6 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     
     private lazy var leftIcon: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = UIImage(named: "sleep") // 左边图标
         imageView.alpha = 0
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -141,7 +140,9 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUTabbarClickEnter"))
+            .sink { [weak self] _ in self?.clickEnter() }
+            .store(in: &cancellables)
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUHidTabb"))
             .sink { [weak self] _ in self?.tukou_hidTabb() }
             .store(in: &cancellables)
@@ -149,21 +150,27 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUShoTabb"))
             .sink { [weak self] _ in self?.tukou_shoTabb() }
             .store(in: &cancellables)
-        //显示首页类型
-        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUShowLeiXing"))
-            .sink { [weak self] _ in self?.clickCenterBtn() }
-            .store(in: &cancellables)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(changeHomeView(_:)),
+            name: NSNotification.Name("TUOKOUXIUShowLeiXing"),
+            object: nil
+        )
 
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUToggleTypePlayback"))
             .sink { [weak self] _ in self?.toggleTypePlayback() }
             .store(in: &cancellables)
         
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUShowChangJing"))
+            .sink { [weak self] _ in self?.changeHomeChangJing() }
+            .store(in: &cancellables)
         tufuh_selInd = -1
         tukou_setTabBar()
         tukou_setContainerV()
         
         self.tukou_setTabBTitArr()
-//        updateCenterText(title: "", subtitle: "")
+
         if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isEnterApp {
             enterBtn.frame = CGRect(x: TUOKOUXIUSwiftSCRE_W/2-140/2, y: 7, width: 140, height: 52)
             enterBtn.backgroundColor = TUOKOUXIUSwiftbaiseC
@@ -175,6 +182,17 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             enterBtn.tukou_setEnlargeEdge(10)
             tufuh_tabBV.addSubview(enterBtn)
         }
+    }
+    
+    @objc private func changeHomeView(_ notification: Notification) {
+        guard let model = notification.object as? MusicItem else { return }
+        clickCenterBtn()
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIULoadMusicDetail"), object: model)
+    }
+    
+    private func changeHomeChangJing() {
+        clickCenterBtn()
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUHuanChangJing"), object: nil)
     }
     
     @objc private func clickEnter() {
@@ -433,6 +451,11 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             self.centerLabel.alpha = 0
             self.leftIcon.alpha = 0
         } completion: { _ in
+            if self.isPlay {
+                self.rightIcon.image = UIImage(named: "tab_home_stop")
+            } else {
+                self.rightIcon.image = UIImage(named: "tab_home_play")
+            }
             // 淡出完成后执行收缩动画
             self.buttonWidthConstraint.constant = 52
             self.rightIconCenterXConstraint.isActive = false
@@ -471,6 +494,11 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             let imageStr:String = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum]
             
             self.leftIcon.image = UIImage(named: imageStr.iconName)
+            if self.isPlay {
+                rightIcon.image = UIImage(named: "tabbar_playing")
+            } else {
+                rightIcon.image = UIImage(named: "tabbar_pausing")
+            }
             // 移除旧的居中约束，添加新的右侧约束
             rightIconCenterXConstraint.isActive = false
     
@@ -602,14 +630,23 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     @objc private func clickPlayBtn() {
         self.isPlay = !self.isPlay
         if self.isPlay {
-            rightIcon.image = UIImage(named: "tab_home_play") // 暂停图标
+            if isExpanded {
+                rightIcon.image = UIImage(named: "tabbar_playing")
+            } else {
+                rightIcon.image = UIImage(named: "tab_home_play")// 暂停图标
+            }
             NotificationCenter.default.post(
                 name: Notification.Name("TUOKOUXIUAudioPlay"),
                 object: nil
             )
             startRotationAnimation()
         } else {
-            rightIcon.image = UIImage(named: "tab_home_stop") // 播放图标
+            if isExpanded {
+                rightIcon.image = UIImage(named: "tabbar_pausing")
+            } else {
+                rightIcon.image = UIImage(named: "tab_home_stop") // 播放图标
+            }
+            
             NotificationCenter.default.post(
                 name: Notification.Name("TUOKOUXIUAudioPause"),
                 object: nil

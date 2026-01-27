@@ -34,7 +34,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     var tufuh_container: UIView?
     var tufuh_isClickTypeBtn: Bool = false
 //    var tufuh_isFirWil: Bool = false
-    var tufuh_isMusicOpen: Bool = false
+    
     private var cancellables = Set<AnyCancellable>()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -66,6 +66,9 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIURefreshHomeWindow"))
             .sink { [weak self] _ in self?.refreshHomeWindow() }
             .store(in: &cancellables)
+        NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUHuanChangJing"))
+            .sink { [weak self] _ in self?.huanHomeChangJing() }
+            .store(in: &cancellables)
         Task {
             let response = await AuthService.getScenesList()
 
@@ -96,6 +99,13 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             tukou_noNetwV()
             return
         }
+    }
+    
+    private func huanHomeChangJing() {
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand {
+            clickBackType()
+        }
+        self.tufuh_pageTitV.tukou_cutBtnAction(selectedIndex: TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum)
     }
     
     private func refreshHomeWindow() {
@@ -166,7 +176,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand = true
         NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshSubView"), object: nil)
         self.tufuh_musicW!.tukou_updateUI()
-        tufuh_isMusicOpen = true
+        
         self.tufuh_musicW!.tuks_spx = TUOKOUXIUSwiftSCRE_W/2-256/2
         self.tufuh_musicW!.tuks_spy = TUOKOUXIUDeviceInfo.tukou_statusBarTopHeight + 44 + 32 + 10
         self.tufuh_musicW!.tuks_spwidth = 256
@@ -201,7 +211,8 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         titleV.layer.borderWidth = 1
         titleV.tukou_addTapGesture(target: self, action: #selector(clickBackType))
         
-        let titleIV = UIImageView.tukou_bjImageV(CGRect(x: 8, y: 4, width: 24, height: 24), superView: titleV, image: UIImage(named: "sleep"))
+        let iconStr = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum]
+        let titleIV = UIImageView.tukou_bjImageV(CGRect(x: 8, y: 4, width: 24, height: 24), superView: titleV, image: UIImage(named: iconStr.iconName))
         let model:SceneModel = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum]
         let name = model.sceneName
         UILabel.tukou_bjLabel(CGRect(x: titleIV.frame.maxX + 6, y: 4, width: 42, height: 24), text: name, superView: titleV, textAlignment: .left, font: TUOKOUXIUSwiftFont.regular(14), textColor: .white)
@@ -220,7 +231,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         print("点击返回之前类型页面")
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand = false
         NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshSubView"), object: nil)
-        tufuh_isMusicOpen = false
+        
         self.tufuh_topTypeV?.isHidden = true
         self.tufuh_topTypeV?.removeFromSuperview()
         self.tufuh_topTypeV = nil
@@ -332,6 +343,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             clickCloseTopSelectTypeV()
         }
         guard view.tag != TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum else { return }
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUTabbarClickEnter"), object: nil)
         clickBackType()
         self.tufuh_pageTitV.tukou_cutBtnAction(selectedIndex: view.tag)
     }

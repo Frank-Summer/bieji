@@ -15,9 +15,12 @@ struct SceneSection {
 
 struct MusicItem {
     let musicId: Int
+    let songUuid: String
     let musicName: String
     let musicDesc: String
     let musicImg: String
+    let sceneId: Int
+    let sceneName: String
 }
 
 enum ExploreModel {
@@ -49,9 +52,12 @@ enum ExploreModel {
 
                 guard
                     let id = dictAny["music_id"]?.value as? Int,
+                    let songid = dictAny["song_uuid"]?.value as? String,
                     let name = dictAny["music_name"]?.value as? String,
                     let desc = dictAny["music_desc"]?.value as? String,
-                    let img = dictAny["music_img"]?.value as? String
+                    let img = dictAny["music_img"]?.value as? String,
+                    let sid = dictAny["scene_id"]?.value as? Int,
+                    let sname = dictAny["scene_name"]?.value as? String
                 else {
                     continue
                 }
@@ -59,9 +65,12 @@ enum ExploreModel {
                 musics.append(
                     MusicItem(
                         musicId: id,
+                        songUuid: songid,
                         musicName: name,
                         musicDesc: desc,
-                        musicImg: img
+                        musicImg: img,
+                        sceneId: sid,
+                        sceneName: sname
                     )
                 )
             }
