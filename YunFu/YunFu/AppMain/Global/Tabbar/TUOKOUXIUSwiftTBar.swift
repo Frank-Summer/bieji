@@ -136,7 +136,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
         static let centerButtonExpandedSize: CGFloat = 210
     }
     
-    private var isPlay = true
+    var isPlay = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -351,6 +351,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     }
     
     @objc private func leftButtonTapped() {
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.isClickLeftAndRight = true
         if isRightButtonExpanded {
             isRightButtonExpanded = false
             rightSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
@@ -415,6 +416,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     }
     
     @objc private func rightButtonTapped() {
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.isClickLeftAndRight = true
         if isLeftButtonExpanded {
             isLeftButtonExpanded = false
             leftSideButton.backgroundColor = TUOKOUXIUSwiftwuseC
@@ -452,9 +454,9 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             self.leftIcon.alpha = 0
         } completion: { _ in
             if self.isPlay {
-                self.rightIcon.image = UIImage(named: "tab_home_stop")
-            } else {
                 self.rightIcon.image = UIImage(named: "tab_home_play")
+            } else {
+                self.rightIcon.image = UIImage(named: "tab_home_stop")
             }
             // 淡出完成后执行收缩动画
             self.buttonWidthConstraint.constant = 52
@@ -606,17 +608,13 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             if self.isPlay {
                 self.isPlay = false
                 rightIcon.image = UIImage(named: "tab_home_stop")
-                NotificationCenter.default.post(
-                    name: Notification.Name("TUOKOUXIUAudioPause"),
-                    object: nil
-                )
+
+                AudioPlayerManager.shared.audioPause()
             } else {
                 self.isPlay = true
                 rightIcon.image = UIImage(named: "tab_home_play")
-                NotificationCenter.default.post(
-                    name: Notification.Name("TUOKOUXIUAudioPlay"),
-                    object: nil
-                )
+
+                AudioPlayerManager.shared.audioPlay()
             }
         }
     }
@@ -635,10 +633,8 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             } else {
                 rightIcon.image = UIImage(named: "tab_home_play")// 暂停图标
             }
-            NotificationCenter.default.post(
-                name: Notification.Name("TUOKOUXIUAudioPlay"),
-                object: nil
-            )
+
+            AudioPlayerManager.shared.audioPlay()
             startRotationAnimation()
         } else {
             if isExpanded {
@@ -646,11 +642,8 @@ class TUOKOUXIUSwiftTBar: UIViewController {
             } else {
                 rightIcon.image = UIImage(named: "tab_home_stop") // 播放图标
             }
-            
-            NotificationCenter.default.post(
-                name: Notification.Name("TUOKOUXIUAudioPause"),
-                object: nil
-            )
+
+            AudioPlayerManager.shared.audioPause()
             stopRotationAnimation()
         }
     }

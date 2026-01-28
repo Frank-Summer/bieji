@@ -18,7 +18,7 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     var tufuh_sortArray: [String] = []
     var tufuh_selectNum: Int = 0
     var tufuh_metaInfo: MetaInfo?
-    var tufuh_detailModel: MusicModel?
+    var isClickLeftAndRight: Bool = false
     var tufuh_iconUrl: String?
     var tufuh_iconUrlExist: Bool = false
     var tufuh_v_placeStr: String?

@@ -33,7 +33,6 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     var countdownRemainingSeconds: Int = 0
     var tufuh_container: UIView?
     var tufuh_isClickTypeBtn: Bool = false
-//    var tufuh_isFirWil: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -45,11 +44,6 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBar.isHidden = true
-        
-//        if self.tufuh_isFirWil {
-//            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUHHHWillAppear"), object: nil)
-//        }
-//        self.tufuh_isFirWil = true
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -79,9 +73,6 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
                 await MainActor.run {
                     tukou_clickRefresh2()
                     tukou_clickRefresh3()
-//                    TUOKOUXIUSwiftDelaBlk(0.25) {
-//                        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshData"), object: nil)
-//                    }
                 }
             }
         }
@@ -519,18 +510,6 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     lazy var tufuh_pageContScrV: TUOKOUXIUSwiftPagContScrV = {
         var childVCs: [UIViewController] = []
         
-//        let urls = [
-//            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!,
-//            URL(string: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")!,
-//            URL(string: "https://test-streams.mux.dev/pts_shift/master.m3u8")!,
-//            URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/gear1/prog_index.m3u8")!
-//        ]
-//        let urls2 = [
-//            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3")!,
-//            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")!,
-//            URL(string: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3")!,
-//            URL(string: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Owl/Epic_Nature_Sounds/Owl_-_Ocean_Waves.mp3")!
-//        ]
         for (i, model) in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_homeArray.enumerated() {
             let v1 = HomeSubVC(tufuh_model: model)
             v1.tufuh_num = i
