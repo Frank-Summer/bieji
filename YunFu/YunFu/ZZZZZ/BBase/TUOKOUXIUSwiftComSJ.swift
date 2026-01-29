@@ -19,6 +19,7 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     var tufuh_selectNum: Int = 0
     var tufuh_metaInfo: MetaInfo?
     var isClickLeftAndRight: Bool = false
+    var isAlarmBellOpen: Bool = false
     var tufuh_iconUrl: String?
     var tufuh_iconUrlExist: Bool = false
     var tufuh_v_placeStr: String?

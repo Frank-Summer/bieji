@@ -13,6 +13,8 @@ class AlarmDurationPicker: UIView {
     private let cancelBtn = UIButton(type: .system)
     private let confirmBtn = UIButton(type: .system)
     private var durations: [Int] = []
+    private let allowNotificationsKey = "allowNotifications"
+    private var AlarmClockSW = UISwitch()
 
     override init(frame: CGRect) {
         super.init(frame: UIScreen.main.bounds)
@@ -66,7 +68,7 @@ class AlarmDurationPicker: UIView {
         UILabel.tukou_bjLabel(CGRect(x: AlarmClockIV.frame.maxX + 10, y: 12, width: 100, height: 24), text: "闹铃提醒", superView: AlarmClockV, textAlignment: .left, font: TUOKOUXIUSwiftFont.medium(14), textColor: .white)
         
         
-        let AlarmClockSW = UISwitch(frame: CGRect(x: UIScreen.main.bounds.width - 40 - 40 - 26, y: 12, width: 40, height: 24))
+        AlarmClockSW = UISwitch(frame: CGRect(x: UIScreen.main.bounds.width - 40 - 40 - 26, y: 12, width: 40, height: 24))
         AlarmClockSW.isOn = false // true: 开, false: 关
         AlarmClockV.addSubview(AlarmClockSW)
         AlarmClockSW.addTarget(self, action: #selector(alarmClockSwitchValueChanged(_:)), for: .valueChanged)
@@ -100,8 +102,51 @@ class AlarmDurationPicker: UIView {
     @objc func alarmClockSwitchValueChanged(_ sender: UISwitch) {
         if sender.isOn {
             print("开关已打开")
+            if let key = UserDefaults.standard.string(forKey: allowNotificationsKey) {
+                if key == "yes" {
+                    
+                } else{
+                    requestNotificationPermission2()
+                }
+            } else {
+                requestNotificationPermission()
+            }
         } else {
             print("开关已关闭")
+        }
+    }
+    
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .sound, .badge]
+        ) { [self] granted, error in
+            if granted {
+                print("✅ 通知权限已授权")
+                UserDefaults.standard.set("yes", forKey: allowNotificationsKey)
+                UserDefaults.standard.synchronize()
+            } else {
+                print("✅ 通知权限未授权")
+                UserDefaults.standard.set("no", forKey: allowNotificationsKey)
+                UserDefaults.standard.synchronize()
+            }
+        }
+    }
+    
+    private func requestNotificationPermission2() {
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .sound, .badge]
+        ) { [self] granted, error in
+            if granted {
+                print("✅ 通知权限已授权2")
+                UserDefaults.standard.set("yes", forKey: allowNotificationsKey)
+                UserDefaults.standard.synchronize()
+            } else {
+                print("✅ 通知权限未授权2")
+                DispatchQueue.main.async {
+                    TUOKOUXIUSwiftKeyWindow()!.makeToast("需要手动去 '设置-通知-选择当前App-允许通知' ", duration: 5.0, position: .center)
+                    self.AlarmClockSW.isOn = false
+                }
+            }
         }
     }
     
@@ -153,6 +198,13 @@ class AlarmDurationPicker: UIView {
     }
 
     @objc private func confirmAction() {
+        if AlarmClockSW.isOn {
+            print("闹铃提醒已打开")
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.isAlarmBellOpen = true
+        } else {
+            print("闹铃提醒未开")
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.isAlarmBellOpen = false
+        }
         let row = picker.selectedRow(inComponent: 0)
         let duration = durations[row]
         onConfirm?(duration)

@@ -1,7 +1,7 @@
 
 
 import Foundation
-
+import UserNotifications
 import AVFoundation
 
 final class AudioPlayerManager {
@@ -29,6 +29,19 @@ final class AudioPlayerManager {
         queuePlayer?.play()
 
         addObserverIfNeeded()
+    }
+    
+    func reloadAndReplay() {
+        guard let queuePlayer else { return }
+        guard !urls.isEmpty else { return }
+
+        queuePlayer.pause()
+        queuePlayer.removeAllItems()
+
+        let items = urls.map { urlAddToken(url: $0) }
+        items.forEach { queuePlayer.insert($0, after: nil) }
+
+        queuePlayer.play()
     }
     
     private func addObserverIfNeeded() {
@@ -133,4 +146,5 @@ extension AudioPlayerManager {
         urls.removeAll()
         lastURL = nil
     }
+    
 }

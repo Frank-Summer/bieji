@@ -29,8 +29,12 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     var tufuh_topSelectTypeV: UIView?
     var tufuh_topSelectTimeV: TUOKOUXIUTopselectTypeW?
     var tufuh_toolsW: TUOKOUXIUToolsW?
-    var countdownTimer: Timer?
+    private var sleepTimer: Timer?
+    private var sleepWorkItem: DispatchWorkItem?
+    private var didFinishSleepTimer = false
+    
     var countdownRemainingSeconds: Int = 0
+    var countdownRemainingMinutes: Int = 0
     var tufuh_container: UIView?
     var tufuh_isClickTypeBtn: Bool = false
     
@@ -349,9 +353,9 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         }
     }
     
-    //点击重载
+    //点击重播
     @objc func clickReplay() {
-        print("点击重载")
+        AudioPlayerManager.shared.reloadAndReplay()
     }
     
     //点击定时
@@ -366,6 +370,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
             self.countdownRemainingSeconds = minute * 60
             // 设置初始显示
             let timeString = self.formatMinuteToHHMMSS(minute)
+            self.countdownRemainingMinutes = minute
             print("选择：\(minute) 分钟")
             self.tufuh_timerBtn!.setImageTitleSpacing(4, shiftLeft: 1)
             self.tufuh_timerBtn!.setTitle(timeString, for: .normal)
@@ -377,7 +382,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
                 self.tufuh_blockingBtn?.frame = CGRect(x: timeBtnX+105+intervalWidth, y: 20, width: 40, height: 40)
             }
             // 启动倒计时
-            self.startCountdown()
+            self.startSleepTimer()
         }
         picker.onCancel = {
             NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUShoTabb"), object: nil)
@@ -390,10 +395,14 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         picker.show(in: self.view)
     }
     
-    func startCountdown() {
-        countdownTimer?.invalidate()
+    func startSleepTimer() {
+        didFinishSleepTimer = false
+        sleepTimer?.invalidate()
+        sleepWorkItem?.cancel()
+        
+        let totalSeconds = countdownRemainingSeconds
 
-        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+        sleepTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
 
             self.countdownRemainingSeconds -= 1
@@ -407,14 +416,74 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
 
             // 倒计时结束
             if self.countdownRemainingSeconds <= 0 {
-                self.countdownTimer?.invalidate()
-                self.countdownTimer = nil
-                self.resetTimerButton()
+                self.handleSleepTimerFinished()
             }
         }
 
         // 防止 UI 卡更新
-        RunLoop.current.add(countdownTimer!, forMode: .common)
+        RunLoop.current.add(sleepTimer!, forMode: .common)
+        
+        // 2️⃣ 后台保障任务（新增）
+        let work = DispatchWorkItem { [weak self] in
+            DispatchQueue.main.async {
+                self?.handleSleepTimerFinished()
+            }
+        }
+        sleepWorkItem = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(totalSeconds), execute: work)
+    }
+    
+    func handleSleepTimerFinished() {
+        guard !didFinishSleepTimer else { return }
+        didFinishSleepTimer = true
+
+        sleepTimer?.invalidate()
+        sleepTimer = nil
+
+        sleepWorkItem?.cancel()
+        sleepWorkItem = nil
+
+        resetTimerButton()
+        AudioPlayerManager.shared.audioPause()
+
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.isAlarmBellOpen {
+            requestNotificationPermission()
+        }
+    }
+    
+    private func requestNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .sound, .badge]
+        ) { [weak self] granted, error in
+            
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+
+                if granted {
+                    print("✅ 通知权限已授权")
+                    self.triggerAlarmNotification()
+                } else {
+                    print("❌ 通知权限未授权")
+                }
+            }
+        }
+    }
+    
+    func triggerAlarmNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "播放已停止"
+        content.body = "\(self.countdownRemainingMinutes) 分钟播放已结束!"
+        content.sound = .default
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
+
+        UNUserNotificationCenter.current().add(request)
     }
     
     func resetTimerButton() {
@@ -438,9 +507,11 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
+    //点击拦截应用
     @objc func clickTiming() {
         FocusShieldUIFlow.start()
     }
+    
     //点击分享
     @objc func clickShare() {
         print("点击分享")
