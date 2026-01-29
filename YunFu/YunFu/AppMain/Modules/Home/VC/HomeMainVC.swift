@@ -80,7 +80,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
                 }
             }
         }
-        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum = 0
+        
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUEnterDetailView"))
             .sink { [weak self] _ in self?.clickMusic() }
             .store(in: &cancellables)
@@ -135,6 +135,12 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         collectionBtn.setImage(UIImage(named: "home_collection_selected"), for: .selected)
         collectionBtn.backgroundColor = TUOKOUXIUWhiteA10
         collectionBtn.layer.cornerRadius = 20
+//        var collectArr: [[Any]] = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey("MusicCollect")?.map { $0 as? [Any] ?? [] } ?? []
+//        if collectArr.isEmpty {
+//            collectionBtn.isSelected = false
+//        } else {
+//            collectionBtn.isSelected = true
+//        }
         
         tufuh_replayBtn = UIButton.tukou_bjBtn(CGRect(x: Int(collectionBtn.frame.maxX) + intervalWidth, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_replay"), superView: contentV, action: #selector(clickReplay))
         tufuh_replayBtn!.backgroundColor = TUOKOUXIUWhiteA10
@@ -348,8 +354,10 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         btn.isSelected = !btn.isSelected
         if btn.isSelected {
             print("收藏")
+//            TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(<#T##[Any]#>, forKey: "MusicCollect")
         } else {
             print("取消收藏")
+//            TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK("MusicCollect")
         }
     }
     

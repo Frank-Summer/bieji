@@ -165,8 +165,8 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
         )
         Task {
             self.tufuh_isFirstLoad = true
-            if let uids = self.tufuh_model?.songUuids, uids.count > TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum {
-                guard let url = self.tufuh_model?.songUuids[TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum] else { return }
+            if let uids = self.tufuh_model?.songUuids, uids.count > 0 {
+                guard let url = self.tufuh_model?.songUuids[0] else { return }
                 self.detailModel = await AuthService.getMusicDetail(Uuid: url)
                 
                 print("✅ 第一次进入 获取成功")
