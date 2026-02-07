@@ -98,15 +98,16 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             self.videoURL = URL(string: self.detailModel?.videoFileUrl ?? "")
             if let urlStrings = self.detailModel?.musicFileUrl, !urlStrings.isEmpty {
                 let urls = makeURLs(from: urlStrings)
-
                 AudioPlayerManager.shared.playAudios(with: urls)
+                _ = await AuthService.postHistoryAdd(Uuid:  self.detailModel!.id)
             }
             TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo = self.detailModel?.meta
             tufuh_tabV.reloadData()
-
+            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshHomeWindow"), object: nil)
             TUOKOUXIUSwiftDelaBlk(0.1) {
                 NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUEnterDetailView"), object: nil)
             }
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isClickExploreCell = false
         }
     }
     
@@ -122,14 +123,47 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                 TUOKOUXIUSwiftComSJ.tukou_sLcom.isClickLeftAndRight = false
                 return
             }
-            if let urlStrings = self.detailModel?.musicFileUrl, !urlStrings.isEmpty {
-                let urls = makeURLs(from: urlStrings)
-                AudioPlayerManager.shared.playAudios(with: urls)
+            if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isClickExploreCell {
+                clickExploreCellLoadDetail()
+            } else {
+                if let urlStrings = self.detailModel?.musicFileUrl, !urlStrings.isEmpty {
+                    let urls = makeURLs(from: urlStrings)
+                    AudioPlayerManager.shared.playAudios(with: urls)
+                }
+                TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo = self.detailModel?.meta
+                tufuh_tabV.reloadData()
+                NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshHomeWindow"), object: nil)
             }
         }else{
             print("✅ 333333")
+            if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isClickExploreCell {
+                clickExploreCellLoadDetail()
+            }
         }
-        
+    }
+    
+    private func clickExploreCellLoadDetail() {
+        Task {
+            let model: MusicItem = TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_musicItemModel!
+            let url = model.songUuid
+            self.detailModel = await AuthService.getMusicDetail(Uuid: url)
+            
+            print("✅ 点击探索页cell加载详情 获取成功")
+            self.videoURL = URL(string: self.detailModel?.videoFileUrl ?? "")
+            if let urlStrings = self.detailModel?.musicFileUrl, !urlStrings.isEmpty {
+                let urls = makeURLs(from: urlStrings)
+
+                AudioPlayerManager.shared.playAudios(with: urls)
+                _ = await AuthService.postHistoryAdd(Uuid:  self.detailModel!.id)
+            }
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo = self.detailModel?.meta
+            tufuh_tabV.reloadData()
+            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshHomeWindow"), object: nil)
+            TUOKOUXIUSwiftDelaBlk(0.1) {
+                NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUEnterDetailView"), object: nil)
+            }
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isClickExploreCell = false
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -175,6 +209,7 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
                     let urls = makeURLs(from: urlStrings)
 
                     AudioPlayerManager.shared.playAudios(with: urls)
+                    _ = await AuthService.postHistoryAdd(Uuid:  self.detailModel!.id)
                 }
                 TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo = self.detailModel?.meta
                 tufuh_tabV.reloadData()
@@ -524,9 +559,11 @@ class HomeSubVC: TUOKOUXIUSwiftBaseVC, UITableViewDelegate, UITableViewDataSourc
             if let urlStrings = self.detailModel?.musicFileUrl, !urlStrings.isEmpty {
                 let urls = makeURLs(from: urlStrings)
                 AudioPlayerManager.shared.playAudios(with: urls)
+                _ = await AuthService.postHistoryAdd(Uuid:  self.detailModel!.id)
             }
             TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_metaInfo = self.detailModel?.meta
             tufuh_tabV.reloadData()
+            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshHomeWindow"), object: nil)
             TUOKOUXIUSwiftDelaBlk(0.1) {
                 NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUEnterDetailView"), object: nil)
             }

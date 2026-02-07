@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     // MARK: - 主界面
     func tukou_enter() {
-        _ = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL
+//        _ = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL
         window = UIWindow(frame: UIScreen.main.bounds)
 
         let tufuh_tabBaVC = TUOKOUXIUSwiftTBar()
@@ -147,6 +147,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_guanBShuJ()
+//        TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_guanBShuJ()
     }
 }

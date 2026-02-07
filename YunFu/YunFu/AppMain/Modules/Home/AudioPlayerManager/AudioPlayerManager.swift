@@ -27,7 +27,7 @@ final class AudioPlayerManager {
 
         queuePlayer = AVQueuePlayer(items: items)
         queuePlayer?.play()
-
+        
         addObserverIfNeeded()
     }
     

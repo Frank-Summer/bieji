@@ -19,7 +19,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     var tufuh_replayBtn: UIButton?
     var tufuh_blockingBtn: UIButton?
     var tufuh_noNetV: UIView?
-    
+    private var tufuh_collectionBtn: UIButton?
     var tufuh_musicL: UILabel?
     var tufuh_nameL: UILabel?
     
@@ -80,7 +80,12 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
                 }
             }
         }
-        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(xinHuanChangJing(_:)),
+            name: NSNotification.Name("TUOKOUXIUXinHuanChangJing"),
+            object: nil
+        )
         NotificationCenter.default.publisher(for: NSNotification.Name("TUOKOUXIUEnterDetailView"))
             .sink { [weak self] _ in self?.clickMusic() }
             .store(in: &cancellables)
@@ -93,6 +98,26 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         if TUOKOUXIUSwiftNetUt.tukou_getCurrNetSta() == 0 {
             tukou_noNetwV()
             return
+        }
+    }
+    
+    @objc private func xinHuanChangJing(_ notification: Notification) {
+        guard let model = notification.object as? MusicItem else { return }
+        let sceneName = model.sceneName
+        var foundIndex: Int = 0
+
+        for (index, item) in TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_sortArray.enumerated() {
+            if item == sceneName {
+                foundIndex = index
+                break
+            }
+        }
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isClickExploreCell = true
+        if foundIndex == TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_selectNum {
+            NotificationCenter.default.post(name: Notification.Name("TUOKOUXIULoadMusicDetail"), object: model)
+        } else {
+            TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_musicItemModel = model
+            self.tufuh_pageTitV.tukou_cutBtnAction(selectedIndex: foundIndex)
         }
     }
     
@@ -109,6 +134,11 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         let nameStr:String = meta?.artist?.name ?? ""
         tufuh_musicL?.text = musicStr
         tufuh_nameL?.text = "艺术家：\(nameStr)"
+        if TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isFavorite {
+            tufuh_collectionBtn?.isSelected = true
+        } else {
+            tufuh_collectionBtn?.isSelected = false
+        }
     }
     
     func tukou_clickRefresh3() {
@@ -135,12 +165,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         collectionBtn.setImage(UIImage(named: "home_collection_selected"), for: .selected)
         collectionBtn.backgroundColor = TUOKOUXIUWhiteA10
         collectionBtn.layer.cornerRadius = 20
-//        var collectArr: [[Any]] = TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_getArrKey("MusicCollect")?.map { $0 as? [Any] ?? [] } ?? []
-//        if collectArr.isEmpty {
-//            collectionBtn.isSelected = false
-//        } else {
-//            collectionBtn.isSelected = true
-//        }
+        tufuh_collectionBtn = collectionBtn
         
         tufuh_replayBtn = UIButton.tukou_bjBtn(CGRect(x: Int(collectionBtn.frame.maxX) + intervalWidth, y: 20, width: 40, height: 40), target: self, image: UIImage(named: "home_replay"), superView: contentV, action: #selector(clickReplay))
         tufuh_replayBtn!.backgroundColor = TUOKOUXIUWhiteA10
@@ -174,6 +199,7 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     //点击音乐
     @objc func clickMusic() {
         print("点击音乐")
+
         TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isOpenHomeMusicExpand = true
         NotificationCenter.default.post(name: Notification.Name("TUOKOUXIURefreshSubView"), object: nil)
         self.tufuh_musicW!.tukou_updateUI()
@@ -204,6 +230,9 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
         
         //禁止横向滑动
         tufuh_pageContScrV.tufuh_scrV.isScrollEnabled = false
+        
+        self.tufuh_topTypeV?.removeFromSuperview()
+        self.tufuh_topTypeV = nil
         
         self.tufuh_topTypeV = TUOKOUXIUTopTypeViewW(frame: self.view.bounds)
         let titleV = UIView.tukou_bjView(CGRect(x: 6, y: 0, width: 86, height: 32), superView: self.tufuh_topTypeV!, bgColor: TUOKOUXIUBlackA20)
@@ -351,13 +380,28 @@ class HomeMainVC: TUOKOUXIUSwiftBaseVC, TUOKOUXIUSwiftPagTitVDelegate, TUOKOUXIU
     
     //点击收藏
     @objc func clickCollect(_ btn: UIButton) {
-        btn.isSelected = !btn.isSelected
-        if btn.isSelected {
-            print("收藏")
-//            TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_setArrV(<#T##[Any]#>, forKey: "MusicCollect")
+        if tufuh_collectionBtn?.isSelected == true {
+            Task {
+                let success = await AuthService.postFavoritesRemove(Uuid:  TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_songId!)
+                if success == true {
+                    tufuh_collectionBtn?.isSelected = false
+                    TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isFavorite = false
+                    DispatchQueue.main.async {
+                        TUOKOUXIUSwiftKeyWindow()!.makeToast("'收藏成功'", duration: 2.0, position: .center)
+                    }
+                }
+            }
         } else {
-            print("取消收藏")
-//            TUOKOUXIUSwiftShuJCC.tukou_shuJuDL.tukou_delArrK("MusicCollect")
+            Task {
+                let success = await AuthService.postFavoritesAdd(Uuid:  TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_songId!)
+                if success == true {
+                    tufuh_collectionBtn?.isSelected = true
+                    TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isFavorite = true
+                    DispatchQueue.main.async {
+                        TUOKOUXIUSwiftKeyWindow()!.makeToast("'取消收藏'", duration: 2.0, position: .center)
+                    }
+                }
+            }
         }
     }
     

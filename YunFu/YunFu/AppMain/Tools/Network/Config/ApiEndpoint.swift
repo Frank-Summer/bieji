@@ -20,9 +20,13 @@ enum ApiEndpoint {
     //获取音频信息
     static let getmusicinfo = "/v1/catalog/getmusicinfo"
     //收藏
-    static let favorites = "/v1/me/favorites"
+    static let favoritesAdd = "/api/favorites/add"
     //取消收藏
-    static let qfavorites = "/v1/me/favorites/"
+    static let favoritesRemove = "/api/favorites/remove"
+    //播放历史添加
+    static let historyAdd = "/api/play-history/add"
+    //获取播放历史
+    static let getHistory = "/api/play-history/recent"
     
     
     

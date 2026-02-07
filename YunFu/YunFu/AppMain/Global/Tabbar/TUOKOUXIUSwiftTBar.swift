@@ -187,7 +187,7 @@ class TUOKOUXIUSwiftTBar: UIViewController {
     @objc private func changeHomeView(_ notification: Notification) {
         guard let model = notification.object as? MusicItem else { return }
         clickCenterBtn()
-        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIULoadMusicDetail"), object: model)
+        NotificationCenter.default.post(name: Notification.Name("TUOKOUXIUXinHuanChangJing"), object: model)
     }
     
     private func changeHomeChangJing() {

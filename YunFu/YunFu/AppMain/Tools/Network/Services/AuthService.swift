@@ -101,20 +101,17 @@ final class AuthService {
 
         return response
     }
-    
+    //场景列表
     static func getScenesList() async -> ScenesResponse? {
 
-        // 1️⃣ 当前时间（时:分）
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         let timeHM = formatter.string(from: Date())
 
-        // 2️⃣ 请求参数
         let params: [String: Any] = [
             "time": timeHM,
         ]
 
-        // 3️⃣ 发起请求
         let result = await HTTPClient.shared.request(
             ApiEndpoint.getScenesList,
             method: "POST",
@@ -131,15 +128,13 @@ final class AuthService {
 
         return ScenesResponse.parseScenesResponse(body: body)
     }
-    
+    //音乐详情
     static func getMusicDetail(Uuid:String) async -> MusicModel? {
 
-        // 2️⃣ 请求参数
         let params: [String: Any] = [
             "songUuid": Uuid,
         ]
 
-        // 3️⃣ 发起请求
         let result = await HTTPClient.shared.request(
             ApiEndpoint.getMusicDetail,
             method: "GET",
@@ -153,12 +148,15 @@ final class AuthService {
         else {
             return nil
         }
-
-        return MusicModel.parseDetail(body: body)
+        let model: MusicModel? = MusicModel.parseDetail(body: body)
+        let isFavorite = model?.isFavorite
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_isFavorite = isFavorite ?? false
+        TUOKOUXIUSwiftComSJ.tukou_sLcom.tufuh_songId = model?.id
+        return model
     }
-    
+    //探索详情
     static func getExploreDetail() async -> [SceneSection]? {
-        // 3️⃣ 发起请求
+
         let result = await HTTPClient.shared.request(
             ApiEndpoint.getExploreDetail,
             method: "GET"
@@ -173,5 +171,68 @@ final class AuthService {
         }
 
         return ExploreModel.parse(body: body)
+    }
+    //收藏
+    static func postFavoritesAdd(Uuid: Int) async -> Bool {
+        let params: [String: Any] = [
+            "songId": Uuid,
+        ]
+        let result = await HTTPClient.shared.request(
+            ApiEndpoint.favoritesAdd,
+            method: "POST",
+            params: params
+        )
+        guard
+            let result = result,
+            result.code == 0,
+            let body = result.bodydata
+        else {
+            return false
+        }
+
+        print("收藏成功", body)
+        return true
+    }
+    //取消收藏
+    static func postFavoritesRemove(Uuid: Int) async -> Bool {
+        let params: [String: Any] = [
+            "songId": Uuid,
+        ]
+        let result = await HTTPClient.shared.request(
+            ApiEndpoint.favoritesRemove,
+            method: "DELETE",
+            params: params
+        )
+        guard
+            let result = result,
+            result.code == 0,
+            let body = result.bodydata
+        else {
+            return false
+        }
+
+        print("取消收藏成功", body)
+        return true
+    }
+    //播放历史添加
+    static func postHistoryAdd(Uuid: Int) async -> Bool {
+        let params: [String: Any] = [
+            "songId": String(Uuid),
+        ]
+        let result = await HTTPClient.shared.request(
+            ApiEndpoint.historyAdd,
+            method: "POST",
+            params: params
+        )
+        guard
+            let result = result,
+            result.code == 0,
+            let body = result.bodydata
+        else {
+            return false
+        }
+
+        print("播放历史添加成功", body)
+        return true
     }
 }

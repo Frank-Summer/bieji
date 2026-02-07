@@ -11,21 +11,24 @@ final class TUOKOUXIUSwiftComSJ: NSObject {
     static let tukou_sLcom = TUOKOUXIUSwiftComSJ()
     
     private override init() {}
-    
+    var tufuh_isClickExploreCell: Bool = false
+    var tufuh_currentHomeState: Int = 0
     var tufuh_isOpenHomeMusicExpand: Bool = false
     var tufuh_isEnterApp: Bool = true
     var tufuh_homeArray: [SceneModel] = []
     var tufuh_sortArray: [String] = []
+    var tufuh_musicItemModel:MusicItem?
     var tufuh_selectNum: Int = 0
     var tufuh_metaInfo: MetaInfo?
     var isClickLeftAndRight: Bool = false
     var isAlarmBellOpen: Bool = false
-    var tufuh_iconUrl: String?
-    var tufuh_iconUrlExist: Bool = false
+//    var tufuh_songUuid: String?
+    var tufuh_songId: Int?
+    var tufuh_isFavorite: Bool = false
     var tufuh_v_placeStr: String?
     var tufuh_isTrial: Bool = false
     private var tufuh_loadV: UIView?
-        
+    
     func tukou_jiaZIcon(_ iconUrl: String, andIsOne isOne: Bool) -> UIImage? {
         var iconPath = iconUrl
 
